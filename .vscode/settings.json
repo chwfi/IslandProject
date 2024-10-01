@@ -1,7 +1,12 @@
 {
     "files.exclude": {
-        "**/.DS_Store": true,
         "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.meta": true,
         "**/.gitmodules": true,
         "**/*.booproj": true,
         "**/*.pidb": true,
@@ -38,7 +43,6 @@
         "**/*.cubemap": true,
         "**/*.flare": true,
         "**/*.mat": true,
-        "**/*.meta": true,
         "**/*.prefab": true,
         "**/*.unity": true,
         "build/": true,
@@ -51,5 +55,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "IslandProject.sln"
+    "dotnet.defaultSolution": "IslandProject.sln",
+    "hide-files.files": []
 }
