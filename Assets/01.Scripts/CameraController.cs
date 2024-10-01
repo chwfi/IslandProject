@@ -13,6 +13,9 @@ public class CameraController : MonoBehaviour
 
     private CinemachineVirtualCamera _camera;
 
+    private Vector2 _lastTouchPosition;
+
+
     private void Awake() 
     {
         _camera = transform.Find("MainCam").GetComponent<CinemachineVirtualCamera>();    
@@ -20,9 +23,67 @@ public class CameraController : MonoBehaviour
 
     private void Update() 
     {
+        #if UNITY_IOS
+        MoveCamera_Mobile();
+        ZoomCamera_Mobile();
+        #endif
+
+        #if UNITY_EDITOR
         MoveCamera();
         ZoomCamera();
+        #endif
     }
+
+    private void MoveCamera_Mobile()
+    {
+        if (Input.touchCount == 1)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                _lastTouchPosition = touch.position;
+            }
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Vector2 deltaPosition = touch.position - _lastTouchPosition;
+
+                Vector3 moveDirection = new Vector3(deltaPosition.x, 0, deltaPosition.y);
+                moveDirection = Quaternion.Euler(0, _cameraRoot.eulerAngles.y, 0) * moveDirection;
+
+                _cameraRoot.position += _moveSpeed * Time.deltaTime * (- moveDirection);
+
+                _lastTouchPosition = touch.position;
+            }
+        }
+    }
+
+    private void ZoomCamera_Mobile()
+    {
+        if (Input.touchCount == 2)
+        {
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+            float difference = currentMagnitude - prevMagnitude;
+
+            Zoom(difference * _scrollAmount);
+        }  
+    }
+
+    void Zoom(float increment)
+    {
+        var wheel = _camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        wheel.m_CameraDistance = Mathf.Clamp(wheel.m_CameraDistance - increment, _minScroll, _maxScroll);
+    }
+
 
     private void MoveCamera()
     {
