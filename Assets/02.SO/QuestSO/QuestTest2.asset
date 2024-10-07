@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: QuestTest2
   m_EditorClassIdentifier: 
   _codeName: 1
-  _questName: 02
+  _questName: "\uAC10\uC2A4\uD2B82"
   _questIcon: {fileID: 0}
   _questDescription: 
   _taskGroup:
   - {fileID: 11400000, guid: 05d06d2144c36407aad146d9954f0ec8, type: 2}
-  _rewardCount: 0
+  _rewardGroups:
+  - reward: {fileID: 11400000, guid: f0b847e4e08dd4e37b466a0954768012, type: 2}
+    amount: 155
   _isAutoStartQuest: 0
   _isAutoComplete: 0
   _isCanclable: 0

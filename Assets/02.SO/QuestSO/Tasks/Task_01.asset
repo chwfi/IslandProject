@@ -15,4 +15,4 @@ MonoBehaviour:
   _description: 
   _taskTarget: {fileID: 0}
   _initialSuccessValue: 0
-  _needToSuccessValue: 0
+  _needToSuccessValue: 5
