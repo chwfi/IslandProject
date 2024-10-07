@@ -10,3 +10,6 @@ Assets/POLYBOX/polyquest_islands_full_pack_vol.2/Scenes_layout/palm_all_trees_wi
 Assets/POLYBOX/polyquest_islands_full_pack_vol.2/Scenes_examples/scenes_islands/island_A/island_A.unity filter=lfs diff=lfs merge=lfs -text
 Assets/POLYBOX/polyquest_islands_full_pack_vol.2/Scenes_examples/scenes_islands/Island_C/island_C_PQ1_min_card_cover_plants_plain.unity filter=lfs diff=lfs merge=lfs -text
 Assets/00.Scenes/island_A.unity filter=lfs diff=lfs merge=lfs -text
+.unity filter=lfs diff=lfs merge=lfs -text
+Assets/10.Assets/IslandAsset/polyquest/island_C_PQ1_min_card_cover.unity filter=lfs diff=lfs merge=lfs -text
+Assets/10.Assets/IslandAsset/island_C_PQ1_min_card_cover_angeled.unity filter=lfs diff=lfs merge=lfs -text
