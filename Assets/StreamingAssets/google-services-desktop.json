@@ -1,0 +1,32 @@
+{
+  "project_info": {
+    "project_number": "798172281529",
+    "firebase_url": "https://project-i-31cac-default-rtdb.firebaseio.com",
+    "project_id": "project-i-31cac",
+    "storage_bucket": "project-i-31cac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798172281529:ios:ad4fd04500ebe9c99cf968",
+        "android_client_info": {
+          "package_name": "com.ZapStudio.IslandProject"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu1NlWPrlq_bRTEIYJEZSvXWb3DvJBU5k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

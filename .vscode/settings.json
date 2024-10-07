@@ -56,5 +56,6 @@
         "Temp/": true
     },
     "dotnet.defaultSolution": "IslandProject.sln",
-    "hide-files.files": []
+    "hide-files.files": [],
+    "git.ignoreLimitWarning": true
 }

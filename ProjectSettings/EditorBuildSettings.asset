@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/00.Scenes/island_A.unity
+    guid: f2311f7f53aa6c84c927201c3e43ea90
   m_configObjects: {}
