@@ -21,14 +21,9 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 {
     [SerializeField] private QuestDatabase _questDatabase;
 
-    private void Awake() 
-    {
-        Load();    
-    }
-
     private void Start() 
     {
-        
+        Load();  
     }
 
     public void Load()

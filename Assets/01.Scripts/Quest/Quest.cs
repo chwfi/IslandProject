@@ -102,21 +102,21 @@ public class Quest : ScriptableObject, ICloneable<Quest>
         }
 
         SetRegisterUI();
-        SetRegisterInfoUI();
+        //SetRegisterInfoUI();
     }
 
     public void SetRegisterUI()
     {
-        var ui = QuestUIBinder.Instance.SetUI(this);
+        QuestUIBinder.Instance.SetUI(this);
         OnSetUI?.Invoke(this);
     }
 
-    public QuestInfoUI SetRegisterInfoUI() // 퀘스트에 맞는 UI 생성
-    {
-        var infoUI = QuestUIBinder.Instance.SetInfoUI(this); // 생성한걸 변수에 할당해줌
-        OnSetUI?.Invoke(this); // 첫 실행
-        return infoUI;
-    }
+    // public QuestInfoUI SetRegisterInfoUI() // 퀘스트에 맞는 UI 생성
+    // {
+    //     var infoUI = QuestUIBinder.Instance.SetInfoUI(this); // 생성한걸 변수에 할당해줌
+    //     OnSetUI?.Invoke(this); // 첫 실행
+    //     return infoUI;
+    // }
 
     public void OnReceieveReport(object target, int successCount)
     {

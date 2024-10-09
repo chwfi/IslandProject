@@ -24,8 +24,8 @@ public class QuestUI : PopupUI
 
         if (_questInfoUI == null)
         {
-            _questInfoUI = quest.SetRegisterInfoUI();
-            _buttonList[0].SetSubscription<Quest>((quest) => SetInfoUI(quest));
+            //_questInfoUI = quest.SetRegisterInfoUI();
+            //_buttonList[0].SetSubscription<Quest>((quest) => SetInfoUI(quest));
         }
     }
 
