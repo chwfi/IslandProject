@@ -34,9 +34,9 @@ public abstract class ButtonUI : MonoBehaviour, IPointerClickHandler
         _ownerPopup = FindObjectUtil.FindParent<PopupUI>(this.gameObject);
     }
 
-    public void SetSubscription<T>(Action<T> action)
+    public void SetSubscription<T>(Action<T> action, T param)
     {
-        _buttonEvent += () => action(default);
+        _buttonEvent += () => action(param);
     }
 
     public void OnPointerClick(PointerEventData eventData)

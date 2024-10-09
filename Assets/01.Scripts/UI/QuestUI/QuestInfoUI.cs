@@ -32,6 +32,10 @@ public class QuestInfoUI : PopupUI
             return;
         }
 
+        _questNameText.text = $"{quest.QuestName}";
+        _goldAmountText.text = $"{quest.Rewards[0].amount}";
+        _popularityText.text = $"{quest.Rewards[1].amount}"; 
+
         if (quest.QuestType == QuestType.TaskQuest)
         {
             _taskPanel.SetActive(true);
@@ -42,10 +46,6 @@ public class QuestInfoUI : PopupUI
             _materialPanel.SetActive(true);
             if (_taskPanel.activeInHierarchy) _taskPanel.SetActive(false);
         }
-
-        _questNameText.text = $"{quest.QuestName}";
-        _goldAmountText.text = $"{quest.Rewards[0].amount}";
-        _popularityText.text = $"{quest.Rewards[1].amount}"; 
 
         foreach (var task in quest.TaskGroup) // 작업들을 생성해서 UI에 불러옴. 여러개일 수도 있으므로 퀘스트에 접근해 리스트로
         {

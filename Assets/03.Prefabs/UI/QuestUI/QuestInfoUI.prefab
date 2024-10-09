@@ -1655,6 +1655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9037692746852482485}
   - component: {fileID: 5545855682489840238}
+  - component: {fileID: 2919078844569373089}
   m_Layer: 5
   m_Name: QuestInfoUI
   m_TagString: Untagged
@@ -1681,8 +1682,8 @@ RectTransform:
   - {fileID: 2735054621918486308}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.49417767, y: 0.5}
+  m_AnchorMax: {x: 0.49417767, y: 0.5}
   m_AnchoredPosition: {x: -9, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1710,6 +1711,18 @@ MonoBehaviour:
   _materialPrefab: {fileID: 7247672762651042077, guid: 90fed483a5d66499388277bd8184a765, type: 3}
   _taskGroupTrm: {fileID: 6215748646060238573}
   _materialGroupTrm: {fileID: 4046546694919393147}
+--- !u!225 &2919078844569373089
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023687794186571506}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &288615455005013265
 PrefabInstance:
   m_ObjectHideFlags: 0
