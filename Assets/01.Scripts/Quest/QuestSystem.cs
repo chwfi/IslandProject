@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -19,6 +21,31 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 {
     [SerializeField] private QuestDatabase _questDatabase;
 
+    private void Awake() 
+    {
+        Load();    
+    }
+
+    private void Start() 
+    {
+        
+    }
+
+    public void Load()
+    {
+        foreach (Quest quest in _questDatabase.Quests)
+        {
+            LoadActiveQuest(quest);
+        }
+    }
+
+    private void LoadActiveQuest(Quest quest)
+    {
+        var newQuest = quest.Clone();
+        newQuest.OnRegister();  
+        OnLoadQuestData(newQuest);
+    }
+
     public void OnSaveQuestData()
     {
         foreach (var quest in _questDatabase.Quests)
@@ -27,21 +54,21 @@ public class QuestSystem : MonoSingleton<QuestSystem>
         }
     }
 
-    public void OnLoadQuestData()
+    public void OnLoadQuestData(Quest quest)
     {
-        foreach (var quest in _questDatabase.Quests)
+        DataManager.Instance.OnLoadData<QuestSaveData>(quest.QuestName, (loadedData) =>
         {
-            DataManager.Instance.OnLoadData<QuestSaveData>(quest.QuestName, (loadedData) =>
+            if (loadedData != null)
             {
-                if (loadedData != null)
-                {
-                    quest.LoadFrom(loadedData);
-                }
-                else
-                {
-                    Debug.Log("Failed to load data");
-                }
-            });
-        }
+                //quest.OnRegister();
+                quest.LoadFrom(loadedData);
+                Debug.Log("Success to load data");
+                //quest.OnRegister();
+            }
+            else
+            {
+                Debug.Log("Failed to load data");
+            }
+        });            
     }
 }

@@ -12,7 +12,7 @@ public class DataManager : MonoSingleton<DataManager>
 
     void Start()
     {
-        _ref = FirebaseDatabase.DefaultInstance.RootReference;
+        //_ref = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
     public void OnSaveData<T>(T data, string id)
@@ -35,29 +35,22 @@ public class DataManager : MonoSingleton<DataManager>
 
     private IEnumerator LoadDataCoroutine<T>(string id, Action<T> callback) where T : new()
     {
-        var dataTask = _ref.Child(userId).Child(id).GetValueAsync();
-        yield return new WaitUntil(() => dataTask.IsCompleted);
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        var DBTask = reference.Child(userId).Child(id).GetValueAsync();
 
-        if (dataTask.Exception != null)
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+        
+        if (DBTask.Result.Value != null)
         {
-            Debug.LogError($"Failed to fetch data: {dataTask.Exception}");
-            callback(new T()); 
-            yield break;
-        }
+            DataSnapshot snapshot = DBTask.Result;
+            string jsonData = snapshot.GetRawJsonValue();
 
-        DataSnapshot snapshot = dataTask.Result;
-        string jsonData = snapshot.GetRawJsonValue();
-
-        if (jsonData != null)
-        {
-            Debug.Log($"data found: {jsonData}");
-            T loadedData = JsonConvert.DeserializeObject<T>(jsonData); 
-            callback(loadedData);
-        }
-        else
-        {
-            Debug.Log("Data not found");
-            callback(new T());
+            if (jsonData != null)
+            {
+                Debug.Log($"data found: {jsonData}");
+                T loadedData = JsonConvert.DeserializeObject<T>(jsonData); 
+                callback?.Invoke(loadedData);
+            }
         }
     }
 }

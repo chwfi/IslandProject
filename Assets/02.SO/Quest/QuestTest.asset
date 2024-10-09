@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4e2e39755be430d8ccc88903f406ea, type: 3}
   m_Name: QuestTest
   m_EditorClassIdentifier: 
+  _questType: 0
   _codeName: 0
   _questName: "\uAC10\uC2A4\uD2B81"
   _questIcon: {fileID: 0}
@@ -19,9 +20,11 @@ MonoBehaviour:
   _taskGroup:
   - {fileID: 11400000, guid: 05d06d2144c36407aad146d9954f0ec8, type: 2}
   _rewardGroups:
-  - reward: {fileID: 11400000, guid: f0b847e4e08dd4e37b466a0954768012, type: 2}
+  - reward: {fileID: 11400000, guid: 9a868640a847b4f889a76ebdc47728f5, type: 2}
     amount: 15
-  _isAutoStartQuest: 0
+  - reward: {fileID: 11400000, guid: fa090063781b54341b60846b5f3c0fe4, type: 2}
+    amount: 15
+  _materialGroups: []
+  _isAutoStartQuest: 1
   _isAutoComplete: 0
   _isCanclable: 0
-  _isSavable: 0

@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Reward : ScriptableObject
+[CreateAssetMenu(menuName = "SO/Quest/Reward", fileName = "Reward_")]
+public class Reward : ScriptableObject
 {
-    [SerializeField] private Sprite _icon;
+    [SerializeField] private Sprite _icon;  
     [SerializeField] private string _description;
 
     public Sprite Icon => _icon;
     public string Description => _description;
 
-    public abstract void Give(Quest quest, int amount);
+    public void Give(Quest quest, int amount)
+    {
+        // 자원 매니저 기능 넣기
+    }
 }

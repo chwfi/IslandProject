@@ -13,8 +13,14 @@ public enum QuestState
     None
 }
 
+public enum QuestType
+{
+    TaskQuest,
+    TrafficQuest
+}
+
 [CreateAssetMenu(menuName = "SO/Quest/Quest")]
-public class Quest : ScriptableObject
+public class Quest : ScriptableObject, ICloneable<Quest>
 {
     public delegate void CompletedHandler(Quest quest);
     public delegate void CanceldHandler(Quest quest);
@@ -22,6 +28,7 @@ public class Quest : ScriptableObject
     public delegate void UpdateUIHandler(Quest quest);
 
     [Header("Info")]
+    [SerializeField] private QuestType _questType;
     [SerializeField] private int _codeName;
     [SerializeField] private string _questName;
     [SerializeField] private Sprite _questIcon;
@@ -33,17 +40,20 @@ public class Quest : ScriptableObject
     [Header("Reward")]
     [SerializeField] private RewardGroup[] _rewardGroups;
 
+    [Header("MaterialGroup")]
+    [SerializeField] private NeedMaterialGroup[] _materialGroups;
+
     [Header("Option")]
     [SerializeField] private bool _isAutoStartQuest;
     [SerializeField] private bool _isAutoComplete;
     [SerializeField] private bool _isCanclable;
-    [SerializeField] private bool _isSavable;
 
     public event CompletedHandler OnCompleted;
     public event CanceldHandler OnCanceled;
     public event SetUIHandler OnSetUI;
     public event UpdateUIHandler OnUpdateUI;
 
+    public QuestType QuestType => _questType;
     public Task[] TaskGroup => _taskGroup;
     public int CodeName
     {
@@ -57,23 +67,21 @@ public class Quest : ScriptableObject
         set
         {
             _state = value;
-            //UpdateUI();
+            OnUpdateUI?.Invoke(this);
         }
     }
     public string QuestName => _questName;
     public Sprite QuestIcon => _questIcon;
     public string QuestDescription => _questDescription;
 
-    //public IReadOnlyList<Reward> Rewards => _rewards;
+    public IReadOnlyList<RewardGroup> Rewards => _rewardGroups;
+    public IReadOnlyList<NeedMaterialGroup> Materials => _materialGroups;
     public bool IsRegistered => State != QuestState.Inactive;
     public bool IsCompletable => State == QuestState.WaitingForCompletion;
     public bool IsComplete => State == QuestState.Complete;
     public bool IsCancel => State == QuestState.Cancel;
     public virtual bool IsCancelable => _isCanclable;
-    public virtual bool IsSavable => _isSavable;
     public bool IsAllTaskComplete => _taskGroup.All(x => x.IsComplete);
-
-    //private QuestUI _questUI;
 
     public void OnRegister()
     {
@@ -88,14 +96,26 @@ public class Quest : ScriptableObject
             task.Start();
         }
 
-        OnRegisterUI();
+        foreach (var mat in _materialGroups)
+        {
+            mat.FindMaterial();
+        }
+
+        SetRegisterUI();
+        SetRegisterInfoUI();
     }
 
-    public void OnRegisterUI() // 퀘스트에 맞는 UI 생성
+    public void SetRegisterUI()
     {
-        //_questUI = QuestBindingManager.Instance.SetUI(this); // 생성한걸 변수에 할당해줌
-        //Debug.Log(_questUI);
-        //SetUI(); // 생성 후 바로 세팅해줌
+        var ui = QuestUIBinder.Instance.SetUI(this);
+        OnSetUI?.Invoke(this);
+    }
+
+    public QuestInfoUI SetRegisterInfoUI() // 퀘스트에 맞는 UI 생성
+    {
+        var infoUI = QuestUIBinder.Instance.SetInfoUI(this); // 생성한걸 변수에 할당해줌
+        OnSetUI?.Invoke(this); // 첫 실행
+        return infoUI;
     }
 
     public void OnReceieveReport(object target, int successCount)
@@ -147,9 +167,7 @@ public class Quest : ScriptableObject
     public Quest Clone()
     {
         var clone = Instantiate(this);
-        //clone._taskGroup = _taskGroup;
-
-        var questSystem = QuestSystem.Instance;
+        clone._taskGroup = _taskGroup;
         
         //questSystem.OnQuestRecieved += clone.OnReceieveReport;
         //questSystem.OnCheckCompleted += clone.OnCheckComplete;

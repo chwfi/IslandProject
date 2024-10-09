@@ -5,7 +5,7 @@ using UnityEngine;
 using Util;
 using DG.Tweening;
 
-public class PopupUI : MonoBehaviour
+public class PopupUI : PoolableMono
 {
     [Header("FadeValue")]
     [SerializeField] private float _fadeDealy = 0f; // UI가 켜질때 바로 켜지지 않고 딜레이를 줄것인가
@@ -30,7 +30,7 @@ public class PopupUI : MonoBehaviour
             _buttonList.AddRange(buttons);
         }
 
-        if (!_activeOnStart)
+        if (!_activeOnStart && _canvasGroup != null)
             AccessUI(false); // 시작하면 UI 꺼줌
     }
 
