@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69d8358aa27b48d686cb51a14e65b94, type: 3}
   m_Name: Task_01
   m_EditorClassIdentifier: 
-  _description: 
-  _taskTarget: {fileID: 0}
+  _description: "\uC232 \uAD6C\uC5ED\uC744 \uD655\uC7A5\uC2DC\uCF1C\uC8FC\uC138\uC694!"
+  _taskTarget: {fileID: 11400000, guid: 027aff3d8b9d94ff599331bc333d7887, type: 2}
   _initialSuccessValue: 0
   _needToSuccessValue: 5
