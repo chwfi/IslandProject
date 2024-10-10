@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questType: 1
   _codeName: 1
-  _questName: "\uD018\uC2A4\uD2B84"
+  _questName: "\uD018\uC2A4\uD2B82"
   _questIcon: {fileID: 0}
   _questDescription: 
   _taskGroup:
