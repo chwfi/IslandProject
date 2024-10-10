@@ -6,12 +6,12 @@ using UnityEngine;
 public class InGameMaterial : ScriptableObject, ICloneable<InGameMaterial>
 {
     [SerializeField] private Sprite _icon;
+    [SerializeField] private string _materialName;
     [SerializeField] private string _description;
 
     public Sprite Icon => _icon;
+    public string MaterialName => _materialName;
     public string Description => _description;
-
-    public int currentCount;
 
     public InGameMaterial Clone()
     {

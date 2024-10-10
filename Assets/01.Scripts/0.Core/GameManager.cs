@@ -8,6 +8,9 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField]
     private PoolingList _poolingList;
 
+    [SerializeField]
+    private InGameMaterial test;
+
     private void Awake()
     {
         MakePool();
@@ -28,5 +31,10 @@ public class GameManager : MonoSingleton<GameManager>
         {
             QuestSystem.Instance.Report("test", 1);
         }    
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            QuestSystem.Instance.Report(test, 1);
+        }
     }
 }

@@ -82,6 +82,7 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
     public bool IsCancel => State == QuestState.Cancel;
     public virtual bool IsCancelable => _isCanclable;
     public bool IsAllTaskComplete => _taskGroup.All(x => x.IsComplete);
+    public bool IsAllMaterialGroupMet => _materialGroups.All(x => x.IsComplete);
 
     public void OnRegister()
     {
@@ -100,6 +101,7 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
         {
             var newMaterial = Instantiate(MaterialManager.Instance.FindQuestBy(mat.material.Icon));
             mat.material = newMaterial;
+            mat.SetOwner(this);
         }
 
         QuestUIController.Instance.SetRegisterUI(this, quest => OnSetUI?.Invoke(this));
@@ -110,18 +112,37 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
         if (IsComplete)
             return;
 
-        foreach (var task in _taskGroup)
-            task.ReceieveReport(target, successCount, this);
+        if (QuestType == QuestType.TaskQuest)
+        {
+            foreach (var task in _taskGroup)
+                task.ReceieveReport(target, successCount, this);
+        }
+        else if (QuestType == QuestType.TrafficQuest)
+        {
+            foreach (var mat in _materialGroups)
+                mat.ReceieveReport(successCount, this);
+        }
 
         State = QuestState.Active;
     }
 
     public void OnCheckComplete()
     {
-        if (IsAllTaskComplete)
+        if (QuestType == QuestType.TaskQuest)
         {
-            if (_isAutoComplete)
-                Complete();
+            if (IsAllTaskComplete)
+            {
+                if (_isAutoComplete)
+                    Complete();
+            }
+        }
+        else if (QuestType == QuestType.TrafficQuest)
+        {
+            if (IsAllMaterialGroupMet)
+            {
+                if (_isAutoComplete)
+                    Complete();
+            }
         }
     }
 

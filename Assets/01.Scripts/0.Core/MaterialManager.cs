@@ -9,12 +9,30 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
 
     public List<InGameMaterial> MaterialList;
 
+    public Dictionary<string, MaterialCounter> MaterialDictionary { get; private set; }
+
     private void Awake() 
     {
+        MaterialDictionary = new Dictionary<string, MaterialCounter>();
+
         foreach (InGameMaterial mat in _materialDatabase.MaterialList)
         {
-            MaterialList.Add(mat.Clone());
+            var newMat = mat.Clone();
+            MaterialList.Add(newMat);
+            MaterialDictionary.Add(newMat.MaterialName, new MaterialCounter());
         }
+    }
+
+    public void AddMaterialCount(string key, int amount)
+    {
+        MaterialDictionary.TryGetValue(key, out MaterialCounter counter);
+        counter.materialCount += amount;
+    }
+
+    public MaterialCounter GetMaterialCounter(string key)
+    {
+        MaterialDictionary.TryGetValue(key, out MaterialCounter counter);
+        return counter;
     }
 
     public InGameMaterial FindQuestBy(Sprite icon) => MaterialList.FirstOrDefault(x => x.Icon.name == icon.name);

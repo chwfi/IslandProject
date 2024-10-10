@@ -9,6 +9,8 @@ public class UnboundedMaterialUI : UnboundedUI
     public override void UpdateUI()
     {
         _icon.sprite = OwnMaterial.material.Icon;
-        _amountText.text = $"{OwnMaterial.material.currentCount}/{OwnMaterial.needAmount}";
+        var counter = MaterialManager.Instance.GetMaterialCounter(OwnMaterial.material.MaterialName);
+        Debug.Log(counter);
+        _amountText.text = $"{counter.materialCount}/{OwnMaterial.needAmount}";
     }
 }
