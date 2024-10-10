@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/Quest/Reward", fileName = "Reward_")]
-public class Reward : ScriptableObject
+public class Reward : ScriptableObject, IQuestable
 {
     [SerializeField] private Sprite _icon;  
     [SerializeField] private string _description;

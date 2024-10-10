@@ -10,7 +10,7 @@ public enum TaskState
 }
 
 [CreateAssetMenu(menuName = "SO/Quest/Task", fileName = "Task_")]
-public class Task : ScriptableObject
+public class Task : ScriptableObject, IQuestable
 {
     [Header("Text")]
     [SerializeField] private string _description;
@@ -23,13 +23,8 @@ public class Task : ScriptableObject
     [SerializeField] private int _needToSuccessValue;
 
     private TaskState _taskState;
-    private int _currentSuccessValue;
+    public int CurrentSuccessValue;
 
-    public int CurrentSuccessValue
-    {
-        get => _currentSuccessValue;
-        set => _currentSuccessValue = value;
-    }
     public string Description => _description;
     public int NeedToSuccessValue => _needToSuccessValue;
     public TaskState TaskState => _taskState;
@@ -45,7 +40,6 @@ public class Task : ScriptableObject
     public void Start()
     {
         _taskState = TaskState.Active;
-        _currentSuccessValue = _initialSuccessValue;
     }
     
     public void ReceieveReport(object target, int successCount, Quest quest)
@@ -54,10 +48,10 @@ public class Task : ScriptableObject
         if (quest.CodeName != Owner.CodeName) return;
         if (TaskState == TaskState.Complete) return;
 
-        _currentSuccessValue += successCount;
-        Debug.Log(_currentSuccessValue);
+        CurrentSuccessValue += successCount;
+        Debug.Log(CurrentSuccessValue);
 
-        if (_currentSuccessValue >= _needToSuccessValue)
+        if (CurrentSuccessValue >= _needToSuccessValue)
         {
             _taskState = TaskState.Complete;
         }

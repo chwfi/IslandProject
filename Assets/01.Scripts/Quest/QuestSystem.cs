@@ -19,8 +19,14 @@ public class TaskSaveData
 
 public class QuestSystem : MonoSingleton<QuestSystem>
 {
+    public delegate void QuestRecieveHandler(object target, int successCount);
+    public delegate void CheckCompleteHandler();
+
     [SerializeField] private QuestDatabase _questDatabase;
     [SerializeField] private string _questRoot;
+
+    public event QuestRecieveHandler OnQuestRecieved;
+    public event CheckCompleteHandler OnCheckCompleted;
 
     private void Start() 
     {
@@ -32,6 +38,13 @@ public class QuestSystem : MonoSingleton<QuestSystem>
         OnSaveQuestData();    
     }
 
+    public void Report(object target, int successCount)
+    {
+        OnQuestRecieved?.Invoke(target, successCount);
+        OnCheckCompleted?.Invoke();
+    }
+
+    #region Save & Load
     public void Load()
     {
         foreach (Quest quest in _questDatabase.Quests)
@@ -39,7 +52,6 @@ public class QuestSystem : MonoSingleton<QuestSystem>
             OnLoadQuestData(quest);
         }
     }
-
 
     public void OnSaveQuestData()
     {
@@ -68,4 +80,5 @@ public class QuestSystem : MonoSingleton<QuestSystem>
             }
         });            
     }
+    #endregion
 }

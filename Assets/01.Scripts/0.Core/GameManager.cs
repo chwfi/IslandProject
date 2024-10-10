@@ -21,4 +21,12 @@ public class GameManager : MonoSingleton<GameManager>
 
         _poolingList.PoolingPairs.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
+
+    private void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            QuestSystem.Instance.Report("test", 1);
+        }    
+    }
 }

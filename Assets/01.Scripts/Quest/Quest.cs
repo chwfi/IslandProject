@@ -19,8 +19,8 @@ public enum QuestType
     TrafficQuest
 }
 
-[CreateAssetMenu(menuName = "SO/Quest/Quest")]
-public class Quest : ScriptableObject, ICloneable<Quest>
+[CreateAssetMenu(menuName = "SO/Quest/Quest")]  
+public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
 {
     public delegate void CompletedHandler(Quest quest);
     public delegate void CanceldHandler(Quest quest);
@@ -127,7 +127,6 @@ public class Quest : ScriptableObject, ICloneable<Quest>
 
     public void Complete()
     {
-        var questSystem = QuestSystem.Instance;
         State = QuestState.Complete;
 
         OnCompleted?.Invoke(this);
@@ -135,9 +134,9 @@ public class Quest : ScriptableObject, ICloneable<Quest>
         foreach (var group in _rewardGroups)
             group.reward.Give(this, group.amount);
 
-        //questSystem.OnQuestRecieved -= OnReceieveReport;
-        //questSystem.OnCheckCompleted -= OnCheckComplete;
-        //questSystem.OnUpdateQuestUI -= UpdateUI;
+        var questSystem = QuestSystem.Instance;
+        questSystem.OnQuestRecieved -= OnReceieveReport;
+        questSystem.OnCheckCompleted -= OnCheckComplete;
 
         OnCompleted = null;
         OnCanceled = null;
@@ -156,9 +155,9 @@ public class Quest : ScriptableObject, ICloneable<Quest>
         var clone = Instantiate(this);
         clone._taskGroup = _taskGroup;
         
-        //questSystem.OnQuestRecieved += clone.OnReceieveReport;
-        //questSystem.OnCheckCompleted += clone.OnCheckComplete;
-        //questSystem.OnUpdateQuestUI += clone.UpdateUI;
+        var questSystem = QuestSystem.Instance;
+        questSystem.OnQuestRecieved += clone.OnReceieveReport;
+        questSystem.OnCheckCompleted += clone.OnCheckComplete;
 
         return clone;
     }
@@ -180,26 +179,13 @@ public class Quest : ScriptableObject, ICloneable<Quest>
     {
         _codeName = saveData.codeName;
         _state = saveData.questState;
-        for (int i = 0; i < Mathf.Min(_taskGroup.Length, saveData.taskSaveData.Length); i++)
+
+        if (_taskGroup.Length > 0)
         {
-            _taskGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
-        }     
+            for (int i = 0; i < Mathf.Min(_taskGroup.Length, saveData.taskSaveData.Length); i++)
+            {
+                _taskGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
+            }     
+        }
     }
-
-    #region EventMethods
-    // public void UpdateUI()
-    // {
-    //     if (_questUI == null) return;
-
-    //     OnUpdateUI?.Invoke(this);
-    // }
-
-    // public void SetUI()
-    // {
-    //     if (_questUI == null) return;
-
-    //     OnSetUI?.Invoke(this);
-    //     OnUpdateUI?.Invoke(this);
-    // }
-    #endregion
 }
