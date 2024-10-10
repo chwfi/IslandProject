@@ -24,8 +24,6 @@ public class QuestInfoUI : PopupUI
 
     public void SetUI(Quest quest)
     {
-        AccessUI(true);
-
         if (quest.IsComplete)
         {
             PoolManager.Instance.Push(this);

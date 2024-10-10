@@ -55,10 +55,8 @@ public class QuestSystem : MonoSingleton<QuestSystem>
         {
             if (loadedData != null)
             {
-                //quest.OnRegister();
                 quest.LoadFrom(loadedData);
                 Debug.Log("Success to load data");
-                //quest.OnRegister();
             }
             else
             {
