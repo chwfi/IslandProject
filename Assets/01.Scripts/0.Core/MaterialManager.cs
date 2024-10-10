@@ -7,7 +7,7 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
 {
     [SerializeField] private MaterialDatabase _materialDatabase;
 
-    [HideInInspector] public List<InGameMaterial> MaterialList;
+    public List<InGameMaterial> MaterialList;
 
     private void Awake() 
     {

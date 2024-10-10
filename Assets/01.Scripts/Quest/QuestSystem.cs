@@ -20,41 +20,45 @@ public class TaskSaveData
 public class QuestSystem : MonoSingleton<QuestSystem>
 {
     [SerializeField] private QuestDatabase _questDatabase;
+    [SerializeField] private string _questRoot;
 
     private void Start() 
     {
         Load();  
     }
 
+    private void OnApplicationQuit() 
+    {
+        OnSaveQuestData();    
+    }
+
     public void Load()
     {
         foreach (Quest quest in _questDatabase.Quests)
         {
-            LoadActiveQuest(quest);
+            OnLoadQuestData(quest);
         }
     }
 
-    private void LoadActiveQuest(Quest quest)
-    {
-        var newQuest = quest.Clone();
-        newQuest.OnRegister();  
-        OnLoadQuestData(newQuest);
-    }
 
     public void OnSaveQuestData()
     {
+        DataManager.Instance.OnDeleteData(_questRoot);
+
         foreach (var quest in _questDatabase.Quests)
         {
-            DataManager.Instance.OnSaveData(quest.ToSaveData(), quest.QuestName);
+            DataManager.Instance.OnSaveData(quest.ToSaveData(), quest.QuestName, _questRoot);
         }
     }
 
     public void OnLoadQuestData(Quest quest)
     {
-        DataManager.Instance.OnLoadData<QuestSaveData>(quest.QuestName, (loadedData) =>
+        DataManager.Instance.OnLoadData<QuestSaveData>(quest.QuestName, _questRoot, (loadedData) =>
         {
             if (loadedData != null)
             {
+                var newQuest = quest.Clone();
+                newQuest.OnRegister();  
                 quest.LoadFrom(loadedData);
                 Debug.Log("Success to load data");
             }

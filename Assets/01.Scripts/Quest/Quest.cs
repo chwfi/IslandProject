@@ -98,7 +98,8 @@ public class Quest : ScriptableObject, ICloneable<Quest>
 
         foreach (var mat in _materialGroups)
         {
-            mat.FindMaterial();
+            var newMaterial = Instantiate(MaterialManager.Instance.FindQuestBy(mat.material.Icon));
+            mat.material = newMaterial;
         }
 
         QuestUIController.Instance.SetRegisterUI(this, quest => OnSetUI?.Invoke(this));
@@ -177,12 +178,12 @@ public class Quest : ScriptableObject, ICloneable<Quest>
 
     public void LoadFrom(QuestSaveData saveData)
     {
+        _codeName = saveData.codeName;
         _state = saveData.questState;
-
         for (int i = 0; i < Mathf.Min(_taskGroup.Length, saveData.taskSaveData.Length); i++)
         {
             _taskGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
-        }
+        }     
     }
 
     #region EventMethods

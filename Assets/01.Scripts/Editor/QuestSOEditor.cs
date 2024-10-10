@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(Quest))]
 public class QuestSOEditor : Editor
@@ -31,6 +32,13 @@ public class QuestSOEditor : Editor
                 continue;
 
             EditorGUILayout.PropertyField(property, true);
+        }
+
+        GUILayout.Space(15);
+
+        if (GUILayout.Button("\nSave all quests in editor\n(에디터 상에서 퀘스트 SO의 값을 수정했을 때 사용)\n"))
+        {
+            QuestSystem.Instance.OnSaveQuestData(); // QuestDatabase에 있는 퀘스트들을 Firebase DB에 동적으로 저장합니다.
         }
 
         serializedObject.ApplyModifiedProperties();

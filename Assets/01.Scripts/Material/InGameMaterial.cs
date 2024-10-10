@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InGameMaterial : ScriptableObject, ICloneable<InGameMaterial>
+[CreateAssetMenu(menuName = "SO/Material/InGameMaterial", fileName = "Material_")]
+public class InGameMaterial : ScriptableObject, ICloneable<InGameMaterial>
 {
     [SerializeField] private Sprite _icon;
     [SerializeField] private string _description;

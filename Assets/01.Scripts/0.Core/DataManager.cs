@@ -7,36 +7,39 @@ using Newtonsoft.Json;
 
 public class DataManager : MonoSingleton<DataManager>
 {
-    private DatabaseReference _ref;
     public string userId;
 
-    void Start()
+    public void OnDeleteData(string root)
     {
-        //_ref = FirebaseDatabase.DefaultInstance.RootReference;
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        reference.Child(userId).Child(root).RemoveValueAsync();
     }
 
-    public void OnSaveData<T>(T data, string id)
+    public void OnSaveData<T>(T data, string id, string baseRoot)
     {
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+
         string json = JsonConvert.SerializeObject(data, new JsonSerializerSettings 
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore
         });
 
-        _ref.Child(userId).Child(id).SetRawJsonValueAsync(json);
+        reference.Child(userId).Child(baseRoot).Child(id).SetRawJsonValueAsync(json);
 
         Debug.Log($"saved: {json}");
     }
 
-    public void OnLoadData<T>(string id, Action<T> callback) where T : new()
+    public void OnLoadData<T>(string id, string baseRoot, Action<T> callback) where T : new()
     {
-        StartCoroutine(LoadDataCoroutine(id, callback));
+        StartCoroutine(LoadDataCoroutine(id, baseRoot, callback));
     }
 
-    private IEnumerator LoadDataCoroutine<T>(string id, Action<T> callback) where T : new()
+    private IEnumerator LoadDataCoroutine<T>(string id, string baseRoot, Action<T> callback) where T : new()
     {
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
-        var DBTask = reference.Child(userId).Child(id).GetValueAsync();
+        var DBTask = reference.Child(userId).Child(baseRoot).Child(id).GetValueAsync();
 
         yield return new WaitUntil(() => DBTask.IsCompleted);
         

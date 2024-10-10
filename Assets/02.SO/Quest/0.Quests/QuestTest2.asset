@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4e2e39755be430d8ccc88903f406ea, type: 3}
   m_Name: QuestTest2
   m_EditorClassIdentifier: 
-  _questType: 0
+  _questType: 1
   _codeName: 1
-  _questName: "\uAC10\uC2A4\uD2B82"
+  _questName: "\uD018\uC2A4\uD2B84"
   _questIcon: {fileID: 0}
   _questDescription: 
   _taskGroup:
   - {fileID: 11400000, guid: 05d06d2144c36407aad146d9954f0ec8, type: 2}
-  _materialGroups: []
+  _materialGroups:
+  - material: {fileID: 11400000, guid: caeb83acf037e4d80b06093e3b47ab3c, type: 2}
+    needAmount: 5
   _rewardGroups:
   - reward: {fileID: 11400000, guid: 9a868640a847b4f889a76ebdc47728f5, type: 2}
     amount: 155
