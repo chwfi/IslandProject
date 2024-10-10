@@ -37,11 +37,11 @@ public class Quest : ScriptableObject, ICloneable<Quest>
     [Header("TaskGroup")]
     [SerializeField] private Task[] _taskGroup;
 
-    [Header("Reward")]
-    [SerializeField] private RewardGroup[] _rewardGroups;
-
     [Header("MaterialGroup")]
     [SerializeField] private NeedMaterialGroup[] _materialGroups;
+
+    [Header("Reward")]
+    [SerializeField] private RewardGroup[] _rewardGroups;
 
     [Header("Option")]
     [SerializeField] private bool _isAutoStartQuest;

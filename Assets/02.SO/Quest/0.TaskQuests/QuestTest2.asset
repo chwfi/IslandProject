@@ -19,12 +19,12 @@ MonoBehaviour:
   _questDescription: 
   _taskGroup:
   - {fileID: 11400000, guid: 05d06d2144c36407aad146d9954f0ec8, type: 2}
+  _materialGroups: []
   _rewardGroups:
   - reward: {fileID: 11400000, guid: 9a868640a847b4f889a76ebdc47728f5, type: 2}
     amount: 155
   - reward: {fileID: 11400000, guid: fa090063781b54341b60846b5f3c0fe4, type: 2}
     amount: 80
-  _materialGroups: []
   _isAutoStartQuest: 1
   _isAutoComplete: 0
   _isCanclable: 0
