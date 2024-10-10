@@ -70,8 +70,8 @@ public class QuestSystem : MonoSingleton<QuestSystem>
             if (loadedData != null)
             {
                 var newQuest = quest.Clone();
-                newQuest.OnRegister();  
-                quest.LoadFrom(loadedData);
+                newQuest.OnRegister();
+                newQuest.LoadFrom(loadedData);
                 Debug.Log("Success to load data");
             }
             else
