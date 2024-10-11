@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class UnboundedTaskUI : UnboundedUI
 {
-    [HideInInspector]
-    public Task OwnTask;
-    
+    private Task _task;
+
+    public void SetUp(Task task)
+    {
+        _task = task;
+    }
+
     public override void UpdateUI()
     {
-        _amountText.text = $"{OwnTask.Description}\n{OwnTask.CurrentSuccessValue}/{OwnTask.NeedToSuccessValue}";
+        _amountText.text = $"{_task.Description}\n{_task.CurrentSuccessValue}/{_task.NeedToSuccessValue}";
     }
 }

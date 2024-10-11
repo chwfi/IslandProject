@@ -27,17 +27,8 @@ public class NeedMaterialGroup
         _materialState = MaterialState.Active;
     }
 
-    public void ReceieveReport(int amount, Quest quest)
+    public void Complete()
     {
-        if (quest.CodeName != Owner.CodeName) return;
-
-        var materialManager = MaterialManager.Instance;
-
-        materialManager.AddMaterialCount(material.MaterialName, amount);
-
-        if (materialManager.GetMaterialCounter(material.MaterialName).materialCount >= needAmount)
-        {
-            _materialState = MaterialState.Complete;
-        }
+        _materialState = MaterialState.Complete;
     }
 }

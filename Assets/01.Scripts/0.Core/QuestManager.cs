@@ -4,26 +4,20 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public class QuestSaveData
-{
-    public int codeName;
-    public QuestState questState;
-    public TaskSaveData[] taskSaveData;
-}
-
 public class TaskSaveData
 {
     public int currentSuccess;
 }
 
-public class QuestSystem : MonoSingleton<QuestSystem>
+public class QuestManager : MonoSingleton<QuestManager>
 {
     public delegate void QuestRecieveHandler(object target, int successCount);
     public delegate void CheckCompleteHandler();
 
     [SerializeField] private QuestDatabase _questDatabase;
-    [SerializeField] private string _questRoot;
+    [SerializeField] private string _root;
+
+    public List<Quest> Quests = new List<Quest>();
 
     public event QuestRecieveHandler OnQuestRecieved;
     public event CheckCompleteHandler OnCheckCompleted;
@@ -35,7 +29,7 @@ public class QuestSystem : MonoSingleton<QuestSystem>
 
     private void OnApplicationQuit() 
     {
-        OnSaveQuestData();    
+        Save();    
     }
 
     public void Report(object target, int successCount)
@@ -53,32 +47,33 @@ public class QuestSystem : MonoSingleton<QuestSystem>
         }
     }
 
-    public void OnSaveQuestData()
+    public void Save()
     {
-        DataManager.Instance.OnDeleteData(_questRoot);
+        DataManager.Instance.OnDeleteData(_root);
 
-        foreach (var quest in _questDatabase.Quests)
+        foreach (var quest in Quests)
         {
-            DataManager.Instance.OnSaveData(quest.ToSaveData(), quest.QuestName, _questRoot);
+            DataManager.Instance.OnSaveData(quest.ToSaveData(), quest.QuestName, _root);
         }
     }
 
     public void OnLoadQuestData(Quest quest)
     {
-        DataManager.Instance.OnLoadData<QuestSaveData>(quest.QuestName, _questRoot, (loadedData) =>
+        DataManager.Instance.OnLoadData<QuestSaveData>(quest.QuestName, _root, (loadedData) =>
         {
             if (loadedData != null)
             {
                 var newQuest = quest.Clone();
                 newQuest.OnRegister();
                 newQuest.LoadFrom(loadedData);
+                Quests.Add(newQuest);
                 Debug.Log("Success to load data");
             }
             else
             {
                 Debug.Log("Failed to load data");
             }
-        });            
+        }, () => Save());            
     }
     #endregion
 }

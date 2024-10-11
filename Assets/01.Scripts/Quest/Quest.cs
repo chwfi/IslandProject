@@ -1,7 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+[System.Serializable]
+public class QuestSaveData
+{
+    public int codeName;
+    public QuestState questState;
+    public TaskSaveData[] taskSaveData;
+}
 
 public enum QuestState
 {
@@ -25,7 +32,7 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
     public delegate void CompletedHandler(Quest quest);
     public delegate void CanceldHandler(Quest quest);
     public delegate void SetUIHandler(Quest quest);
-    public delegate void UpdateUIHandler(Quest quest);
+    public delegate void UpdateUIHandler();
 
     [Header("Info")]
     [SerializeField] private QuestType _questType;
@@ -67,15 +74,13 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
         set
         {
             _state = value;
-            OnUpdateUI?.Invoke(this);
+            OnUpdateUI?.Invoke();
         }
     }
     public string QuestName => _questName;
-    public Sprite QuestIcon => _questIcon;
-    public string QuestDescription => _questDescription;
 
     public IReadOnlyList<RewardGroup> Rewards => _rewardGroups;
-    public IReadOnlyList<NeedMaterialGroup> Materials => _materialGroups;
+    public IReadOnlyList<NeedMaterialGroup> MaterialGroups => _materialGroups;
     public bool IsRegistered => State != QuestState.Inactive;
     public bool IsCompletable => State == QuestState.WaitingForCompletion;
     public bool IsComplete => State == QuestState.Complete;
@@ -97,57 +102,71 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
             task.Start();
         }
 
-        foreach (var mat in _materialGroups)
+        foreach (var material in _materialGroups)
         {
-            var newMaterial = Instantiate(MaterialManager.Instance.FindQuestBy(mat.material.Icon));
-            mat.material = newMaterial;
-            mat.SetOwner(this);
+            material.SetOwner(this);
+            material.Start();
         }
 
         QuestUIController.Instance.SetRegisterUI(this, quest => OnSetUI?.Invoke(this));
     }
 
-    public void OnReceieveReport(object target, int successCount)
+    public void OnReceieveTask(object target, int successCount)
     {
         if (IsComplete)
             return;
 
-        if (QuestType == QuestType.TaskQuest)
-        {
-            foreach (var task in _taskGroup)
-                task.ReceieveReport(target, successCount, this);
-        }
-        else if (QuestType == QuestType.TrafficQuest)
-        {
-            foreach (var mat in _materialGroups)
-                mat.ReceieveReport(successCount, this);
-        }
+        foreach (var task in _taskGroup)
+            task.ReceieveReport(target, successCount, this);
 
         State = QuestState.Active;
     }
 
-    public void OnCheckComplete()
+    public void OnCheckCompleteTask()
     {
-        if (QuestType == QuestType.TaskQuest)
+        if (IsAllTaskComplete)
         {
-            if (IsAllTaskComplete)
+            if (_isAutoComplete)
             {
-                if (_isAutoComplete)
-                    Complete();
+                OnComplete();
             }
-        }
-        else if (QuestType == QuestType.TrafficQuest)
-        {
-            if (IsAllMaterialGroupMet)
+            else
             {
-                if (_isAutoComplete)
-                    Complete();
+                State = QuestState.WaitingForCompletion;
             }
         }
     }
 
-    public void Complete()
+    public void OnCheckCompleteMaterial()
     {
+        foreach (var matGroup in _materialGroups)
+        {
+            var matData = MaterialManager.Instance.FindMaterialBy(matGroup.material.CodeName);
+            Debug.Log(matData);
+            if (matData.MaterialCounter.materialCount >= matGroup.needAmount)
+            {
+                Debug.Log("Material group complete");
+                matGroup.Complete();
+            }
+        }
+
+        if (IsAllMaterialGroupMet)
+        {
+            Debug.Log("All Complete");
+            if (_isAutoComplete)
+            {
+                OnComplete();
+            }
+            else
+            {
+                State = QuestState.WaitingForCompletion;
+            }
+        }
+    }
+
+    public void OnComplete()
+    {
+        Debug.Log("Complete Quest!");
         State = QuestState.Complete;
 
         OnCompleted?.Invoke(this);
@@ -155,9 +174,17 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
         foreach (var group in _rewardGroups)
             group.reward.Give(this, group.amount);
 
-        var questSystem = QuestSystem.Instance;
-        questSystem.OnQuestRecieved -= OnReceieveReport;
-        questSystem.OnCheckCompleted -= OnCheckComplete;
+        if (QuestType == QuestType.TaskQuest)
+        {
+            var questSystem = QuestManager.Instance;
+            questSystem.OnQuestRecieved -= OnReceieveTask;
+            questSystem.OnCheckCompleted -= OnCheckCompleteTask;
+        }
+        else if (QuestType == QuestType.TrafficQuest)
+        {
+            var materialManager = MaterialManager.Instance;
+            materialManager.OnReceivedNotify -= OnCheckCompleteMaterial;
+        }
 
         OnCompleted = null;
         OnCanceled = null;
@@ -176,10 +203,18 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
         var clone = Instantiate(this);
         clone._taskGroup = _taskGroup;
         
-        var questSystem = QuestSystem.Instance;
-        questSystem.OnQuestRecieved += clone.OnReceieveReport;
-        questSystem.OnCheckCompleted += clone.OnCheckComplete;
-
+        if (QuestType == QuestType.TaskQuest)
+        {
+            var questSystem = QuestManager.Instance;
+            questSystem.OnQuestRecieved += clone.OnReceieveTask;
+            questSystem.OnCheckCompleted += clone.OnCheckCompleteTask;
+        }
+        else if (QuestType == QuestType.TrafficQuest)
+        {
+            var materialManager = MaterialManager.Instance;
+            materialManager.OnReceivedNotify += clone.OnCheckCompleteMaterial;
+        }
+        
         return clone;
     }
 
@@ -193,6 +228,7 @@ public class Quest : ScriptableObject, ICloneable<Quest>, IQuestable
             {
                 currentSuccess = task.CurrentSuccessValue
             }).ToArray()
+            
         };
     }
 

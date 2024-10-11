@@ -24,7 +24,7 @@ public class QuestUIBinder : MonoSingleton<QuestUIBinder>
         SetTransformUtil.SetUIParent(clone.transform, _questInfoUITransform, new Vector3(-9, 0, 0));
 
         quest.OnSetUI += clone.SetUI; // 생성 이후, 주체 퀘스트의 이벤트들을 구독
-        quest.OnUpdateUI += clone.UpdateUI;
+        clone.SetButton(quest);
 
         return clone;
     }

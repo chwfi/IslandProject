@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Util;
 
-public abstract class ButtonUI : MonoBehaviour, IPointerClickHandler
+public abstract class ButtonUI : PoolableMono, IPointerClickHandler
 {
     protected Button _button;
     protected event Action _buttonEvent;
@@ -37,6 +37,11 @@ public abstract class ButtonUI : MonoBehaviour, IPointerClickHandler
     public void SetSubscription<T>(Action<T> action, T param)
     {
         _buttonEvent += () => action(param);
+    }
+
+    protected void SetSubscriptionSelf(Action action)
+    {
+        _buttonEvent += action;
     }
 
     public void OnPointerClick(PointerEventData eventData)

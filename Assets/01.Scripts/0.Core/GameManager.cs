@@ -29,12 +29,12 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            QuestSystem.Instance.Report("test", 1);
+            QuestManager.Instance.Report("test", 1);
         }    
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            QuestSystem.Instance.Report(test, 1);
+            MaterialManager.Instance.AddMaterialCount(test, 1);
         }
     }
 }

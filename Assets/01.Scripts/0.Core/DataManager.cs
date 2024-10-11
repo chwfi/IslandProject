@@ -31,12 +31,12 @@ public class DataManager : MonoSingleton<DataManager>
         Debug.Log($"saved: {json}");
     }
 
-    public void OnLoadData<T>(string id, string baseRoot, Action<T> callback) where T : new()
+    public void OnLoadData<T>(string id, string baseRoot, Action<T> callback, Action failed)
     {
-        StartCoroutine(LoadDataCoroutine(id, baseRoot, callback));
+        StartCoroutine(LoadDataCoroutine(id, baseRoot, callback, failed));
     }
 
-    private IEnumerator LoadDataCoroutine<T>(string id, string baseRoot, Action<T> callback) where T : new()
+    private IEnumerator LoadDataCoroutine<T>(string id, string baseRoot, Action<T> callback, Action failed)
     {
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
         var DBTask = reference.Child(userId).Child(baseRoot).Child(id).GetValueAsync();
@@ -54,6 +54,10 @@ public class DataManager : MonoSingleton<DataManager>
                 T loadedData = JsonConvert.DeserializeObject<T>(jsonData); 
                 callback?.Invoke(loadedData);
             }
+        }
+        else
+        {
+            failed?.Invoke();
         }
     }
 }

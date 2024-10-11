@@ -3,7 +3,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(ScriptableObject), true)]
-public class QuestSOEditor : Editor
+public class QuestSOEditor : Editor  
 {
     SerializedProperty enumValue;
 
@@ -51,7 +51,7 @@ public class QuestSOEditor : Editor
 
             if (GUILayout.Button("\nSave all quests in editor\n(에디터 상에서 퀘스트 SO의 값을 수정했을 때 사용)\n"))
             {
-                QuestSystem.Instance.OnSaveQuestData(); // 클릭 시 동적으로 Firebase DB에 저장
+                QuestManager.Instance.Save(); // 클릭 시 동적으로 Firebase DB에 저장
             }
         }
     }
