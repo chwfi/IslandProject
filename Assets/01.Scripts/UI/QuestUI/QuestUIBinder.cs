@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Util;
 
 public class QuestUIBinder : MonoSingleton<QuestUIBinder>
 {
+    [Header("Prefabs")]
     [SerializeField] private QuestUI _questUIPrefab;
-    [SerializeField] private QuestInfoUI _questInfoUIPrefab;
+    [SerializeField] private TaskQuestInfoUI _taskQuestInfoUIPrefab;
+    [SerializeField] private TrafficQuestInfoUI _trafficQuestInfoUIPrefab;
+
+    [Header("Instantiate Transfrom")]
     [SerializeField] private Transform _questUITransform;
     [SerializeField] private Transform _questInfoUITransform;
 
@@ -20,7 +22,14 @@ public class QuestUIBinder : MonoSingleton<QuestUIBinder>
 
     public QuestInfoUI SetInfoUI(Quest quest)
     {
-        QuestInfoUI clone = PoolManager.Instance.Pop(_questInfoUIPrefab.name) as QuestInfoUI; // 알맞는 위치에 생성
+        // 들어온 퀘스트 타입에 따라 알맞는 퀘스트를 Pool에서 생성
+        QuestInfoUI clone = quest switch
+        {
+            TaskQuest => PoolManager.Instance.Pop(_taskQuestInfoUIPrefab.name) as TaskQuestInfoUI,
+            TrafficQuest => PoolManager.Instance.Pop(_trafficQuestInfoUIPrefab.name) as TrafficQuestInfoUI,
+            _ => null // 아무것도 아니라면 null 반환
+        };
+        
         SetTransformUtil.SetUIParent(clone.transform, _questInfoUITransform, new Vector3(-9, 0, 0));
 
         quest.OnSetUI += clone.SetUI; // 생성 이후, 주체 퀘스트의 이벤트들을 구독

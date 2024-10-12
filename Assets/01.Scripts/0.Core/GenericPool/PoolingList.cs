@@ -9,7 +9,7 @@ public class PoolingPair
     public int poolCount;
 }
 
-[CreateAssetMenu(menuName = "SO/Pool/list")]
+[CreateAssetMenu(menuName = "SO/Pool/list")]  
 public class PoolingList : ScriptableObject
 {
     public List<PoolingPair> PoolingPairs;

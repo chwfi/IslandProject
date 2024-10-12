@@ -11,10 +11,10 @@ public class QuestUIController : MonoSingleton<QuestUIController>
         QuestUIDictionary = new Dictionary<Quest, QuestInfoUI>();    
     }
 
-    public void SetRegisterUI(Quest quest, Action<Quest> action)
+    public void SetRegisterUI(Quest quest, Action<Quest> callback)
     {
         QuestUIBinder.Instance.SetUI(quest);
-        action?.Invoke(quest);
+        callback?.Invoke(quest);
     }
 
     public void SetUIPair(Quest quest)

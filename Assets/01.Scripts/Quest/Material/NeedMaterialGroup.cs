@@ -1,3 +1,7 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+[JsonConverter(typeof(StringEnumConverter))]
 public enum MaterialState
 {
     Inactive,
@@ -12,9 +16,16 @@ public class NeedMaterialGroup
     public int needAmount;
 
     private MaterialState _materialState;
-    public MaterialState MaterialState => _materialState;
-    public bool IsComplete => MaterialState == MaterialState.Complete;
+    public MaterialState MaterialState    
+    {
+        get => _materialState;
+        set
+        {
+            _materialState = value;
+        }
+    }
 
+    public bool IsComplete => MaterialState == MaterialState.Complete;
     public Quest Owner { get; private set; }
      
     public void SetOwner(Quest owner)

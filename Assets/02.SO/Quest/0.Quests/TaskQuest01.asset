@@ -9,22 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4e2e39755be430d8ccc88903f406ea, type: 3}
-  m_Name: QuestTest
+  m_Script: {fileID: 11500000, guid: 936cbec0dc8bb4313b1af008220c1ba5, type: 3}
+  m_Name: TaskQuest01
   m_EditorClassIdentifier: 
-  _questType: 0
   _codeName: 0
   _questName: "\uD018\uC2A4\uD2B81"
   _questIcon: {fileID: 0}
   _questDescription: 
-  _taskGroup:
-  - {fileID: 11400000, guid: 05d06d2144c36407aad146d9954f0ec8, type: 2}
-  _materialGroups: []
   _rewardGroups:
   - reward: {fileID: 11400000, guid: 9a868640a847b4f889a76ebdc47728f5, type: 2}
     amount: 15
   - reward: {fileID: 11400000, guid: fa090063781b54341b60846b5f3c0fe4, type: 2}
-    amount: 15
-  _isAutoStartQuest: 1
+    amount: 25
+  _isAutoStartQuest: 0
   _isAutoComplete: 0
   _isCanclable: 0
+  _taskGroup:
+  - {fileID: 11400000, guid: 05d06d2144c36407aad146d9954f0ec8, type: 2}

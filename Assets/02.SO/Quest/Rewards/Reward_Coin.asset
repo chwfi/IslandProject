@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d061b0726cfd6457b8ba133bce625a83, type: 3}
   m_Name: Reward_Coin
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 8a969c77c3e3d6d41be8d81f4c853fab, type: 3}
   _description: 

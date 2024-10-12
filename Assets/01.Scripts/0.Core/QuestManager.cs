@@ -1,13 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-
-public class TaskSaveData
-{
-    public int currentSuccess;
-}
 
 public class QuestManager : MonoSingleton<QuestManager>
 {
@@ -17,7 +13,8 @@ public class QuestManager : MonoSingleton<QuestManager>
     [SerializeField] private QuestDatabase _questDatabase;
     [SerializeField] private string _root;
 
-    public List<Quest> Quests = new List<Quest>();
+    public List<TaskQuest> ActiveTaskQuests = new List<TaskQuest>();
+    public List<TrafficQuest> ActiveTrafficQuests = new List<TrafficQuest>();
 
     public event QuestRecieveHandler OnQuestRecieved;
     public event CheckCompleteHandler OnCheckCompleted;
@@ -41,39 +38,89 @@ public class QuestManager : MonoSingleton<QuestManager>
     #region Save & Load
     public void Load()
     {
-        foreach (Quest quest in _questDatabase.Quests)
+        foreach (TaskQuest taskQuest in _questDatabase.TaskQuests)
         {
-            OnLoadQuestData(quest);
+            OnLoadTaskQuestData(taskQuest);
+        }
+
+        foreach (TrafficQuest trafficQuest in  _questDatabase.TrafficQuests)
+        {
+            OnLoadTrafficQuestData(trafficQuest);
         }
     }
 
     public void Save()
     {
+        Debug.Log("Save");
         DataManager.Instance.OnDeleteData(_root);
 
-        foreach (var quest in Quests)
+        foreach (var taskQuest in ActiveTaskQuests)
         {
-            DataManager.Instance.OnSaveData(quest.ToSaveData(), quest.QuestName, _root);
+            DataManager.Instance.OnSaveData(taskQuest.ToSaveData(), taskQuest.QuestName, _root);
+        }
+
+        foreach (var trafficQuest in ActiveTrafficQuests)
+        {
+            DataManager.Instance.OnSaveData(trafficQuest.ToSaveData(), trafficQuest.QuestName, _root);
         }
     }
 
-    public void OnLoadQuestData(Quest quest)
+    public void SaveTaskQuestAtEmptyState()
     {
-        DataManager.Instance.OnLoadData<QuestSaveData>(quest.QuestName, _root, (loadedData) =>
+        foreach (var taskQuest in _questDatabase.TaskQuests)
+        {
+            DataManager.Instance.OnSaveData(taskQuest.ToSaveData(), taskQuest.QuestName, _root);
+            OnLoadTaskQuestData(taskQuest);
+        }
+    }
+
+    public void SaveTrafficQuestAtEmptyState()
+    {
+        foreach (var trafficQuest in _questDatabase.TrafficQuests)
+        {
+            DataManager.Instance.OnSaveData(trafficQuest.ToSaveData(), trafficQuest.QuestName, _root);
+            OnLoadTrafficQuestData(trafficQuest);
+        }
+    }
+
+    public void OnLoadTaskQuestData(TaskQuest quest)
+    {
+        DataManager.Instance.OnLoadData<TaskQuestSaveData>(quest.QuestName, _root, (loadedData) =>
         {
             if (loadedData != null)
             {
-                var newQuest = quest.Clone();
+                var newQuest = quest.Clone() as TaskQuest;
                 newQuest.OnRegister();
                 newQuest.LoadFrom(loadedData);
-                Quests.Add(newQuest);
+                ActiveTaskQuests.Add(newQuest);
+                Debug.Log("Success to load data");
+
+                OnCheckCompleted?.Invoke();
+            }
+            else
+            {
+                Debug.Log("Failed to load data");
+            }
+        }, () => SaveTaskQuestAtEmptyState());            
+    }
+
+    public void OnLoadTrafficQuestData(TrafficQuest quest)
+    {
+        DataManager.Instance.OnLoadData<TrafficQuestSaveData>(quest.QuestName, _root, (loadedData) =>
+        {
+            if (loadedData != null)
+            {
+                var newQuest = quest.Clone() as TrafficQuest;
+                newQuest.OnRegister();
+                newQuest.LoadFrom(loadedData);
+                ActiveTrafficQuests.Add(newQuest);
                 Debug.Log("Success to load data");
             }
             else
             {
                 Debug.Log("Failed to load data");
             }
-        }, () => Save());            
+        }, () => SaveTrafficQuestAtEmptyState());            
     }
     #endregion
 }

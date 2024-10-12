@@ -6,5 +6,5 @@ using UnityEngine;
 public class MaterialDatabase : ScriptableObject
 {
     [SerializeField] private List<InGameMaterial> _materials;
-    public IReadOnlyList<InGameMaterial> MaterialList => _materials;
+    public IReadOnlyList<InGameMaterial> Materials => _materials;
 }

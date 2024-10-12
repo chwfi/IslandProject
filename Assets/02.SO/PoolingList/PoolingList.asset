@@ -15,9 +15,11 @@ MonoBehaviour:
   PoolingPairs:
   - prefab: {fileID: 7728939127508120107, guid: 3918f426e94084aa183f076e9249f022, type: 3}
     poolCount: 6
-  - prefab: {fileID: 5545855682489840238, guid: 7d4f10a426bdd4206aeb2ca6546f3031, type: 3}
-    poolCount: 2
-  - prefab: {fileID: 7247672762651042077, guid: 90fed483a5d66499388277bd8184a765, type: 3}
-    poolCount: 5
   - prefab: {fileID: 7964053024620240924, guid: efae09a5013e940399e590fda61785b3, type: 3}
     poolCount: 5
+  - prefab: {fileID: 7247672762651042077, guid: 90fed483a5d66499388277bd8184a765, type: 3}
+    poolCount: 5
+  - prefab: {fileID: 3910154180320529186, guid: 7d4f10a426bdd4206aeb2ca6546f3031, type: 3}
+    poolCount: 2
+  - prefab: {fileID: 87561546249288738, guid: 3cefeb0f546e44088af5d05fd353caef, type: 3}
+    poolCount: 2

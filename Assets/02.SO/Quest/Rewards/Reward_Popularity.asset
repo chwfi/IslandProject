@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d061b0726cfd6457b8ba133bce625a83, type: 3}
   m_Name: Reward_Popularity
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 5a695c2986882a643b35d0dd60a037b3, type: 3}
   _description: 

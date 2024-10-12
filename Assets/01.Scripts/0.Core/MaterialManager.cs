@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game Materials
@@ -12,7 +11,7 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
     [SerializeField] private MaterialDatabase _materialDatabase;
     [SerializeField] private string _root;
 
-    public List<InGameMaterial> Materials = new List<InGameMaterial>();
+    public List<InGameMaterial> ActiveMaterials = new List<InGameMaterial>();
 
     public event MaterialRecieveHandler OnMaterialRecieved;
     public event NotifyHandler OnReceivedNotify;
@@ -35,25 +34,37 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
 
     public InGameMaterial FindMaterialBy(int codeName)
     {
-        return Materials.FirstOrDefault(x => x.CodeName == codeName);
+        return ActiveMaterials.FirstOrDefault(x => x.CodeName == codeName);
     }
     
     #region Save & Load
     public void Load()
     {
-        foreach (var mat in _materialDatabase.MaterialList)
+        foreach (var mat in _materialDatabase.Materials) 
         {
             OnLoadMaterialData(mat);
         }
     }
 
-    public void Save()
+    public void Save() 
     {
         DataManager.Instance.OnDeleteData(_root);
 
-        foreach (var mat in Materials)
+        foreach (var mat in ActiveMaterials)
         {
             DataManager.Instance.OnSaveData(mat.ToSaveData(), mat.MaterialName, _root);
+        }
+    }
+
+    public void SaveAtEmptyState() // Firebase DB에 데이터가 감지되지 않을때, 즉 처음 실행할 때만 실행해주는 Save 로직
+    {
+        Debug.Log("Initial Save");
+        DataManager.Instance.OnDeleteData(_root);
+
+        foreach (var mat in _materialDatabase.Materials)
+        {
+            DataManager.Instance.OnSaveData(mat.ToSaveData(), mat.MaterialName, _root);
+            OnLoadMaterialData(mat);
         }
     }
 
@@ -65,14 +76,16 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
             {
                 var newMat = mat.Clone();
                 newMat.LoadFrom(loadedData);
-                Materials.Add(newMat);
+                ActiveMaterials.Add(newMat);
                 Debug.Log("Success to load data");
+
+                OnReceivedNotify?.Invoke();
             }
             else
             {
                 Debug.Log("Failed to load data");
             }
-        }, () => Save());            
+        }, () => SaveAtEmptyState());            
     }
     #endregion
 }
