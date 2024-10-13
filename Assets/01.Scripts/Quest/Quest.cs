@@ -21,6 +21,7 @@ public abstract class Quest : ScriptableObject, IQuestable
     public delegate void CanceldHandler(Quest quest);
     public delegate void SetUIHandler(Quest quest);
     public delegate void UpdateUIHandler();
+    public delegate void DestroyUIHandler(Quest quest);
 
     [Header("Info")]
     [SerializeField] protected int _codeName;
@@ -40,6 +41,7 @@ public abstract class Quest : ScriptableObject, IQuestable
     public event CanceldHandler OnCanceled;
     public event SetUIHandler OnSetUI;
     public event UpdateUIHandler OnUpdateUI;
+    public event DestroyUIHandler OnDestroyUI;
 
     public int CodeName
     {
@@ -75,6 +77,7 @@ public abstract class Quest : ScriptableObject, IQuestable
         Debug.Log("Complete Quest!");
         State = QuestState.Complete;
 
+        OnDestroyUI?.Invoke(this);
         OnCompleted?.Invoke(this);
 
         foreach (var group in _rewardGroups)

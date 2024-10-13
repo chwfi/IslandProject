@@ -18,7 +18,7 @@ public class TrafficQuestInfoUI : QuestInfoUI
         foreach (var matGroup in trafficQuest.MaterialGroups) 
         {
             UnboundedMaterialUI materialUI = PoolManager.Instance.Pop(_materialPrefab.name) as UnboundedMaterialUI;
-            SetTransformUtil.SetUIParent(materialUI.transform, _materialGroupTrm, Vector3.zero);
+            SetTransformUtil.SetUIParent(materialUI.transform, _materialGroupTrm, Vector3.zero, true);
             materialUI.SetUp(matGroup);
 
             MaterialManager.Instance.OnReceivedNotify += materialUI.UpdateUI;

@@ -34,14 +34,14 @@ public class QuestPanel : PopupUI
     private void ActiveUIElements()
     {
         _sideListUI.DOLocalRotate(Vector3.zero, 1f).SetEase(Ease.InOutBack);
-        _middleInfoUI.DOAnchorPosY(-63, 0.6f).SetEase(Ease.OutQuart);
-        _upperTitleUI.DOAnchorPosY(-46, 0.5f).SetEase(Ease.InOutBack);
+        _middleInfoUI.DOAnchorPosY(-63, 1f).SetEase(Ease.OutQuart);
+        _upperTitleUI.DOAnchorPosY(-46, 1f).SetEase(Ease.InOutBack);
     }
 
     private void InactiveUIElements()
     {
         _sideListUI.DOLocalRotate(new Vector3(0, 0, 73), 0.6f).SetEase(Ease.InOutBack);
         _middleInfoUI.DOAnchorPosY(-750, 0.6f).SetEase(Ease.OutQuart);
-        _upperTitleUI.DOAnchorPosY(250, 0.5f).SetEase(Ease.InOutBack);
+        _upperTitleUI.DOAnchorPosY(250, 0.6f).SetEase(Ease.InOutBack);
     }
 }

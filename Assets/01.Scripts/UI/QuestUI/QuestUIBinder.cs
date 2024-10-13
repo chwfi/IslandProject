@@ -15,9 +15,10 @@ public class QuestUIBinder : MonoSingleton<QuestUIBinder>
     public void SetUI(Quest quest)
     {
         QuestUI clone = PoolManager.Instance.Pop(_questUIPrefab.name) as QuestUI; // 알맞는 위치에 생성
-        SetTransformUtil.SetUIParent(clone.transform, _questUITransform, Vector3.zero);
+        SetTransformUtil.SetUIParent(clone.transform, _questUITransform, Vector3.zero, false);
 
         quest.OnSetUI += clone.SetUI; // 생성 이후, 주체 퀘스트의 이벤트들을 구독
+        quest.OnDestroyUI += clone.DestroyUI;
     }
 
     public QuestInfoUI SetInfoUI(Quest quest)
@@ -30,7 +31,7 @@ public class QuestUIBinder : MonoSingleton<QuestUIBinder>
             _ => null // 아무것도 아니라면 null 반환
         };
         
-        SetTransformUtil.SetUIParent(clone.transform, _questInfoUITransform, new Vector3(-9, 0, 0));
+        SetTransformUtil.SetUIParent(clone.transform, _questInfoUITransform, new Vector3(-9, 0, 0), false);
 
         quest.OnSetUI += clone.SetUI; // 생성 이후, 주체 퀘스트의 이벤트들을 구독
         clone.SetButton(quest);

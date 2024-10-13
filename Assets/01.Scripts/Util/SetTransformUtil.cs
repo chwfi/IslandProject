@@ -8,9 +8,9 @@ namespace Util
     {
         // UI의 부모를 지정해주고 RectTransform을 조정해주는 기능
         // 매개변수로는 주체 UI, 부모로 설정할 UI, 그리고 상세 포지션을 지정할 Vector3값이 있다.
-        public static void SetUIParent(Transform subjectUI, Transform parentUI, Vector3 newPosition)
+        public static void SetUIParent(Transform subjectUI, Transform parentUI, Vector3 newPosition, bool setRotate)
         {
-            subjectUI.SetParent(parentUI, false); 
+            subjectUI.SetParent(parentUI, setRotate); 
             // 주체로 들어온 UI를 부모로 들어온 UI에 SetParent해준다.
             subjectUI.GetComponent<RectTransform>().anchoredPosition = newPosition; 
             // 부모가 설정된 후, 매개변수에 따라 상세 포지션을 정한다.

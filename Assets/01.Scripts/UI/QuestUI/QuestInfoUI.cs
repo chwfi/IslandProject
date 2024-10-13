@@ -11,24 +11,41 @@ public class QuestInfoUI : PopupUI
     [SerializeField] protected TextMeshProUGUI _questNameText;
     [SerializeField] protected TextMeshProUGUI _goldAmountText;
     [SerializeField] protected TextMeshProUGUI _popularityText;
+    [SerializeField] protected GameObject _completePanel;
+
+    private bool _isCompleted = false;
 
     public virtual void SetUI(Quest quest)
     {
         _questNameText.text = $"{quest.QuestName}";
         _goldAmountText.text = $"{quest.Rewards[0].amount}";
-        _popularityText.text = $"{quest.Rewards[1].amount}"; 
+        _popularityText.text = $"{quest.Rewards[1].amount}";
     }
 
     public void SetButton(Quest quest)
     {
-        _buttonList.ForEach(x => x.SetSubscription(SetCompletionUI, quest));
+        _buttonList[0].SetSubscription(SetCompletionUI, quest);
     }
 
     public void SetCompletionUI(Quest quest)
     {
         if (quest.IsCompletable)
         {
-            Debug.Log("완");
+            quest.OnComplete();
+            _completePanel.SetActive(true);
+            _buttonList[0].InactiveButton();
+
+            _isCompleted = true;
         }
+    }
+
+    public override void AccessUI(bool active)
+    {
+        if (_isCompleted && !active)
+        {
+            PoolManager.Instance.Push(this);
+        }
+
+        base.AccessUI(active);
     }
 }

@@ -67,7 +67,7 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
 
     public override void OnComplete()
     {
-        Debug.Log("Complete Quest!");
+        base.OnComplete();
 
         var questSystem = QuestManager.Instance;
         questSystem.OnQuestRecieved -= OnReceieveTask;

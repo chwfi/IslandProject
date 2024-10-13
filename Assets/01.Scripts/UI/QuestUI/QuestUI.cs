@@ -20,4 +20,12 @@ public class QuestUI : PopupUI
         _buttonList.FirstOrDefault().SetSubscription((quest) => 
             QuestUIController.Instance.SetUIPair(quest), quest);
     }
+
+    public void DestroyUI(Quest quest)
+    {
+        PoolManager.Instance.Push(this);
+
+        quest.OnSetUI -= SetUI;
+        quest.OnDestroyUI -= DestroyUI;
+    }
 }

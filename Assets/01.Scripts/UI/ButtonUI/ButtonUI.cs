@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Util;
 
-public abstract class ButtonUI : PoolableMono, IPointerClickHandler
+public class ButtonUI : PoolableMono, IPointerClickHandler
 {
     protected Button _button;
     protected event Action _buttonEvent;
@@ -34,14 +34,19 @@ public abstract class ButtonUI : PoolableMono, IPointerClickHandler
         _ownerPopup = FindObjectUtil.FindParent<PopupUI>(this.gameObject);
     }
 
-    public void SetSubscription<T>(Action<T> action, T param)
+    public void SetSubscription<T>(Action<T> action, T param) // 버튼 외부에서 액션을 구독시킬 때 호출
     {
         _buttonEvent += () => action(param);
     }
 
-    protected void SetSubscriptionSelf(Action action)
+    protected void SetSubscriptionSelf(Action action) // 자식에서 원하는 액션을 구독시키고 싶을 때 호출
     {
         _buttonEvent += action;
+    }
+
+    public void InactiveButton()
+    {
+        _button.interactable = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
