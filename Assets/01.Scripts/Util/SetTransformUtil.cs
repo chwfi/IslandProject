@@ -10,7 +10,7 @@ namespace Util
         // 매개변수로는 주체 UI, 부모로 설정할 UI, 그리고 상세 포지션을 지정할 Vector3값이 있다.
         public static void SetUIParent(Transform subjectUI, Transform parentUI, Vector3 newPosition)
         {
-            subjectUI.SetParent(parentUI); 
+            subjectUI.SetParent(parentUI, false); 
             // 주체로 들어온 UI를 부모로 들어온 UI에 SetParent해준다.
             subjectUI.GetComponent<RectTransform>().anchoredPosition = newPosition; 
             // 부모가 설정된 후, 매개변수에 따라 상세 포지션을 정한다.
