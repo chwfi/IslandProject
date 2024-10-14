@@ -58,12 +58,9 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
 
     public void SaveAtEmptyState() // Firebase DB에 데이터가 감지되지 않을때, 즉 처음 실행할 때만 실행해주는 Save 로직
     {
-        Debug.Log("Initial Save");
-        DataManager.Instance.OnDeleteData(_root);
-
         foreach (var mat in _materialDatabase.Materials)
         {
-            DataManager.Instance.OnSaveData(mat.ToSaveData(), mat.MaterialName, _root);
+            DataManager.Instance.OnSaveData(mat.ToInitialSaveData(), mat.MaterialName, _root);
             OnLoadMaterialData(mat);
         }
     }
@@ -77,7 +74,6 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
                 var newMat = mat.Clone();
                 newMat.LoadFrom(loadedData);
                 ActiveMaterials.Add(newMat);
-                Debug.Log("Success to load data");
 
                 OnReceivedNotify?.Invoke();
             }

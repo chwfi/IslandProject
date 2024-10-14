@@ -25,6 +25,7 @@ public class DataManager : MonoSingleton<DataManager>
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore
         });
+        Debug.Log($"Serialized InGameMaterial JSON: {json}");
 
         reference.Child(userId).Child(baseRoot).Child(id).SetRawJsonValueAsync(json);
 

@@ -1,7 +1,3 @@
-using System;
-using System.Diagnostics;
-
-[System.Serializable]
 public class MaterialCounter
 {
     public MaterialCounter(int count)

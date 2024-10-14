@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class MaterialSaveData
 {
     public int codeName;
@@ -57,6 +56,15 @@ public class InGameMaterial : ScriptableObject, ICloneable<InGameMaterial>
         {
             codeName = _codeName,
             count = _materialCounter.materialCount
+        };
+    }
+
+    public MaterialSaveData ToInitialSaveData()
+    {
+        return new MaterialSaveData
+        {
+            codeName = _codeName,
+            count = 0
         };
     }
 
