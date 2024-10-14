@@ -89,11 +89,13 @@ public class QuestManager : MonoSingleton<QuestManager>
         {
             if (loadedData != null)
             {
+                if (loadedData.questState == QuestState.Complete)
+                    return;
+
                 var newQuest = quest.Clone() as TaskQuest;
                 newQuest.OnRegister();
                 newQuest.LoadFrom(loadedData);
                 ActiveTaskQuests.Add(newQuest);
-                Debug.Log("Success to load data");
 
                 OnCheckCompleted?.Invoke();
             }
@@ -110,11 +112,13 @@ public class QuestManager : MonoSingleton<QuestManager>
         {
             if (loadedData != null)
             {
+                if (loadedData.questState == QuestState.Complete)
+                    return;
+
                 var newQuest = quest.Clone() as TrafficQuest;
                 newQuest.OnRegister();
                 newQuest.LoadFrom(loadedData);
                 ActiveTrafficQuests.Add(newQuest);
-                Debug.Log("Success to load data");
             }
             else
             {

@@ -21,7 +21,7 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
     [Header("TaskGroup")]
     [SerializeField] private Task[] _taskGroup;
 
-    public List<Task> TaskCloneGroup { get; private set; }
+    [HideInInspector] public List<Task> TaskCloneGroup = new();
     public bool IsAllTaskComplete => TaskCloneGroup.All(x => x.IsComplete);
 
     public override void OnRegister()
