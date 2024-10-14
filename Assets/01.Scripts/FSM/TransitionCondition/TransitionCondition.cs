@@ -13,7 +13,7 @@ public abstract class TransitionCondition : ScriptableObject
     {
         var clone = Instantiate(this);
         clone.Owner = owner;
-        
+
         return clone;
     }
 

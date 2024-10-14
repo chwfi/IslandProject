@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/TransitionCondition/TimerCondition")]
 public class TimerCondition : TransitionCondition
 {
+    private float timer = 0;
     private float randomTime = 0f;
 
     [SerializeField] private float minTime = 1f; // 최소 랜덤 타이머 값
@@ -19,7 +18,27 @@ public class TimerCondition : TransitionCondition
 
     public override bool IsConditionValid()
     {
-        Util.CoroutineUtil.CallWaitForSeconds(randomTime, () => complete = true);
-        return complete;
+        if (complete)
+        {
+            timer = 0;
+            randomTime = Random.Range(minTime, maxTime);
+            complete = false;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+
+            if (timer > randomTime)
+            {
+                complete = true;
+                return complete;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
     }
 }

@@ -102,12 +102,10 @@ public class Entity : MonoBehaviour
 
         if (conditions == null) return; // 리스트가 없다면 리턴하고
 
-        Debug.Log("Check Condition");
         foreach (var condition in conditions) // 있다면 그 리스트를 반복해
         {
             if (condition.IsConditionValid()) // 조건 리스트 중 만족되는 조건이 있는지 확인한다.
             {
-                Debug.Log("Check Condition state");
                 this.StateMachineCompo.ChangeState(stateType); // 조건 하나라도 만족된다면 목표 스테이트 타입으로 이동.
             }
         }

@@ -11,19 +11,19 @@ public class MoveState : State
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Move State");
+
+        _owner.MoveCompo.OnMove();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        //_owner.MoveCompo.OnMove();
+        _owner.IsConditionsValid(StateTypeEnum.Idle);
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Exit Move State");
     }
 }

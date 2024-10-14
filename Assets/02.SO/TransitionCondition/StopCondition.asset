@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d50d8fac7c3c475bafab035b0988eb2, type: 3}
-  m_Name: PigTimerCondition
+  m_Script: {fileID: 11500000, guid: 4e3515d0d977e460cb2b57f075df913a, type: 3}
+  m_Name: StopCondition
   m_EditorClassIdentifier: 
   _description: 
-  TargetStateType: 1
-  minTime: 3
-  maxTime: 5
+  TargetStateType: 0
