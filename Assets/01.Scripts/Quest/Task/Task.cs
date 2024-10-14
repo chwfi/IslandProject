@@ -10,7 +10,7 @@ public enum TaskState
 }
 
 [CreateAssetMenu(menuName = "SO/Quest/Task", fileName = "Task_")]
-public class Task : ScriptableObject, IQuestable
+public class Task : ScriptableObject, IQuestable, ICloneable<Task>
 {
     [Header("Text")]
     [SerializeField] private string _description;
@@ -55,5 +55,12 @@ public class Task : ScriptableObject, IQuestable
         {
             _taskState = TaskState.Complete;
         }
+    }
+
+    public Task Clone()
+    {
+        var clone = Instantiate(this);
+
+        return clone;
     }
 }

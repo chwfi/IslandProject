@@ -69,7 +69,7 @@ public class QuestManager : MonoSingleton<QuestManager>
     {
         foreach (var taskQuest in _questDatabase.TaskQuests)
         {
-            DataManager.Instance.OnSaveData(taskQuest.ToSaveData(), taskQuest.QuestName, _root);
+            DataManager.Instance.OnSaveData(taskQuest.ToInitialSaveData(), taskQuest.QuestName, _root);
             OnLoadTaskQuestData(taskQuest);
         }
     }

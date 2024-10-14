@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Util;
 using DG.Tweening;
+using System;
 
 public class PopupUI : PoolableMono
 {
@@ -45,6 +46,12 @@ public class PopupUI : PoolableMono
         {
             _canvasGroup.DOFade(active ? 1f : 0f, _fadeTime); // 캔버스 그룹을 active bool값에 따라 키거나 꺼준다. fade 가능 
         });
+    }
+
+    public virtual void MoveUI(Vector3 pos, float duration, Action callback)
+    {
+        transform.GetComponent<RectTransform>().DOAnchorPos(pos, duration).
+            OnComplete(() => callback?.Invoke());
     }
 
     private void SetInteractive(bool value)

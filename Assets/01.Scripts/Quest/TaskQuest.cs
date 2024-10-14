@@ -21,8 +21,8 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
     [Header("TaskGroup")]
     [SerializeField] private Task[] _taskGroup;
 
-    public Task[] TaskGroup => _taskGroup;
-    public bool IsAllTaskComplete => _taskGroup.All(x => x.IsComplete);
+    public List<Task> TaskCloneGroup { get; private set; }
+    public bool IsAllTaskComplete => TaskCloneGroup.All(x => x.IsComplete);
 
     public override void OnRegister()
     {
@@ -32,8 +32,10 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
         
         foreach (var task in _taskGroup)
         {
-            task.SetOwner(this);
-            task.Start();
+            var newTask = task.Clone();
+            newTask.SetOwner(this);
+            newTask.Start();
+            TaskCloneGroup.Add(newTask);
         }
 
         base.OnRegister();
@@ -44,7 +46,7 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
         if (IsComplete)
             return;
 
-        foreach (var task in _taskGroup)
+        foreach (var task in TaskCloneGroup)
             task.ReceieveReport(target, successCount, this);
 
         State = QuestState.Active;
@@ -80,6 +82,19 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
         {
             codeName = _codeName,
             questState = _state,
+            taskSaveData = TaskCloneGroup.Select(task => new TaskSaveData
+            {
+                currentSuccess = task.CurrentSuccessValue
+            }).ToArray()     
+        };
+    }
+
+    public TaskQuestSaveData ToInitialSaveData()
+    {
+        return new TaskQuestSaveData
+        {
+            codeName = _codeName,
+            questState = _state,
             taskSaveData = _taskGroup.Select(task => new TaskSaveData
             {
                 currentSuccess = task.CurrentSuccessValue
@@ -92,11 +107,11 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
         _codeName = saveData.codeName;
         _state = saveData.questState;
 
-        if (_taskGroup.Length > 0)
+        if (TaskCloneGroup.Count > 0)
         {
-            for (int i = 0; i < Mathf.Min(_taskGroup.Length, saveData.taskSaveData.Length); i++)
+            for (int i = 0; i < Mathf.Min(TaskCloneGroup.Count, saveData.taskSaveData.Length); i++)
             {
-                _taskGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
+                TaskCloneGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
             }     
         }
     }

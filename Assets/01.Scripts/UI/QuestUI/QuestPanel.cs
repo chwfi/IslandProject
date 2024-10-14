@@ -33,9 +33,9 @@ public class QuestPanel : PopupUI
 
     private void ActiveUIElements()
     {
-        _sideListUI.DOLocalRotate(Vector3.zero, 1f).SetEase(Ease.InOutBack);
-        _middleInfoUI.DOAnchorPosY(-63, 1f).SetEase(Ease.OutQuart);
-        _upperTitleUI.DOAnchorPosY(-46, 1f).SetEase(Ease.InOutBack);
+        _sideListUI.DOLocalRotate(Vector3.zero, 0.8f).SetEase(Ease.InOutBack);
+        _middleInfoUI.DOAnchorPosY(-63, 0.8f).SetEase(Ease.OutQuart);
+        _upperTitleUI.DOAnchorPosY(-46, 0.8f).SetEase(Ease.InOutBack);
     }
 
     private void InactiveUIElements()
