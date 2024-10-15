@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class BaseBuilding : MonoBehaviour
 {
-    private void OnMouseDown() 
+    protected virtual void OnMouseDown() 
     {
-        PopupUIManager.Instance.SetPopupUI("QuestPanel", true);
+        if (EventSystem.current.IsPointerOverGameObject()) return;
     }
 }
