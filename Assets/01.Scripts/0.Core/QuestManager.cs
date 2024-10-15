@@ -51,7 +51,6 @@ public class QuestManager : MonoSingleton<QuestManager>
 
     public void Save()
     {
-        Debug.Log("Save");
         DataManager.Instance.OnDeleteData(_root);
 
         foreach (var taskQuest in ActiveTaskQuests)

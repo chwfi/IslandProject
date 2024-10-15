@@ -74,14 +74,13 @@ public abstract class Quest : ScriptableObject, IQuestable
 
     public virtual void OnComplete()
     {
-        Debug.Log("Complete Quest!");
         State = QuestState.Complete;
 
         OnDestroyUI?.Invoke(this);
         OnCompleted?.Invoke(this);
 
         foreach (var group in _rewardGroups)
-            group.reward.Give(this, group.amount);
+            group.reward.Give(group.reward.RewardType, group.amount);
 
         OnCompleted = null;
         OnCanceled = null;

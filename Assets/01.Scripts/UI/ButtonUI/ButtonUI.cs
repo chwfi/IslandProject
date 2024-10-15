@@ -39,6 +39,12 @@ public class ButtonUI : PoolableMono, IPointerClickHandler
         _buttonEvent += () => action(param);
     }
 
+    public void DisableSubscription<T>(Action<T> action, T param) // 버튼 외부에서 액션을 구독시킬 때 호출
+    {
+        if (_buttonEvent != null)
+            _buttonEvent -= () => action(param);
+    }
+
     protected void SetSubscriptionSelf(Action action) // 자식에서 원하는 액션을 구독시키고 싶을 때 호출
     {
         _buttonEvent += action;

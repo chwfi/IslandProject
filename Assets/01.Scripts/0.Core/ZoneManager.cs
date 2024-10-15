@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class ZoneManager : MonoSingleton<ZoneManager>
 {
-    [SerializeField] private Color _selecteColor;
+    [SerializeField] private Color _selectedColor;
 
     private ExpandUI _panel;
 
-    public List<Zone> ClickedZoneList = new List<Zone>();
+    public Zone PreviousZone;
+    public Zone CurrentZone;
 
     private void Awake() 
     {
@@ -16,18 +17,20 @@ public class ZoneManager : MonoSingleton<ZoneManager>
 
     public void SetZone(Zone zone)
     {
-        if (ClickedZoneList.Count > 0)
-        {
-            var prevZone = ClickedZoneList[0];
-            prevZone.Camera.SetActive(false);
-            prevZone.ResetMaterial();
-            ClickedZoneList.Remove(prevZone);
-        }
+        PreviousZone = CurrentZone;
+        CurrentZone = zone;
+        
+        if (PreviousZone != null)
+            PreviousZone.DisableZoneElements();
 
-        ClickedZoneList.Add(zone);
+        CurrentZone.SetZoneElements(_selectedColor);
 
-        zone.Camera.SetActive(true);
-        _panel.SetUI(zone);
-        zone.SetMaterialProperty(_selecteColor);
+        _panel.SetUI(CurrentZone);
+    }
+
+    public void DisableZone(Zone zone)
+    {
+        zone.DestroyZone();
+        _panel.AccessUI(false);
     }
 }

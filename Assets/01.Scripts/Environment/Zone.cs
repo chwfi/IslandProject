@@ -7,19 +7,19 @@ using UnityEngine.EventSystems;
 public class Zone : MonoBehaviour
 {
     [SerializeField] private int _expandPrice; 
-    private GameObject _camera;
+    [SerializeField] private GameObject _camera;
 
     public int ExpandPrice => _expandPrice;
-    public GameObject Camera => _camera;
 
     private List<MeshRenderer> _childRenderers = new List<MeshRenderer>();
+    private List<ParticleSystem> _particles = new List<ParticleSystem>();
     private MaterialPropertyBlock _propertyBlock;
     private Dictionary<MeshRenderer, Color> _originalColors = new Dictionary<MeshRenderer, Color>();
 
     private void Awake() 
     {
-        _camera = transform.Find("Camera").gameObject;
         _childRenderers.AddRange(GetComponentsInChildren<MeshRenderer>());
+        _particles.AddRange(GetComponentsInChildren<ParticleSystem>());
         _propertyBlock = new MaterialPropertyBlock();
 
         foreach (var renderer in _childRenderers)
@@ -38,18 +38,26 @@ public class Zone : MonoBehaviour
         ZoneManager.Instance.SetZone(this);
     }
 
-    public void SetMaterialProperty(Color color)
+    public void SetZoneElements(Color color)
     {
+        _camera.SetActive(true);
+
         foreach (var renderer in _childRenderers)
         {
             renderer.GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetColor("_Color", color); // 컬러 속성 변경
             renderer.SetPropertyBlock(_propertyBlock);
         }
+
+        _particles.ForEach(p => p.Play());
     }
 
-    public void ResetMaterial()
+    public void DisableZoneElements()
     {
+        if (_childRenderers[0] == null) return;
+
+        _camera.SetActive(false);
+
         foreach (var renderer in _childRenderers)
         {
             if (_originalColors.ContainsKey(renderer))
@@ -59,5 +67,18 @@ public class Zone : MonoBehaviour
                 renderer.SetPropertyBlock(_propertyBlock);
             }
         }
+
+        _particles.ForEach(p => p.Stop());
+    }
+
+    public void DestroyZone()
+    {
+        ItemManager.Instance.UseCoin(_expandPrice, () => 
+        {
+            var effect = PoolManager.Instance.Pop("ExplosionEffect");
+            effect.transform.position = transform.position;
+            _camera.SetActive(false);
+            Destroy(this.gameObject);
+        });
     }
 }
