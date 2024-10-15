@@ -33,7 +33,7 @@ public class QuestInfoUI : PopupUI
         {
             quest.OnComplete();
             _completePanel.SetActive(true);
-            _buttonList[0].InactiveButton();
+            _buttonList[0].AccessButton(false);
 
             _isCompleted = true;
         }

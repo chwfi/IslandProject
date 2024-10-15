@@ -44,9 +44,9 @@ public class ButtonUI : PoolableMono, IPointerClickHandler
         _buttonEvent += action;
     }
 
-    public void InactiveButton()
+    public void AccessButton(bool value)
     {
-        _button.interactable = false;
+        _button.interactable = value;
     }
 
     public void OnPointerClick(PointerEventData eventData)

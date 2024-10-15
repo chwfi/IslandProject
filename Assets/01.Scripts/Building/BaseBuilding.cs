@@ -5,8 +5,11 @@ using UnityEngine.EventSystems;
 
 public class BaseBuilding : MonoBehaviour
 {
-    protected virtual void OnMouseDown() 
+    protected bool IsClickable()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (!EventSystem.current.IsPointerOverGameObject())
+            return true;
+        else
+            return false;
     }
 }

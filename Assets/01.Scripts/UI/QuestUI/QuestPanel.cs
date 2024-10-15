@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestPanel : PopupUI
@@ -35,11 +36,17 @@ public class QuestPanel : PopupUI
     {
         _sideListUI.DOLocalRotate(Vector3.zero, 0.8f).SetEase(Ease.InOutBack);
         _middleInfoUI.DOAnchorPosY(-63, 0.8f).SetEase(Ease.OutQuart);
-        _upperTitleUI.DOAnchorPosY(-46, 0.8f).SetEase(Ease.InOutBack);
+        _upperTitleUI.DOAnchorPosY(-46, 0.8f).SetEase(Ease.InOutBack).
+        OnComplete(() => 
+        {
+            _buttonList.ForEach(x => x.gameObject.SetActive(true));
+        });
     }
 
     private void InactiveUIElements()
     {
+        _buttonList.ForEach(x => x.gameObject.SetActive(false));
+
         _sideListUI.DOLocalRotate(new Vector3(0, 0, 73), 0.6f).SetEase(Ease.InOutBack);
         _middleInfoUI.DOAnchorPosY(-750, 0.6f).SetEase(Ease.OutQuart);
         _upperTitleUI.DOAnchorPosY(250, 0.6f).SetEase(Ease.InOutBack);

@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class HomeBuilding : BaseBuilding
 {
-    protected override void OnMouseDown()
-    {
-        base.OnMouseDown();
-
-        PopupUIManager.Instance.SetPopupUI("QuestPanel", true);
+    private void OnMouseDown()
+    {   
+        if (IsClickable())
+        {
+            PopupUIManager.Instance.SetPopupUI("QuestPanel", true);
+        }
     }
 }
