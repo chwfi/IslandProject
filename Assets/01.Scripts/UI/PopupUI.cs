@@ -30,9 +30,6 @@ public class PopupUI : PoolableMono
         {
             _buttonList.AddRange(buttons);
         }
-
-        if (!_activeOnStart && _canvasGroup != null)
-            AccessUI(false); // 시작하면 UI 꺼줌
     }
 
     public virtual void AccessUI(bool active) // UI에 접근하여 키거나 끌 수 있는 함수

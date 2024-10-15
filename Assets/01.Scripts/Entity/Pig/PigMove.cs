@@ -17,12 +17,6 @@ public class PigMove : MoveComponent
             {
                 NavAgentCompo.SetDestination(randomPoint);
             }
-
-            if (IsSomethingInFront())
-            {
-                Debug.Log("Auch");
-                NavAgentCompo.SetDestination(randomPoint);
-            }
         }
     }
 
@@ -43,7 +37,7 @@ public class PigMove : MoveComponent
 
     private bool IsSomethingInFront()
     {
-        bool hitSomething = Physics.Raycast(_owner.transform.position, _owner.transform.forward, out RaycastHit hit, 5f);
+        bool hitSomething = Physics.Raycast(_owner.transform.position, _owner.transform.forward, out RaycastHit hit, 15f);
         return hitSomething;
     }
 }

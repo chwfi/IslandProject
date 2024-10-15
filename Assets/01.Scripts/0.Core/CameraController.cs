@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoSingleton<CameraController>
 {
     [SerializeField] private Transform _cameraRoot;
     [SerializeField] private float _moveSpeed;
@@ -18,9 +18,20 @@ public class CameraController : MonoBehaviour
 
     private void Awake() 
     {
-        _camera = transform.Find("MainCam").GetComponent<CinemachineVirtualCamera>();    
+        _camera = transform.Find("MainCam").GetComponent<CinemachineVirtualCamera>(); 
     }
 
+    public void SetCameraFollow(Transform root)
+    {
+        _camera.Follow = root;
+    }
+
+    public void InitCameraFollow()
+    {
+        _camera.Follow = _cameraRoot;
+    }
+
+    #region Move & Rotate
     private void Update() 
     {
         #if UNITY_IOS
@@ -100,4 +111,5 @@ public class CameraController : MonoBehaviour
         var wheel = _camera.GetCinemachineComponent<CinemachineFramingTransposer>();
         wheel.m_CameraDistance += -scroollWheel * Time.deltaTime * 250;
     }
+    #endregion
 }
