@@ -71,6 +71,8 @@ public class TaskQuest : Quest, ICloneable<Quest>, IQuestable
     {
         base.OnComplete();
 
+        QuestManager.Instance.ActiveTaskQuests.Remove(this);
+
         var questSystem = QuestManager.Instance;
         questSystem.OnQuestRecieved -= OnReceieveTask;
         questSystem.OnCheckCompleted -= OnCheckCompleteTask;

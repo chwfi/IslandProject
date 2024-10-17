@@ -51,6 +51,14 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         OnLoadCostData();
     }
+    
+    private void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Coin += 500;
+        }
+    }
 
     private void OnApplicationQuit() 
     {
@@ -73,11 +81,12 @@ public class ItemManager : MonoSingleton<ItemManager>
         }
     }
 
-    public void UseCoin(int amount, Action success)
+    public void UseCoin(int amount, Action success, Action fail)
     {
         if (Coin < amount)
         {
-            Debug.Log("재화가 부족합니다");
+            PopupUIManager.Instance.AccessPopupUI("WarningPanel", true);
+            fail?.Invoke();
             return;
         }
         else

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
@@ -11,10 +8,13 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField]
     private InGameMaterial test;
 
+    [HideInInspector] public Camera MainCam;
+
     private void Awake()
     {
         MakePool();
 
+        MainCam = Camera.main;
         //Application.targetFrameRate = 60;
     }
 

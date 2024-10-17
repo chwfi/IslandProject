@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class PopupUIManager : MonoSingleton<PopupUIManager>
 {
@@ -17,7 +15,7 @@ public class PopupUIManager : MonoSingleton<PopupUIManager>
         }
     }
 
-    public void SetPopupUI(string popupName, bool value)
+    public void AccessPopupUI(string popupName, bool value)
     {
         PopupDictionary[popupName].AccessUI(value);
     }

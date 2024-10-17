@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pool<T> where T : PoolableMono
@@ -42,6 +43,7 @@ public class Pool<T> where T : PoolableMono
 
     public void Push(T obj)
     {
+        obj.transform.parent = null;
         obj.gameObject.SetActive(false);
         _pool.Push(obj);
     }

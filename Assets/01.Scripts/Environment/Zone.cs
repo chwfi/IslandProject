@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -31,10 +29,18 @@ public class Zone : MonoBehaviour
         }
     }
 
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
+
     private void OnMouseDown() 
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-        
+        if (IsPointerOverUIObject()) return;
         ZoneManager.Instance.SetZone(this);
     }
 
@@ -79,6 +85,6 @@ public class Zone : MonoBehaviour
             effect.transform.position = transform.position;
             _camera.SetActive(false);
             Destroy(this.gameObject);
-        });
+        }, null);
     }
 }

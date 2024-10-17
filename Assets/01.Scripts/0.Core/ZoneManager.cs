@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ZoneManager : MonoSingleton<ZoneManager>
@@ -7,8 +6,8 @@ public class ZoneManager : MonoSingleton<ZoneManager>
 
     private ExpandUI _panel;
 
-    public Zone PreviousZone;
-    public Zone CurrentZone;
+    public Zone PreviousZone { get; private set; }
+    public Zone CurrentZone { get; private set; }
 
     private void Awake() 
     {

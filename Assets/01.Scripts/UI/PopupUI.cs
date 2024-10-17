@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,9 +10,11 @@ public class PopupUI : PoolableMono
     [Header("FadeValue")]
     [SerializeField] private float _fadeDealy = 0f; // UI가 켜질때 바로 켜지지 않고 딜레이를 줄것인가
     [SerializeField] private float _fadeTime; // UI가 켜지거나 꺼질 때 몇초동안 페이드를 줄것인가
+    [SerializeField] private float _disableDelay; // 꺼지기까지 몇초
 
     [Header("Option")]
     [SerializeField] private bool _activeOnStart; // 시작했을 때 켜줄것인가
+    [SerializeField] private bool _autoDisable; // 켜진 후 꺼지게 할것인가
 
     protected CanvasGroup _canvasGroup; // 팝업 UI는 캔버스 그룹으로 관리한다
     protected List<ButtonUI> _buttonList = new(); // UI에 달려있는 버튼들의 리스트
@@ -36,8 +37,15 @@ public class PopupUI : PoolableMono
     {
         SetInteractive(active);
 
-        if (active)
-            transform.SetAsLastSibling(); // 만약 UI가 켜진다면, 자식 순서를 가장 나중으로 하여 맨 앞에 띄워지게 한다.
+        if (active) // 켜졌을 때
+        {
+            transform.SetAsLastSibling(); // 자식 순서를 가장 나중으로 하여 맨 앞에 띄워지게 한다.
+            
+            if (_autoDisable) // 자동 비활성화가 켜져있다면, disableDelay만큼 기다렸다가 UI 꺼줌
+            {
+                CoroutineUtil.CallWaitForSeconds(_disableDelay, () => AccessUI(false));
+            }
+        }
 
         CoroutineUtil.CallWaitForSeconds(_fadeDealy, () => // 코루틴 유틸 클래스를 이용하여 딜레이 시간만큼 기다려주고,
         {

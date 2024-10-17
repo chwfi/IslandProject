@@ -9,7 +9,6 @@ public class TrafficQuestSaveData
     public MaterialGroupData[] materialGroupData;
 }
 
-[System.Serializable]
 public class MaterialGroupData
 {
     public MaterialState materialState;
@@ -43,17 +42,15 @@ public class TrafficQuest : Quest, ICloneable<Quest>, IQuestable
         foreach (var matGroup in _materialGroups)
         {
             var matData = MaterialManager.Instance.FindMaterialBy(matGroup.material.CodeName);
-            Debug.Log(matData);
+
             if (matData.MaterialCounter.materialCount >= matGroup.needAmount)
             {
-                Debug.Log("Material group complete");
                 matGroup.Complete();
             }
         }
 
         if (IsAllMaterialGroupMet)
         {
-            Debug.Log("All Complete");
             if (_isAutoComplete)
             {
                 OnComplete();
@@ -68,6 +65,8 @@ public class TrafficQuest : Quest, ICloneable<Quest>, IQuestable
     public override void OnComplete()
     {
         base.OnComplete();
+
+        QuestManager.Instance.ActiveTrafficQuests.Remove(this);
 
         var materialManager = MaterialManager.Instance;
         materialManager.OnReceivedNotify -= OnCheckCompleteMaterial;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -12,13 +10,17 @@ public class CameraController : MonoSingleton<CameraController>
     [SerializeField] private float _maxScroll;
 
     private CinemachineVirtualCamera _camera;
-
+    public CinemachineVirtualCamera Cam => _camera;
+    
     private Vector2 _lastTouchPosition;
 
+    [HideInInspector] public bool canControll;
 
     private void Awake() 
     {
         _camera = transform.Find("MainCam").GetComponent<CinemachineVirtualCamera>(); 
+
+        canControll = true;
     }
 
     public void SetCameraFollow(Transform root)
@@ -35,8 +37,11 @@ public class CameraController : MonoSingleton<CameraController>
     private void Update() 
     {
         #if UNITY_IOS
-        MoveCamera_Mobile();
-        ZoomCamera_Mobile();
+        if (canControll)
+        {
+            MoveCamera_Mobile();
+            ZoomCamera_Mobile();
+        }
         #endif
 
         #if UNITY_EDITOR

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/Quest/TaskTarget/String", fileName = "TaskTarget_")]
