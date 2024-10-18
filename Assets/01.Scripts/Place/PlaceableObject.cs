@@ -1,15 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
 using DG.Tweening;
 using UnityEngine;
-using Util;
 
-public class PlaceableObject : PoolableMono
+public class PlaceableObject : MonoBehaviour
 {
     [SerializeField] private int _price;
 
     private BuildOptionUI _buildOptionUI;
-
     private PlaceableChecker _placeableChecker;
 
     private void Awake() 
@@ -19,8 +15,7 @@ public class PlaceableObject : PoolableMono
 
     public void SetPlaceableObject() 
     {
-        _buildOptionUI = PoolManager.Instance.Pop("BuildOptionUI") as BuildOptionUI;
-        SetTransformUtil.SetUIParent(_buildOptionUI.transform, transform, new Vector3(0, 4, -1), false);
+        _buildOptionUI = transform.GetComponentInChildren<BuildOptionUI>();
         _buildOptionUI.SetObject(this);
 
         if (!_placeableChecker.gameObject.activeInHierarchy)
@@ -41,11 +36,13 @@ public class PlaceableObject : PoolableMono
                 effect.transform.position = transform.position;
             });
             _placeableChecker.gameObject.SetActive(false);
-            PoolManager.Instance.Push(_buildOptionUI);
+            _buildOptionUI.gameObject.SetActive(false);
+
+            CameraController.Instance.canControll = true;
         }, 
         () => 
         {
-            PoolManager.Instance.Push(this);
+            Destroy(this.gameObject);
         });
     }
 }

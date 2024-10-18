@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlaceManager : MonoSingleton<PlaceManager>
 {
+    [Header("Database")]
+    [SerializeField] private PlaceableDatabase _placeableDatabase;
+
     [Header("Grid Setting")]
     [SerializeField] private float _gridSize;
     [SerializeField] private float _initialHeight;
@@ -20,9 +23,9 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     private Camera _mainCamera;
     private Vector3 _gridPosition;
 
-    private bool _canPlace = false;
     private bool _isDragging = false;
 
+    public PlaceableDatabase PlaceableDatabase => _placeableDatabase;
     public Material PositiveMaterial => _positiveMaterial;
     public Material NegativeMaterial => _negativeMaterial;
     public float RayDistance => _rayDistance;
@@ -35,14 +38,13 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         _target.transform.position = new Vector3(51.95f, _initialHeight, 0.61f);
     }
 
-    public void SetPlaceableObject(PlaceableObject placeableObject)
+    public void SetPlaceableObject(PlaceableObjectData data)
     {
-        CurrentPlaceableObject = Instantiate(placeableObject);
+        CurrentPlaceableObject = Instantiate(data.prefab);
         CurrentPlaceableObject.transform.position = _target.transform.position;
         CurrentPlaceableObject.SetPlaceableObject();
         
         CameraController.Instance.canControll = false;
-        _canPlace = true;
     }
 
     public void CancelPlace()
@@ -50,18 +52,16 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         Destroy(CurrentPlaceableObject.gameObject);
 
         CameraController.Instance.canControll = true;
-        _canPlace = false;
     }
 
     private void Update() 
     {
-        if (_canPlace)
+        if (CurrentPlaceableObject == null) return;
+
+        HandleInput();
+        if (_isDragging)
         {
-            HandleInput();
-            if (_isDragging)
-            {
-                Follow();
-            }
+            Follow();
         }
     }
 
@@ -98,13 +98,12 @@ public class PlaceManager : MonoSingleton<PlaceManager>
 
     private void LateUpdate() 
     {
-        if (_canPlace)
-        {
-            _gridPosition.x = Mathf.Floor((_target.transform.position.x / _gridSize)) * _gridSize + _gridSize / 2f;    
-            _gridPosition.z = Mathf.Floor((_target.transform.position.z / _gridSize)) * _gridSize + _gridSize / 2f;
+        if (CurrentPlaceableObject == null) return;
 
-            CurrentPlaceableObject.transform.position = 
-            new Vector3(_gridPosition.x, CurrentPlaceableObject.transform.position.y, _gridPosition.z);
-        }
+        _gridPosition.x = Mathf.Floor((_target.transform.position.x / _gridSize)) * _gridSize + _gridSize / 2f;    
+        _gridPosition.z = Mathf.Floor((_target.transform.position.z / _gridSize)) * _gridSize + _gridSize / 2f;
+
+        CurrentPlaceableObject.transform.position = 
+        new Vector3(_gridPosition.x, CurrentPlaceableObject.transform.position.y, _gridPosition.z); 
     }
 }
