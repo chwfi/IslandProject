@@ -45,15 +45,11 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         CurrentPlaceableObject = Instantiate(data.prefab);
         CurrentPlaceableObject.transform.position = _target.transform.position;
         CurrentPlaceableObject.SetPlaceableObject();
-        
-        CameraController.Instance.canControll = false;
     }
 
     public void CancelPlace()
     {
         Destroy(CurrentPlaceableObject.gameObject);
-
-        CameraController.Instance.canControll = true;
     }
 
     private void Update() 
@@ -72,17 +68,18 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit) && hit.transform == CurrentPlaceableObject.transform)
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform == CurrentPlaceableObject.transform)
             {
                 _isDragging = true;
+                CameraController.Instance.canControll = false;
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             _isDragging = false;
+            CameraController.Instance.canControll = true;
         }
     }
 
