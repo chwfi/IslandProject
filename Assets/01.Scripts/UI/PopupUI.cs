@@ -7,10 +7,13 @@ using System;
 
 public class PopupUI : PoolableMono
 {
-    [Header("FadeValue")]
+    [Header("Fade Value")]
     [SerializeField] private float _fadeDealy = 0f; // UI가 켜질때 바로 켜지지 않고 딜레이를 줄것인가
     [SerializeField] private float _fadeTime; // UI가 켜지거나 꺼질 때 몇초동안 페이드를 줄것인가
     [SerializeField] private float _disableDelay; // 꺼지기까지 몇초
+
+    [Header("Move Value")]
+    [SerializeField] private float _moveDuration;
 
     [Header("Option")]
     [SerializeField] private bool _activeOnStart; // 시작했을 때 켜줄것인가
@@ -18,7 +21,6 @@ public class PopupUI : PoolableMono
 
     protected CanvasGroup _canvasGroup; // 팝업 UI는 캔버스 그룹으로 관리한다
     protected List<ButtonUI> _buttonList = new(); // UI에 달려있는 버튼들의 리스트
-
 
     public virtual void Awake()
     {
@@ -53,10 +55,9 @@ public class PopupUI : PoolableMono
         });
     }
 
-    public virtual void MoveUI(Vector3 pos, float duration, Action callback)
+    public virtual void MoveUI(Vector3 pos, Action callback = null)
     {
-        transform.GetComponent<RectTransform>().DOAnchorPos(pos, duration).
-            OnComplete(() => callback?.Invoke());
+        transform.GetComponent<RectTransform>().DOAnchorPos(pos, _moveDuration).OnComplete(() => callback?.Invoke());     
     }
 
     private void SetInteractive(bool value)

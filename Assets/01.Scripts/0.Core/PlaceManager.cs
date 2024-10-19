@@ -40,6 +40,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
 
     public void SetPlaceableObject(PlaceableObjectData data)
     {
+        PopupUIManager.Instance.MovePopupUI("CreatePanel", new Vector3(0, -375, 0));
+
         CurrentPlaceableObject = Instantiate(data.prefab);
         CurrentPlaceableObject.transform.position = _target.transform.position;
         CurrentPlaceableObject.SetPlaceableObject();
