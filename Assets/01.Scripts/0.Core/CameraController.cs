@@ -100,7 +100,6 @@ public class CameraController : MonoSingleton<CameraController>
         wheel.m_CameraDistance = Mathf.Clamp(wheel.m_CameraDistance - increment, _minScroll, _maxScroll);
     }
 
-
     private void MoveCamera()
     {
         float x = Input.GetAxisRaw("Horizontal");
