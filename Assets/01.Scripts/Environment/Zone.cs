@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 public class Zone : MonoBehaviour
 {
     [SerializeField] private int _expandPrice; 
-    [SerializeField] private GameObject _camera;
-
     public int ExpandPrice => _expandPrice;
+
+    private GameObject _camera;
 
     private List<MeshRenderer> _childRenderers = new List<MeshRenderer>();
     private List<ParticleSystem> _particles = new List<ParticleSystem>();
@@ -16,6 +16,7 @@ public class Zone : MonoBehaviour
 
     private void Awake() 
     {
+        _camera = transform.Find("Camera").gameObject;
         _childRenderers.AddRange(GetComponentsInChildren<MeshRenderer>());
         _particles.AddRange(GetComponentsInChildren<ParticleSystem>());
         _propertyBlock = new MaterialPropertyBlock();
@@ -29,6 +30,23 @@ public class Zone : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null && hit.collider.transform.IsChildOf(transform))
+                {
+                    ZoneManager.Instance.SetZone(this);
+                }
+            }
+        }
+    }
+
     private bool IsPointerOverUIObject()
     {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
@@ -38,11 +56,11 @@ public class Zone : MonoBehaviour
         return results.Count > 0;
     }
 
-    private void OnMouseDown() 
-    {
-        if (IsPointerOverUIObject()) return;
-        ZoneManager.Instance.SetZone(this);
-    }
+    // private void OnMouseDown() 
+    // {
+    //     if (IsPointerOverUIObject()) return;
+    //     ZoneManager.Instance.SetZone(this);
+    // }
 
     public void SetZoneElements(Color color)
     {
