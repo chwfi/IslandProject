@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: m_tree_canopies_top_ABCDEF 4
   m_Shader: {fileID: 4800000, guid: 5c0a2cf3121e44d4cb6a0367d8a1afba, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _APPLYUNITYFOG
   - _HEIGHTFOGCOLOR
@@ -19,6 +21,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -99,7 +102,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BackfaceEmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Color: {r: 0.31993008, g: 0.61, b: 0, a: 1}
+    - _Color: {r: 0.31993005, g: 0.61, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HeightFogColor: {r: 0, g: 0, b: 0, a: 1}
     - _HeightFogColor2: {r: 0, g: 0, b: 0, a: 0}

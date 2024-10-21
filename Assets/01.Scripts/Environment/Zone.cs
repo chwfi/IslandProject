@@ -1,32 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class Zone : MonoBehaviour
 {
+    [Header("Price")]
     [SerializeField] private int _expandPrice; 
+
+    [Header("Effect Setting Position")]
+    [SerializeField] private Transform[] _effectPlayTransforms;
+
     public int ExpandPrice => _expandPrice;
 
-    private GameObject _camera;
-
-    private List<MeshRenderer> _childRenderers = new List<MeshRenderer>();
-    private List<ParticleSystem> _particles = new List<ParticleSystem>();
-    private MaterialPropertyBlock _propertyBlock;
-    private Dictionary<MeshRenderer, Color> _originalColors = new Dictionary<MeshRenderer, Color>();
+    private readonly List<ParticleSystem> _particles = new();
+    private readonly List<Outline> _outlines = new();
 
     private void Awake() 
     {
-        _camera = transform.Find("Camera").gameObject;
-        _childRenderers.AddRange(GetComponentsInChildren<MeshRenderer>());
         _particles.AddRange(GetComponentsInChildren<ParticleSystem>());
-        _propertyBlock = new MaterialPropertyBlock();
 
-        foreach (var renderer in _childRenderers)
+        Transform[] allChildren = GetComponentsInChildren<Transform>();
+        foreach(Transform child in allChildren) 
         {
-            renderer.GetPropertyBlock(_propertyBlock);
-            Color originalColor;
-            originalColor = renderer.sharedMaterial.color; // 기본 머터리얼 색을 저장
-            _originalColors[renderer] = originalColor;
+            var outline = child.gameObject.AddComponent<Outline>();
+
+            outline.enabled = false;
+            outline.OutlineColor = ZoneManager.Instance.OutlineColor;
+            outline.OutlineWidth = ZoneManager.Instance.OutlineWidth;
+
+            _outlines.Add(outline);
         }
     }
 
@@ -34,10 +37,12 @@ public class Zone : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            if (IsPointerOverUIObject())
+                return;
 
-            if (Physics.Raycast(ray, out hit))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.collider != null && hit.collider.transform.IsChildOf(transform))
                 {
@@ -56,21 +61,11 @@ public class Zone : MonoBehaviour
         return results.Count > 0;
     }
 
-    // private void OnMouseDown() 
-    // {
-    //     if (IsPointerOverUIObject()) return;
-    //     ZoneManager.Instance.SetZone(this);
-    // }
-
-    public void SetZoneElements(Color color)
+    public void SetZoneElements()
     {
-        _camera.SetActive(true);
-
-        foreach (var renderer in _childRenderers)
+        foreach (var outline in _outlines)
         {
-            renderer.GetPropertyBlock(_propertyBlock);
-            _propertyBlock.SetColor("_Color", color); // 컬러 속성 변경
-            renderer.SetPropertyBlock(_propertyBlock);
+            outline.enabled = true;
         }
 
         _particles.ForEach(p => p.Play());
@@ -78,18 +73,9 @@ public class Zone : MonoBehaviour
 
     public void DisableZoneElements()
     {
-        if (_childRenderers[0] == null) return;
-
-        _camera.SetActive(false);
-
-        foreach (var renderer in _childRenderers)
+        foreach (var outline in _outlines)
         {
-            if (_originalColors.ContainsKey(renderer))
-            {
-                renderer.GetPropertyBlock(_propertyBlock);
-                _propertyBlock.SetColor("_Color", _originalColors[renderer]); // 원래 색깔로 복원
-                renderer.SetPropertyBlock(_propertyBlock);
-            }
+            outline.enabled = false;
         }
 
         _particles.ForEach(p => p.Stop());
@@ -99,9 +85,11 @@ public class Zone : MonoBehaviour
     {
         ItemManager.Instance.UseCoin(_expandPrice, () => 
         {
-            var effect = PoolManager.Instance.Pop("ExplosionEffect");
-            effect.transform.position = transform.position;
-            _camera.SetActive(false);
+            foreach (var trm in _effectPlayTransforms)
+            {
+                var effect = PoolManager.Instance.Pop("LeafExplosionEffect");
+                effect.transform.position = trm.position;
+            }
             Destroy(this.gameObject);
         }, null);
     }

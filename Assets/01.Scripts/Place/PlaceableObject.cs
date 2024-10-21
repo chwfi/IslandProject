@@ -1,9 +1,9 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class PlaceableObject : MonoBehaviour
+public class PlaceableObject : PoolableMono
 {
-    [SerializeField] private int _price;
+    private PlaceableObjectData _objectData;
 
     private BuildOptionUI _buildOptionUI;
     private PlaceableChecker _placeableChecker;
@@ -13,8 +13,10 @@ public class PlaceableObject : MonoBehaviour
         _placeableChecker = transform.GetComponentInChildren<PlaceableChecker>();    
     }
 
-    public void SetPlaceableObject() 
+    public void SetPlaceableObject(PlaceableObjectData data) 
     {
+        _objectData = data;
+
         _buildOptionUI = transform.GetComponentInChildren<BuildOptionUI>();
         _buildOptionUI.SetObject(this);
 
@@ -24,11 +26,11 @@ public class PlaceableObject : MonoBehaviour
         }
     }
 
-    public void OnPlace()
+    public virtual void OnPlace()
     {
         if (!_placeableChecker.CanPlace) return;
 
-        ItemManager.Instance.UseCoin(_price, () => 
+        ItemManager.Instance.UseCoin(_objectData.price, () => 
         {
             transform.DOMoveY(_placeableChecker.transform.position.y, 0.05f).OnComplete(() =>
             {
@@ -42,7 +44,7 @@ public class PlaceableObject : MonoBehaviour
         }, 
         () => 
         {
-            Destroy(this.gameObject);
+            PoolManager.Instance.Push(this);
         });
     }
 }

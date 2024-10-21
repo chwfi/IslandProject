@@ -13,4 +13,5 @@ public class PoolingPair
 public class PoolingList : ScriptableObject
 {
     public List<PoolingPair> PoolingPairs;
+    public List<PoolingPair> PlaceableObjects;
 }

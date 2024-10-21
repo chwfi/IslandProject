@@ -155,12 +155,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 740021583695263227}
-  - component: {fileID: 7684309963032906354}
+  - component: {fileID: 2198807730209114876}
   - component: {fileID: 1790189822047882789}
   - component: {fileID: 5510493162576033394}
   - component: {fileID: 4382560442869875737}
   m_Layer: 0
-  m_Name: Field
+  m_Name: CornField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +183,7 @@ Transform:
   - {fileID: 4236289373143049944}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &7684309963032906354
+--- !u!114 &2198807730209114876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9180140512040064658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66392484d54da4e47910161fef688f0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 629e0f7b732be40ca985b1e73b9d0785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _price: 0

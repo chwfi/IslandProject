@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: m_tree_canopies_bottom_ABCDEF 4
   m_Shader: {fileID: 4800000, guid: 5c0a2cf3121e44d4cb6a0367d8a1afba, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _APPLYUNITYFOG
   - _EMISSION
@@ -20,6 +22,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -84,7 +87,7 @@ Material:
     - _HeightFogPow2: 1
     - _HeightFogStart: -500
     - _HeightFogStart2: 0
-    - _Metallic: 0.137
+    - _Metallic: 0.246
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02

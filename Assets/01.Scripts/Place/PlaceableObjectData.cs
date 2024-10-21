@@ -7,6 +7,6 @@ public class PlaceableObjectData : ScriptableObject
 {
     public Sprite icon;
     public string objectName;
+    public string uiName;
     public int price;
-    public PlaceableObject prefab;
 }

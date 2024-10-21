@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class ZoneManager : MonoSingleton<ZoneManager>
 {
-    [SerializeField] private Color _selectedColor;
+    [Header("Outline Setting")]
+    [SerializeField] private Color _outlineColor;
+    [SerializeField] private float _outlineWidth;
 
-    private ExpandUI _panel;
+    public Color OutlineColor => _outlineColor;
+    public float OutlineWidth => _outlineWidth;
 
     public Zone PreviousZone { get; private set; }
     public Zone CurrentZone { get; private set; }
+
+    private ExpandUI _panel;
 
     private void Awake() 
     {
@@ -22,8 +27,7 @@ public class ZoneManager : MonoSingleton<ZoneManager>
         if (PreviousZone != null)
             PreviousZone.DisableZoneElements();
 
-        CurrentZone.SetZoneElements(_selectedColor);
-
+        CurrentZone.SetZoneElements();
         _panel.SetUI(CurrentZone);
     }
 

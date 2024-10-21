@@ -20,7 +20,7 @@ public class StructureUI : PoolableMono
     public void SetUI(PlaceableObjectData data)
     {
         _icon.sprite = data.icon;
-        _nameText.text = data.objectName;
+        _nameText.text = data.uiName;
         _priceText.text = $"{data.price}";
 
         _button.onClick.AddListener(() => PlaceManager.Instance.SetPlaceableObject(data));

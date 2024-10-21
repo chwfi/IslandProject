@@ -23,6 +23,7 @@ public class GameManager : MonoSingleton<GameManager>
         PoolManager.Instance = new PoolManager(transform);
 
         _poolingList.PoolingPairs.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
+        _poolingList.PlaceableObjects.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
 
     private void Update() 

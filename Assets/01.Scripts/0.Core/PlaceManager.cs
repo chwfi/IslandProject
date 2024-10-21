@@ -35,26 +35,27 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     {
         _mainCamera = Camera.main;   
 
-        _target.transform.position = new Vector3(51.95f, _initialHeight, 0.61f);
+        _target.transform.position = new Vector3(73.5f, _initialHeight, 22f);
     }
 
     public void SetPlaceableObject(PlaceableObjectData data)
     {
         PopupUIManager.Instance.MovePopupUI("CreatePanel", new Vector3(0, -375, 0));
 
-        CurrentPlaceableObject = Instantiate(data.prefab);
+        CurrentPlaceableObject = PoolManager.Instance.Pop(data.objectName) as PlaceableObject;
         CurrentPlaceableObject.transform.position = _target.transform.position;
-        CurrentPlaceableObject.SetPlaceableObject();
+        CurrentPlaceableObject.SetPlaceableObject(data);
     }
 
     public void CancelPlace()
     {
-        Destroy(CurrentPlaceableObject.gameObject);
+        PoolManager.Instance.Push(CurrentPlaceableObject);
     }
 
     private void Update() 
     {
-        if (CurrentPlaceableObject == null) return;
+        if (CurrentPlaceableObject == null) 
+            return;
 
         HandleInput();
         if (_isDragging)
@@ -97,7 +98,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
 
     private void LateUpdate() 
     {
-        if (CurrentPlaceableObject == null) return;
+        if (CurrentPlaceableObject == null) 
+            return;
 
         _gridPosition.x = Mathf.Floor((_target.transform.position.x / _gridSize)) * _gridSize + _gridSize / 2f;    
         _gridPosition.z = Mathf.Floor((_target.transform.position.z / _gridSize)) * _gridSize + _gridSize / 2f;

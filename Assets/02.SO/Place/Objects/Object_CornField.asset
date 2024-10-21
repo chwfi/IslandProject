@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Object_CornField
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 55aeecd0c39994c90a9e26c08dee2994, type: 3}
-  objectName: "\uC625\uC218\uC218\uBC2D"
+  objectName: CornField
+  uiName: "\uC625\uC218\uC218\uBC2D"
   price: 10
-  prefab: {fileID: 7684309963032906354, guid: a025b7f9c54e24a27bed10ff1f9ef481, type: 3}
