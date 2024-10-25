@@ -7,10 +7,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     [Header("Database")]
     [SerializeField] private PlaceableDatabase _placeableDatabase;
 
-    [Header("Grid Setting")]
-    [SerializeField] private float _gridSize;
-    [SerializeField] private float _initialHeight;
-    [SerializeField] private GameObject _target;
+    [Header("Grid Target")]
+    [SerializeField] private GameObject _targetRoot;
 
     [Header("PlaceableObject Setting")]
     [SerializeField] private Material _positiveMaterial;
@@ -22,6 +20,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
 
     private Camera _mainCamera;
     private Vector3 _gridPosition;
+    private float _gridSize;
+    private float _initialHeight;
 
     private bool _isDragging = false;
 
@@ -34,8 +34,13 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     private void Awake() 
     {
         _mainCamera = Camera.main;   
+        _initialHeight = _targetRoot.transform.position.y;
+    }
 
-        _target.transform.position = new Vector3(73.5f, _initialHeight, 22f);
+    public void InitTargetHeight()
+    {
+        _targetRoot.transform.position = new Vector3
+        (_targetRoot.transform.position.x, _initialHeight, _targetRoot.transform.position.z);
     }
 
     public void SetPlaceableObject(PlaceableObjectData data)
@@ -43,7 +48,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         PopupUIManager.Instance.MovePopupUI("CreatePanel", new Vector3(0, -375, 0));
 
         CurrentPlaceableObject = PoolManager.Instance.Pop(data.objectName) as PlaceableObject;
-        CurrentPlaceableObject.transform.position = _target.transform.position;
+        _gridSize = CurrentPlaceableObject.transform.localScale.x * 4f;
+        CurrentPlaceableObject.transform.position = _targetRoot.transform.position;
         CurrentPlaceableObject.SetPlaceableObject(data);
     }
 
@@ -70,7 +76,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform == CurrentPlaceableObject.transform)
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform == 
+            CurrentPlaceableObject.ModelObject.transform)
             {
                 _isDragging = true;
                 CameraController.Instance.canControll = false;
@@ -91,8 +98,7 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Vector3 targetPosition = hit.point;
-            targetPosition.y = _initialHeight;
-            _target.transform.position = targetPosition;
+            _targetRoot.transform.position = targetPosition;
         }
     }
 
@@ -101,8 +107,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         if (CurrentPlaceableObject == null) 
             return;
 
-        _gridPosition.x = Mathf.Floor((_target.transform.position.x / _gridSize)) * _gridSize + _gridSize / 2f;    
-        _gridPosition.z = Mathf.Floor((_target.transform.position.z / _gridSize)) * _gridSize + _gridSize / 2f;
+        _gridPosition.x = Mathf.Floor((_targetRoot.transform.position.x / _gridSize)) * _gridSize + _gridSize / 2f;    
+        _gridPosition.z = Mathf.Floor((_targetRoot.transform.position.z / _gridSize)) * _gridSize + _gridSize / 2f;
 
         CurrentPlaceableObject.transform.position = 
         new Vector3(_gridPosition.x, CurrentPlaceableObject.transform.position.y, _gridPosition.z); 

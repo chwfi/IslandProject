@@ -16,6 +16,7 @@ public class CameraController : MonoSingleton<CameraController>
     private Vector2 _lastTouchPosition;
 
     [HideInInspector] public bool canControll;
+    [HideInInspector] public bool isMoving;
 
     private void Awake() 
     {
@@ -76,6 +77,12 @@ public class CameraController : MonoSingleton<CameraController>
                 _cameraRoot.position += _moveSpeed * Time.deltaTime * (-moveDirection);
 
                 _lastTouchPosition = touch.position;
+
+                isMoving = true;
+            }
+            else
+            {
+                isMoving = false;
             }
         }
     }

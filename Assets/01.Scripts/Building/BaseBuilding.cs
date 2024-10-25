@@ -1,13 +1,5 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class BaseBuilding : MonoBehaviour
+public class BaseBuilding : PoolableMono
 {
-    protected bool IsClickable()
-    {
-        if (!EventSystem.current.IsPointerOverGameObject())
-            return true;
-        else
-            return false;
-    }
 }

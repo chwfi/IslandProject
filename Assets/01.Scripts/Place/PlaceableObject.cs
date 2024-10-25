@@ -3,14 +3,19 @@ using UnityEngine;
 
 public class PlaceableObject : PoolableMono
 {
-    private PlaceableObjectData _objectData;
+    protected PlaceableObjectData _objectData;
 
     private BuildOptionUI _buildOptionUI;
     private PlaceableChecker _placeableChecker;
+    private GameObject _modelObject;
+    public GameObject ModelObject => _modelObject;
+
+    protected bool placed = false;
 
     private void Awake() 
     {
-        _placeableChecker = transform.GetComponentInChildren<PlaceableChecker>();    
+        _placeableChecker = transform.GetComponentInChildren<PlaceableChecker>();   
+        _modelObject = transform.Find("Object").gameObject; 
     }
 
     public void SetPlaceableObject(PlaceableObjectData data) 
@@ -32,15 +37,19 @@ public class PlaceableObject : PoolableMono
 
         ItemManager.Instance.UseCoin(_objectData.price, () => 
         {
-            transform.DOMoveY(_placeableChecker.transform.position.y, 0.05f).OnComplete(() =>
+            _modelObject.transform.DOMoveY(_placeableChecker.transform.position.y, 0.05f).OnComplete(() =>
             {
                 var effect = PoolManager.Instance.Pop("DustEffect");
-                effect.transform.position = transform.position;
+                effect.transform.position = _modelObject.transform.position;
             });
+
             _placeableChecker.gameObject.SetActive(false);
             _buildOptionUI.gameObject.SetActive(false);
+            
+            PlaceManager.Instance.InitTargetHeight();
 
             CameraController.Instance.canControll = true;
+            placed = true;
         }, 
         () => 
         {

@@ -5,8 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/Place/PlaceableObject", fileName = "Object_")]
 public class PlaceableObjectData : ScriptableObject
 {
+    [Header("Info")]
     public Sprite icon;
     public string objectName;
     public string uiName;
     public int price;
+    public InGameMaterial material;
 }

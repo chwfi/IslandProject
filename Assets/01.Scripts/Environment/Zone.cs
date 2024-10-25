@@ -35,12 +35,15 @@ public class Zone : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (CameraController.Instance.isMoving)
+            return;
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            if (IsPointerOverUIObject())
+            if (GameManager.Instance.IsPointerOverUIObject())
                 return;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
@@ -50,15 +53,6 @@ public class Zone : MonoBehaviour
                 }
             }
         }
-    }
-
-    private bool IsPointerOverUIObject()
-    {
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
     }
 
     public void SetZoneElements()

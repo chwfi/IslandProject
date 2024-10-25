@@ -31,6 +31,21 @@ MonoBehaviour:
     poolCount: 15
   - prefab: {fileID: 7577986041812653753, guid: f648bd4b6f57f46238b163f53d727716, type: 3}
     poolCount: 50
+  UI:
+  - prefab: {fileID: 5389934313327157732, guid: c30052931bd534033b452688d8af37e9, type: 3}
+    poolCount: 20
+  Effects:
+  - prefab: {fileID: 6633701788156753862, guid: e27515a12d31242b7a6984c9035e7d66, type: 3}
+    poolCount: 15
+  - prefab: {fileID: 2069606966955620381, guid: 21f392bc0ee9946caba012cf8278025e, type: 3}
+    poolCount: 15
   PlaceableObjects:
   - prefab: {fileID: 2198807730209114876, guid: a025b7f9c54e24a27bed10ff1f9ef481, type: 3}
+    poolCount: 50
+  Plants:
+  - prefab: {fileID: 8905226751184060743, guid: 4c940fba11d904f65a0fe061fd3710f6, type: 3}
+    poolCount: 50
+  - prefab: {fileID: 7746637221469641854, guid: 3cc91414bcdc040dd9f21385dd863276, type: 3}
+    poolCount: 50
+  - prefab: {fileID: 8095932951246673410, guid: a1294a48b91cb457ba72b3d51d4ccf05, type: 3}
     poolCount: 50

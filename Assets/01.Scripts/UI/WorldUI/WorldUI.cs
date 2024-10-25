@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class WorldUI : PoolableMono
 {
-    [SerializeField] private float _scaleFactor;
+    [SerializeField] private float _scaleFactor; // 스케일 조정하는 필드
 
     private Canvas _canvas;
 
@@ -15,7 +15,7 @@ public abstract class WorldUI : PoolableMono
         _canvas.planeDistance = 50;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         Vector3 cameraRotation = GameManager.Instance.MainCam.transform.rotation * Vector3.forward;
         Vector3 posTarget = transform.position + cameraRotation;
