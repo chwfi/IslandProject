@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/01.Scripts/Place/Objects/Plant.meta
 guid: be1d5be7b9a4a4426862384d983c2bf6
+========
+guid: e535c1ee6921044c89870f74d2efaaff
+>>>>>>>> 1f2f4b6512a407aaf4061b6fbf6b88a419069e1a:Assets/01.Scripts/0.AddressablePool.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
