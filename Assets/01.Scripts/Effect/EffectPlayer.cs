@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Util;
 
-public class EffectPlayer : PoolableMono
+public class EffectPlayer : MonoBehaviour, IPoolable
 {
     [Header("Option")]
     [SerializeField] private bool _isStartOnEnable;
@@ -20,7 +20,7 @@ public class EffectPlayer : PoolableMono
             CoroutineUtil.CallWaitForSeconds(_startDelayTime, () => PlayEffect());
         }
 
-        CoroutineUtil.CallWaitForSeconds(_endTime, () => PoolManager.Instance.Push(this));
+        CoroutineUtil.CallWaitForSeconds(_endTime, () => PoolManager.Instance.Return(this));
     }
 
     public void PlayEffect()
@@ -29,5 +29,15 @@ public class EffectPlayer : PoolableMono
         {
             particle.Play();
         }
+    }
+
+    public void OnTakenFromPool()
+    {
+
+    }
+
+    public void OnReturnedToPool()
+    {
+
     }
 }

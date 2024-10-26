@@ -5,7 +5,7 @@ using Util;
 using DG.Tweening;
 using System;
 
-public class PopupUI : PoolableMono
+public class PopupUI : MonoBehaviour, IPoolable
 {
     [Header("Fade Value")]
     [SerializeField] private float _fadeDealy = 0f; // UI가 켜질때 바로 켜지지 않고 딜레이를 줄것인가
@@ -64,5 +64,15 @@ public class PopupUI : PoolableMono
     {
         _canvasGroup.blocksRaycasts = value;
         _canvasGroup.interactable = value;
+    }
+
+    public void OnTakenFromPool()
+    {
+
+    }
+
+    public void OnReturnedToPool()
+    {
+
     }
 }

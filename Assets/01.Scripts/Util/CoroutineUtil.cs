@@ -15,6 +15,11 @@ namespace Util
             _coroutineExecutor = _coroutineObj.AddComponent<CoroutineExecutor>();
         }
 
+        public static void CallCoroutine(IEnumerator coroutine)
+        {
+            _coroutineExecutor.StartCoroutine(coroutine);
+        }
+
         public static void CallWaitForOneFrame(Action action)
         {
             _coroutineExecutor.StartCoroutine(DoCallWaitForOneFrame(action));

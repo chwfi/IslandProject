@@ -39,7 +39,7 @@ public class QuestInfoUI : PopupUI
     {
         if (_isCompleted && !active)
         {
-            PoolManager.Instance.Push(this);
+            PoolManager.Instance.Return(this);
         }
 
         base.AccessUI(active);

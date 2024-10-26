@@ -50,9 +50,8 @@ public class PlaceableChecker : MonoBehaviour
         foreach (Vector3 corner in _corners)
         {
             Ray ray = new Ray(corner, Vector3.down);
-            RaycastHit hit;
 
-            if (!Physics.Raycast(ray, out hit, manager.RayDistance, manager.LayerMask))
+            if (!Physics.Raycast(ray, out RaycastHit hit, manager.RayDistance, manager.LayerMask))
             {
                 return false;
             }

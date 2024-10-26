@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Util;
 
-public class ButtonUI : PoolableMono, IPointerClickHandler
+public class ButtonUI : MonoBehaviour, IPoolable, IPointerClickHandler
 {
     protected Button _button;
     protected event Action _buttonEvent;
@@ -61,5 +61,15 @@ public class ButtonUI : PoolableMono, IPointerClickHandler
     public void StartEvent()
     {
         _buttonEvent?.Invoke();
+    }
+
+    public void OnTakenFromPool()
+    {
+
+    }
+
+    public void OnReturnedToPool()
+    {
+
     }
 }

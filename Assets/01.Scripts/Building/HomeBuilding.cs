@@ -2,7 +2,7 @@ public class HomeBuilding : BaseBuilding
 {
     private void OnMouseDown()
     {   
-        if (IsClickable())
+        if (GameManager.Instance.IsPointerOverUIObject())
         {
             PopupUIManager.Instance.AccessPopupUI("QuestPanel", true);
         }

@@ -21,7 +21,7 @@ public class QuestUI : PopupUI
 
     public void DestroyUI(Quest quest)
     {
-        PoolManager.Instance.Push(this);
+        PoolManager.Instance.Return(this);
 
         quest.OnSetUI -= SetUI;
         quest.OnDestroyUI -= DestroyUI;

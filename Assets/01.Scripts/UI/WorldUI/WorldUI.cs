@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class WorldUI : PoolableMono
+public abstract class WorldUI : MonoBehaviour, IPoolable
 {
-    [SerializeField] private float _scaleFactor;
+    [SerializeField] private float _scaleFactor; // 스케일 조정하는 필드
 
     private Canvas _canvas;
 
@@ -15,7 +15,7 @@ public abstract class WorldUI : PoolableMono
         _canvas.planeDistance = 50;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         Vector3 cameraRotation = GameManager.Instance.MainCam.transform.rotation * Vector3.forward;
         Vector3 posTarget = transform.position + cameraRotation;
@@ -26,5 +26,15 @@ public abstract class WorldUI : PoolableMono
         
         float scale = _scaleFactor * distance / fov;
         transform.localScale = Vector3.one * scale;
+    }
+
+    public void OnTakenFromPool()
+    {
+
+    }
+
+    public void OnReturnedToPool()
+    {
+
     }
 }

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StructureUI : PoolableMono
+public class StructureUI : MonoBehaviour, IPoolable
 {
     [SerializeField] private Image _icon;
     [SerializeField] private TextMeshProUGUI _nameText;
@@ -24,5 +24,15 @@ public class StructureUI : PoolableMono
         _priceText.text = $"{data.price}";
 
         _button.onClick.AddListener(() => PlaceManager.Instance.SetPlaceableObject(data));
+    }
+
+    public void OnTakenFromPool()
+    {
+
+    }
+
+    public void OnReturnedToPool()
+    {
+
     }
 }

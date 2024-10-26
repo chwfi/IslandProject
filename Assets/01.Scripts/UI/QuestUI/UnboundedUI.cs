@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine;
 
-public abstract class UnboundedUI : PoolableMono
+public abstract class UnboundedUI : MonoBehaviour, IPoolable
 {
     protected TextMeshProUGUI _amountText;
     protected Image _icon;
@@ -13,4 +14,14 @@ public abstract class UnboundedUI : PoolableMono
     }  
 
     public abstract void UpdateUI();
+
+    public void OnTakenFromPool()
+    {
+
+    }
+
+    public void OnReturnedToPool()
+    {
+
+    }
 }

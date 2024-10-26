@@ -15,4 +15,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 55aeecd0c39994c90a9e26c08dee2994, type: 3}
   objectName: CornField
   uiName: "\uC625\uC218\uC218\uBC2D"
-  price: 10
+  price: 0
+  material: {fileID: 11400000, guid: 7187aef006ca44777a49a3f8f6f696a1, type: 2}
