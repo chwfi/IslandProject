@@ -47,9 +47,8 @@ public class PoolManager : MonoSingleton<PoolManager>
         pool.Push(poolableObject);
     }
 
-    void Awake()
+    public void Init()
     {
-        //allAvailablePools[assetReferenceToInstantiate.RuntimeKey] = this;
         loadingCoroutine = StartCoroutine(SetupPools());
     }
 
