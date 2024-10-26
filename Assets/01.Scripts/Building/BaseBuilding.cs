@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public class BaseBuilding : PoolableMono
+public class BaseBuilding : MonoBehaviour
 {
 }
