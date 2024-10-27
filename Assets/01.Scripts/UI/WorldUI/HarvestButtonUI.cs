@@ -17,7 +17,9 @@ public class HarvestButtonUI : WorldUI
         {
             obj.OnHarvest();
             _harvestButton.onClick.RemoveAllListeners(); 
-            var effect = PoolManager.Instance.Take("BubbleMuzzleEffect", transform);
+            var effect = PoolManager.Instance.Take("BubbleMuzzleEffect", null) as EffectPlayer;
+            effect.transform.localPosition = transform.position;
+            effect.transform.localScale = Vector3.one;
             PoolManager.Instance.Return(this);
         });
     }

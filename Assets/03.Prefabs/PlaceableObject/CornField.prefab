@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629e0f7b732be40ca985b1e73b9d0785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _objectData: {fileID: 11400000, guid: c2b6d038443e54f7db38b47ac2cbe1f5, type: 2}
 --- !u!1001 &7281071309502543582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -354,6 +355,10 @@ PrefabInstance:
     - target: {fileID: 1741027854020108827, guid: 300d4f7485b854d57acdb5c38cf9a38b, type: 3}
       propertyPath: m_Name
       value: BuildOptionUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741027854020108827, guid: 300d4f7485b854d57acdb5c38cf9a38b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6900039620312682502, guid: 300d4f7485b854d57acdb5c38cf9a38b, type: 3}
       propertyPath: m_Pivot.x

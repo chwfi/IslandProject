@@ -32,7 +32,104 @@ MonoBehaviour:
   - m_GUID: 4311151cac3204d0faa1fe73167d6406
     m_Address: Assets/03.Prefabs/UI/PlaceUI/StructureUI.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98fca81efcf3a49f883c3052ac38ca44
+    m_Address: Assets/03.Prefabs/Effect/DustEffect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Effect
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e27515a12d31242b7a6984c9035e7d66
+    m_Address: Assets/03.Prefabs/Effect/BubbleMuzzleEffect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Effect
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f648bd4b6f57f46238b163f53d727716
+    m_Address: Assets/03.Prefabs/Effect/LeafExplosionEffect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Effect
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21f392bc0ee9946caba012cf8278025e
+    m_Address: Assets/03.Prefabs/Effect/LeafEffect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Effect
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48b6a922a942b435a9e157bc3547645f
+    m_Address: Assets/03.Prefabs/Effect/ExplosionEffect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Effect
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c940fba11d904f65a0fe061fd3710f6
+    m_Address: Assets/03.Prefabs/Plant/Corn/CornFieldSeed.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cc91414bcdc040dd9f21385dd863276
+    m_Address: Assets/03.Prefabs/Plant/Corn/CornFieldMiddle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1294a48b91cb457ba72b3d51d4ccf05
+    m_Address: Assets/03.Prefabs/Plant/Corn/CornFieldComplete.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3918f426e94084aa183f076e9249f022
+    m_Address: Assets/03.Prefabs/UI/QuestUI/QuestUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d4f10a426bdd4206aeb2ca6546f3031
+    m_Address: Assets/03.Prefabs/UI/QuestUI/TaskQuestInfoUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cefeb0f546e44088af5d05fd353caef
+    m_Address: Assets/03.Prefabs/UI/QuestUI/TrafficQuestInfoUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: efae09a5013e940399e590fda61785b3
+    m_Address: Assets/03.Prefabs/UI/QuestUI/UnboundedTaskUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90fed483a5d66499388277bd8184a765
+    m_Address: Assets/03.Prefabs/UI/QuestUI/UnboundedMaterialUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c30052931bd534033b452688d8af37e9
+    m_Address: Assets/03.Prefabs/UI/WorldUI/HarvestButtonUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 300d4f7485b854d57acdb5c38cf9a38b
+    m_Address: Assets/03.Prefabs/UI/WorldUI/BuildOptionUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b9fa8ba97ef14d588875f5e861da2ed
+    m_Address: Assets/03.Prefabs/0.MainResources/Zone.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9dee8bbcdd13643b499a0a20133943cd, type: 2}

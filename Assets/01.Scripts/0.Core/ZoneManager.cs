@@ -14,7 +14,7 @@ public class ZoneManager : MonoSingleton<ZoneManager>
 
     private ExpandUI _panel;
 
-    private void Awake() 
+    private void Start() 
     {
         _panel = PopupUIManager.Instance.transform.GetComponentInChildren<ExpandUI>();
     }

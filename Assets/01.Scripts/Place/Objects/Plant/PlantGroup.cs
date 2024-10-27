@@ -33,9 +33,8 @@ public class PlantGroup : MonoBehaviour
 
         foreach (Vector3 pos in plantPositions)
         {
-            var plant = PoolManager.Instance.Take($"{objName}{plantTypeName}", transform);
-
-            //SetTransformUtil.SetTransformParent(plant.transform, transform, pos, false);
+            var plant = PoolManager.Instance.Take($"{objName}{plantTypeName}", transform) as Plant;
+            SetTransformUtil.SetTransformParent(plant.transform, transform, pos, false);
         }
     }
 }

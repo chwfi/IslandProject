@@ -8,8 +8,6 @@ public class CrystalUI : MonoBehaviour
     private void Awake()
     {
         _amountText = transform.GetComponentInChildren<TextMeshProUGUI>();
-
-        ItemManager.Instance.OnCrystalUpdateUI += UpdateUI;
     }
 
     private void UpdateUI(int amount)

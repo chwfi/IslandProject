@@ -31,7 +31,7 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     public float RayDistance => _rayDistance;
     public LayerMask LayerMask => _layerMask;
 
-    private void Awake() 
+    private void Start() 
     {
         _mainCamera = Camera.main;   
         _initialHeight = _targetRoot.transform.position.y;
@@ -56,6 +56,7 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     public void CancelPlace()
     {
         PoolManager.Instance.Return(CurrentPlaceableObject);
+        InitTargetHeight();
     }
 
     private void Update() 

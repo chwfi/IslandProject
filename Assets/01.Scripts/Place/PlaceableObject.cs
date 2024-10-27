@@ -1,14 +1,17 @@
 using DG.Tweening;
 using UnityEngine;
+using Util;
 
 public class PlaceableObject : MonoBehaviour, IPoolable
 {
+    [SerializeField]
     protected PlaceableObjectData _objectData;
 
-    private BuildOptionUI _buildOptionUI;
-    private PlaceableChecker _placeableChecker;
-    private GameObject _modelObject;
+    protected BuildOptionUI _buildOptionUI;
+    protected PlaceableChecker _placeableChecker;
+    protected GameObject _modelObject;
     public GameObject ModelObject => _modelObject;
+    public PlaceableObjectData ObjectData => _objectData;
 
     protected bool placed = false;
 
@@ -37,10 +40,11 @@ public class PlaceableObject : MonoBehaviour, IPoolable
 
         ItemManager.Instance.UseCoin(_objectData.price, () => 
         {
-            _modelObject.transform.DOMoveY(_placeableChecker.transform.position.y, 0.05f).OnComplete(() =>
-            {
-                var effect = PoolManager.Instance.Take("DustEffect", transform);
-            });
+            _modelObject.transform.DOMoveY(_placeableChecker.transform.position.y, 0.05f);
+            var effect = PoolManager.Instance.Take("DustEffect", transform) as EffectPlayer;
+
+            SetTransformUtil.SetTransformParent(effect.transform, transform, Vector3.zero, false);
+            effect.transform.localScale = new Vector3(3, 3, 3);
 
             _placeableChecker.gameObject.SetActive(false);
             _buildOptionUI.gameObject.SetActive(false);
@@ -56,9 +60,16 @@ public class PlaceableObject : MonoBehaviour, IPoolable
         });
     }
 
-    public void OnTakenFromPool()
+    public virtual void OnTakenFromPool()
     {
-
+        if (placed)
+        {
+            ModelObject.transform.DOMoveY(_placeableChecker.transform.position.y, 0.01f);
+            _placeableChecker.gameObject.SetActive(false);
+            _buildOptionUI.gameObject.SetActive(false);
+            
+            PlaceManager.Instance.InitTargetHeight();
+        }
     }
 
     public void OnReturnedToPool()

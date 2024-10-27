@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Firebase;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LoginSystem : MonoBehaviour
 {
-    public InputField email;
-    public InputField password;
+    public TMP_InputField email;
+    public TMP_InputField password;
 
-    public Text outputText;
+    public TextMeshProUGUI outputText;
 
     private void Start() 
     {

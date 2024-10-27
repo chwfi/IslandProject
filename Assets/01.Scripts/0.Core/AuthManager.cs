@@ -1,6 +1,5 @@
 using System;
 using Firebase.Auth;
-using UnityEditor;
 using UnityEngine;
 
 public class AuthManager : MonoSingleton<AuthManager>
@@ -15,6 +14,11 @@ public class AuthManager : MonoSingleton<AuthManager>
     public void Init()
     {
         _auth = FirebaseAuth.DefaultInstance;
+
+        if (_auth.CurrentUser != null)
+        {
+            Logout();
+        }
 
         _auth.StateChanged += OnChanged;
     }

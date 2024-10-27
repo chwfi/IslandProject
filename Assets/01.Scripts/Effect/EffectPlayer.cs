@@ -11,16 +11,9 @@ public class EffectPlayer : MonoBehaviour, IPoolable
 
     private List<ParticleSystem> _particles = new List<ParticleSystem>();
 
-    private void OnEnable() 
+    private void Start() 
     {
-        _particles.AddRange(transform.GetComponentsInChildren<ParticleSystem>());
-
-        if (_isStartOnEnable)
-        {
-            CoroutineUtil.CallWaitForSeconds(_startDelayTime, () => PlayEffect());
-        }
-
-        CoroutineUtil.CallWaitForSeconds(_endTime, () => PoolManager.Instance.Return(this));
+        _particles.AddRange(transform.GetComponentsInChildren<ParticleSystem>());    
     }
 
     public void PlayEffect()
@@ -33,11 +26,16 @@ public class EffectPlayer : MonoBehaviour, IPoolable
 
     public void OnTakenFromPool()
     {
+        if (_isStartOnEnable)
+        {
+            CoroutineUtil.CallWaitForSeconds(_startDelayTime, () => PlayEffect());
+        }
 
+        CoroutineUtil.CallWaitForSeconds(_endTime, () => PoolManager.Instance.Return(this));
     }
 
     public void OnReturnedToPool()
     {
-
+        
     }
 }

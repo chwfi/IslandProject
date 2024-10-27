@@ -3,6 +3,7 @@ using UnityEngine;
 using Firebase.Database;
 using System;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 public class DataManager : MonoSingleton<DataManager>
 {
@@ -33,6 +34,38 @@ public class DataManager : MonoSingleton<DataManager>
     public void OnLoadData<T>(string id, string baseRoot, Action<T> callback, Action failed)
     {
         StartCoroutine(LoadDataCoroutine(id, baseRoot, callback, failed));
+    }
+
+    public void OnLoadAllData<T>(string baseRoot, Action<List<T>> callback)
+    {
+        StartCoroutine(LoadAllDataCoroutine(baseRoot, callback));
+    }
+
+    private IEnumerator LoadAllDataCoroutine<T>(string baseRoot, Action<List<T>> callback)
+    {
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        var DBTask = reference.Child(userId).Child(baseRoot).GetValueAsync();
+
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+
+        if (DBTask.Result.Value != null)
+        {
+            List<T> loadedDataList = new List<T>();
+            foreach (DataSnapshot childSnapshot in DBTask.Result.Children)
+            {
+                string jsonData = childSnapshot.GetRawJsonValue();
+                T loadedData = JsonConvert.DeserializeObject<T>(jsonData);
+                loadedDataList.Add(loadedData);
+            }
+
+            callback?.Invoke(loadedDataList);
+            Debug.Log($"Loaded {loadedDataList.Count} items from {baseRoot}");
+        }
+        else
+        {
+            Debug.LogWarning($"No data found at {baseRoot}");
+            callback?.Invoke(null);
+        }
     }
 
     private IEnumerator LoadDataCoroutine<T>(string id, string baseRoot, Action<T> callback, Action failed)

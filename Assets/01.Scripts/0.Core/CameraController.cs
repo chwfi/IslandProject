@@ -9,7 +9,7 @@ public class CameraController : MonoSingleton<CameraController>
     [SerializeField] private float _minScroll;
     [SerializeField] private float _maxScroll;
 
-    private CinemachineVirtualCamera _camera;
+    [SerializeField] private CinemachineVirtualCamera _camera;
     public CinemachineVirtualCamera Cam => _camera;
     public Transform CameraRoot => _cameraRoot;
     
@@ -20,19 +20,7 @@ public class CameraController : MonoSingleton<CameraController>
 
     private void Awake() 
     {
-        _camera = transform.Find("MainCam").GetComponent<CinemachineVirtualCamera>(); 
-
         canControll = true;
-    }
-
-    public void SetCameraFollow(Transform root)
-    {
-        _camera.Follow = root;
-    }
-
-    public void InitCameraFollow()
-    {
-        _camera.Follow = _cameraRoot;
     }
 
     #region Move & Rotate

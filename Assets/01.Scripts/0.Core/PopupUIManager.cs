@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopupUIManager : MonoSingleton<PopupUIManager>
+public class PopupUIManager : MonoSingleton<PopupUIManager>, IPoolable
 {
     public Dictionary<string, PopupUI> PopupDictionary = new();
 
-    private void Awake()
+    private void Start()
     {
         var list = GetComponentsInChildren<PopupUI>();
 
@@ -24,5 +24,15 @@ public class PopupUIManager : MonoSingleton<PopupUIManager>
     public void MovePopupUI(string popupName, Vector3 dir)
     {
         PopupDictionary[popupName].MoveUI(dir);
+    }
+
+    public void OnTakenFromPool()
+    {
+
+    }
+
+    public void OnReturnedToPool()
+    {
+
     }
 }

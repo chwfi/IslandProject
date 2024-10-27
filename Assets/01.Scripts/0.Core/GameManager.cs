@@ -7,19 +7,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField]
     private InGameMaterial test;
 
-    [HideInInspector] public Camera MainCam;
-
-    private void Awake()
-    {
-        MakePool();
-
-        MainCam = Camera.main;
-    }
-
-    private void MakePool()
-    {  
-        //PoolManager.Instance.CreatePoolFromAddressable(_poolingList);
-    }
+    [SerializeField] private Camera _mainCam;
+    public Camera MainCam => _mainCam;
 
     public bool IsPointerOverUIObject()
     {

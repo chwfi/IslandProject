@@ -11,7 +11,7 @@ public class ItemSaveData
 public class ItemManager : MonoSingleton<ItemManager>
 {
     public Action<int> OnCoinUpdateUI;
-    public Action<int> OnCrystalUpdateUI;
+    public Action<int> OnPopularityUpdateUI;
 
     private int _coin;
     private int _crystal;
@@ -32,7 +32,6 @@ public class ItemManager : MonoSingleton<ItemManager>
         set
         {
             _crystal = value;
-            OnCrystalUpdateUI?.Invoke(_crystal);
         }
     }
     public int Popularity 
@@ -41,7 +40,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         set
         {
             _popularity = value;
-            // action
+            OnPopularityUpdateUI?.Invoke(_popularity);
         }
     }
 
@@ -110,7 +109,6 @@ public class ItemManager : MonoSingleton<ItemManager>
             {
                 LoadFrom(loadedData);
                 OnCoinUpdateUI?.Invoke(_coin);
-                OnCrystalUpdateUI?.Invoke(_crystal);
             }
             else
             {

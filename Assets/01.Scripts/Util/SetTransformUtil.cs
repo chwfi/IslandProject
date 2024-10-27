@@ -18,7 +18,7 @@ namespace Util
 
         public static void SetTransformParent(Transform subject, Transform parent, Vector3 newPosition, bool worldStay = true)
         {
-            subject.SetParent(parent, worldStay);
+            subject.SetParent(parent, false);
             subject.transform.localPosition = newPosition;
         }
     }

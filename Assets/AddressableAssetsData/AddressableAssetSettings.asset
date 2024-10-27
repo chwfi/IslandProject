@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 1ffab0bd351314ecb9059c95a9aeee3b
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 7d9fda160d5a331fd7989cbe07c3b0fa
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -89,6 +89,9 @@ MonoBehaviour:
     - default
     - PlaceableObject
     - Environment
+    - UI
+    - Effect
+    - Plant
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: e183a0639aa2142debc666f648c8f12b, type: 2}
