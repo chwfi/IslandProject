@@ -11,21 +11,27 @@ public class LevelData
 public class LevelManager : MonoSingleton<LevelManager>
 {
     private const int BASE_REQUIRED_EXP = 250;
-    private const float EXP_INCREASE_RATE = 1.2f; // 레벨당 20% 증가
+    private const float EXP_INCREASE_RATE = 1.2f;
 
     private int _currentLevel = 1;
     private int _currentExp = 0;
+    private int _expForCurrentLevel = 0; // 현재 레벨에서의 경험치
 
     public int CurrentLevel => _currentLevel;
     public int CurrentExp => _currentExp;
     public int RequiredExp => CalculateRequiredExp(_currentLevel);
-
-    [SerializeField] private LevelUI _levelUI;
-
+    
     private void Start()
     {
         ItemManager.Instance.OnPopularityUpdateUI += UpdateExp;
         UpdateExp(ItemManager.Instance.Popularity);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ItemManager.Instance.RecieveItem(RewardTypeEnum.Popularity, 15);
+        }
     }
 
     private void UpdateExp(int popularity)
@@ -36,30 +42,36 @@ public class LevelManager : MonoSingleton<LevelManager>
 
     private void CheckLevelUp()
     {
-        while (_currentExp >= CalculateRequiredExp(_currentLevel))
-        {
-            _currentLevel++;
-            // 레벨업 이벤트 처리 (필요시)
-            OnLevelUp();
-        }
+        // 총 누적 경험치로 레벨 계산
+        int tempExp = _currentExp;
+        int level = 1;
         
-        _levelUI.UpdateLevelUI(_currentLevel, _currentExp, CalculateRequiredExp(_currentLevel));
+        while (tempExp >= CalculateRequiredExp(level))
+        {
+            tempExp -= CalculateRequiredExp(level);
+            level++;
+
+            PopupUIManager.Instance.AccessPopupUI("LevelUpPanel", true);
+        }
+
+        _currentLevel = level;
+        _expForCurrentLevel = tempExp; // 현재 레벨에서의 순수 경험치
+
+        LevelUI.Instance.UpdateLevelUI
+        (
+            _currentLevel, 
+            _expForCurrentLevel,  // 현재 레벨에서의 순수 경험치
+            CalculateRequiredExp(_currentLevel)
+        );
     }
 
     private int CalculateRequiredExp(int level)
     {
-        // 레벨이 올라갈수록 필요 경험치가 증가
         return Mathf.RoundToInt(BASE_REQUIRED_EXP * Mathf.Pow(EXP_INCREASE_RATE, level - 1));
-    }
-
-    private void OnLevelUp()
-    {
-        // 레벨업 시 보상이나 효과 처리
-        Debug.Log($"Level Up! Current Level: {_currentLevel}");
     }
 
     public float GetExpPercentage()
     {
-        return (float)_currentExp / RequiredExp;
+        return (float)_expForCurrentLevel / RequiredExp;
     }
 }

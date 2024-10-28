@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class PoolManager : MonoSingleton<PoolManager>
 {
     [SerializeField] private PoolingList _poolingList;
-    [SerializeField] private int batchSize = 5; // 한 번에 생성(로딩)할 오브젝트 수
+    [SerializeField] private int batchSize = 15; // 한 번에 생성(로딩)할 오브젝트 수
 
     private Dictionary<string, Stack<IPoolable>> pools = new Dictionary<string, Stack<IPoolable>>();
     private Coroutine loadingCoroutine;

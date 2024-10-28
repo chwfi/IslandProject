@@ -10,10 +10,10 @@ public class LevelUI : MonoSingleton<LevelUI>
     [SerializeField] private Image _expSlider;
     [SerializeField] private TextMeshProUGUI _expText;
 
-    public void UpdateLevelUI(int level, int currentExp, int requiredExp)
+    public void UpdateLevelUI(int level, int currentLevelExp, int requiredExp)
     {
-        _levelText.text = $"Lv.{level}";
-        _expSlider.fillAmount = (float)currentExp / requiredExp;
-        _expText.text = $"{currentExp:N0} / {requiredExp:N0}";
+        _levelText.text = $"{level}";
+        _expSlider.fillAmount = (float)currentLevelExp / requiredExp;
+        _expText.text = $"{currentLevelExp:N0} / {requiredExp:N0}";
     }
 }

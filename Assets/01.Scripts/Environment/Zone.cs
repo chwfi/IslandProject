@@ -14,22 +14,24 @@ public class Zone : MonoBehaviour
     public int ExpandPrice => _expandPrice;
 
     private readonly List<ParticleSystem> _particles = new();
-    private readonly List<Outline> _outlines = new();
+
+     private List<MeshRenderer> _childRenderers = new List<MeshRenderer>();
+    private MaterialPropertyBlock _propertyBlock;
+    private Dictionary<MeshRenderer, Color> _originalColors = new Dictionary<MeshRenderer, Color>();
 
     private void Awake() 
     {
         _particles.AddRange(GetComponentsInChildren<ParticleSystem>());
+        _childRenderers.AddRange(GetComponentsInChildren<MeshRenderer>());
 
-        Transform[] allChildren = GetComponentsInChildren<Transform>();
-        foreach(Transform child in allChildren) 
+        _propertyBlock = new MaterialPropertyBlock();
+
+        foreach (var renderer in _childRenderers)
         {
-            var outline = child.gameObject.AddComponent<Outline>();
-
-            outline.enabled = false;
-            outline.OutlineColor = ZoneManager.Instance.OutlineColor;
-            outline.OutlineWidth = ZoneManager.Instance.OutlineWidth;
-
-            _outlines.Add(outline);
+            renderer.GetPropertyBlock(_propertyBlock);
+            Color originalColor;
+            originalColor = renderer.sharedMaterial.color;
+            _originalColors[renderer] = originalColor;
         }
     }
 
@@ -38,12 +40,12 @@ public class Zone : MonoBehaviour
         if (CameraController.Instance.isMoving)
             return;
 
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.GetMouseButtonDown(0))
         {
             if (GameManager.Instance.IsPointerOverUIObject())
                 return;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
@@ -55,11 +57,13 @@ public class Zone : MonoBehaviour
         }
     }
 
-    public void SetZoneElements()
+    public void SetZoneElements(Color color)
     {
-        foreach (var outline in _outlines)
+        foreach (var renderer in _childRenderers)
         {
-            outline.enabled = true;
+            renderer.GetPropertyBlock(_propertyBlock);
+            _propertyBlock.SetColor("_Color", color);
+            renderer.SetPropertyBlock(_propertyBlock);
         }
 
         _particles.ForEach(p => p.Play());
@@ -67,9 +71,14 @@ public class Zone : MonoBehaviour
 
     public void DisableZoneElements()
     {
-        foreach (var outline in _outlines)
+        foreach (var renderer in _childRenderers)
         {
-            outline.enabled = false;
+            if (_originalColors.ContainsKey(renderer))
+            {
+                renderer.GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_Color", _originalColors[renderer]);
+                renderer.SetPropertyBlock(_propertyBlock);
+            }
         }
 
         _particles.ForEach(p => p.Stop());
@@ -81,8 +90,10 @@ public class Zone : MonoBehaviour
         {
             foreach (var trm in _effectPlayTransforms)
             {
-                PoolManager.Instance.Take("LeafExplosionEffect", trm);
+                var effect = PoolManager.Instance.Take("LeafExplosionEffect", null) as EffectPlayer;
+                effect.transform.position = trm.position;
             }
+            QuestManager.Instance.Report("Expand", 1);
             Destroy(this.gameObject);
         }, null);
     }

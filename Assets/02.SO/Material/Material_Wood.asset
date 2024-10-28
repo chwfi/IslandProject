@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Material_Wood
   m_EditorClassIdentifier: 
   _codeName: 0
-  _icon: {fileID: 21300000, guid: 711809308c8403447aada8cf946d51dd, type: 3}
+  _icon: {fileID: 21300000, guid: 5bd169ddf51589b47bb553574905f561, type: 3}
   _materialName: Wood
   _description: 

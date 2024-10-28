@@ -101,6 +101,11 @@ public class ItemManager : MonoSingleton<ItemManager>
         DataManager.Instance.OnSaveData(ToSaveData(), "items", _root);
     }
 
+    public void Init()
+    {
+        _coin = 500;
+    }
+
     public void OnLoadCostData()
     {
         DataManager.Instance.OnLoadData<ItemSaveData>("items", _root, (loadedData) =>
@@ -114,7 +119,7 @@ public class ItemManager : MonoSingleton<ItemManager>
             {
                 Debug.Log("Failed to load data");
             }
-        }, () => Save());            
+        }, () => Init());            
     }
 
     public ItemSaveData ToSaveData()
@@ -122,13 +127,13 @@ public class ItemManager : MonoSingleton<ItemManager>
         return new ItemSaveData
         {
             coinAmount = Coin,
-            crystalAmount = Crystal   
+            popularityAmount = Popularity
         };
     }
 
     public void LoadFrom(ItemSaveData saveData)
     {
         _coin = saveData.coinAmount;
-        _coin = saveData.crystalAmount;
+        _popularity = saveData.popularityAmount;
     }
 }

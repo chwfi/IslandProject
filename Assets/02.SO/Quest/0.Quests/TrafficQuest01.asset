@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: TrafficQuest01
   m_EditorClassIdentifier: 
   _codeName: 1
-  _questName: "\uD018\uC2A4\uD2B82"
+  _questName: "\uD544\uC694 \uC7AC\uB8CC"
   _questIcon: {fileID: 0}
   _questDescription: 
   _rewardGroups:
   - reward: {fileID: 11400000, guid: 9a868640a847b4f889a76ebdc47728f5, type: 2}
-    amount: 25
+    amount: 100
   - reward: {fileID: 11400000, guid: fa090063781b54341b60846b5f3c0fe4, type: 2}
-    amount: 5
+    amount: 45
   _isAutoStartQuest: 0
   _isAutoComplete: 0
   _isCanclable: 0

@@ -3,11 +3,7 @@ using UnityEngine;
 public class ZoneManager : MonoSingleton<ZoneManager>
 {
     [Header("Outline Setting")]
-    [SerializeField] private Color _outlineColor;
-    [SerializeField] private float _outlineWidth;
-
-    public Color OutlineColor => _outlineColor;
-    public float OutlineWidth => _outlineWidth;
+    [SerializeField] private Color _selectedColor;
 
     public Zone PreviousZone { get; private set; }
     public Zone CurrentZone { get; private set; }
@@ -27,7 +23,7 @@ public class ZoneManager : MonoSingleton<ZoneManager>
         if (PreviousZone != null)
             PreviousZone.DisableZoneElements();
 
-        CurrentZone.SetZoneElements();
+        CurrentZone.SetZoneElements(_selectedColor);
         _panel.SetUI(CurrentZone);
     }
 
