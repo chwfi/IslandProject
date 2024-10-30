@@ -1,3 +1,6 @@
+using System;
+
+[Serializable]
 public class MaterialCounter
 {
     public MaterialCounter(int count)

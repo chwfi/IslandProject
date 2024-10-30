@@ -40,40 +40,46 @@ public class CameraController : MonoSingleton<CameraController>
         #endif
     }
 
-    private void MoveCamera_Mobile()
+    private void MoveCamera_Mobile() // 가드 클로즈 패턴을 사용하여 코드 안정성을 증가시켰습니다.
     {
-        if (Input.touchCount == 1)
+        if (Input.touchCount != 1) return;
+
+        Touch touch = Input.GetTouch(0);
+
+        Ray ray = GameManager.Instance.MainCam.ScreenPointToRay(touch.position);
+
+        if (!Physics.Raycast(ray, out RaycastHit hit) 
+        || hit.collider.gameObject.layer != LayerMask.NameToLayer("Ground")
+        || hit.collider.gameObject.layer != LayerMask.NameToLayer("Land")) 
         {
-            Touch touch = Input.GetTouch(0);
+            return;
+        }
 
-            if (touch.phase == TouchPhase.Began)
-            {
-                _lastTouchPosition = touch.position;
-            }
+        if (touch.phase == TouchPhase.Began)
+        {
+            _lastTouchPosition = touch.position;
+            isMoving = true; 
+            return; 
+        }
 
-            if (touch.phase == TouchPhase.Moved)
-            {
-                Vector2 deltaPosition = touch.position - _lastTouchPosition;
+        if (touch.phase == TouchPhase.Moved && isMoving)
+        {
+            Vector2 deltaPosition = touch.position - _lastTouchPosition;
 
-                // 화면의 터치 이동을 월드 공간으로 변환
-                Vector3 moveDirection = new Vector3(deltaPosition.x, 0, deltaPosition.y);
+            Vector3 moveDirection = new Vector3(deltaPosition.x, 0, deltaPosition.y);
+            moveDirection = Quaternion.Euler(0, _cameraRoot.eulerAngles.y, 0) * moveDirection;
 
-                // 카메라의 현재 y 축 회전을 반영하여 이동 방향 결정
-                moveDirection = Quaternion.Euler(0, _cameraRoot.eulerAngles.y, 0) * moveDirection;
+            _cameraRoot.position += _moveSpeed * Time.deltaTime * (-moveDirection);
 
-                // 카메라 이동 적용 (음수로 움직이는 이유는 일반적으로 터치를 반대로 드래그하면 카메라가 따라가기 때문)
-                _cameraRoot.position += _moveSpeed * Time.deltaTime * (-moveDirection);
+            _lastTouchPosition = touch.position;
+        }
 
-                _lastTouchPosition = touch.position;
-
-                isMoving = true;
-            }
-            else
-            {
-                isMoving = false;
-            }
+        if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+        {
+            isMoving = false;
         }
     }
+
 
     private void ZoomCamera_Mobile()
     {

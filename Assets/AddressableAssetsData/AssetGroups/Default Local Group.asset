@@ -131,6 +131,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Environment
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a294ee04a96c409d9e9d4a18498881b
+    m_Address: Assets/03.Prefabs/UI/MaterialUI/MaterialUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9dee8bbcdd13643b499a0a20133943cd, type: 2}
   m_SchemaSet:

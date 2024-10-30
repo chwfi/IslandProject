@@ -74,6 +74,12 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
+  - poolCount: 15
+    assetReference:
+      m_AssetGUID: 4a294ee04a96c409d9e9d4a18498881b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   _placeableObjectList:
   - poolCount: 45
     assetReference:
