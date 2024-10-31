@@ -106,7 +106,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.75, y: 1, z: 0.75}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 15, z: 0}
 --- !u!114 &524830100267779196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 181.43, y: 1, z: 246.6}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2832365163184354948}
@@ -352,6 +352,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 740021583695263227}
     m_Modifications:
+    - target: {fileID: 1520287138134895923, guid: 300d4f7485b854d57acdb5c38cf9a38b, type: 3}
+      propertyPath: _scaleFactor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1741027854020108827, guid: 300d4f7485b854d57acdb5c38cf9a38b, type: 3}
       propertyPath: m_Name
       value: BuildOptionUI

@@ -4,15 +4,19 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class PoolManager : MonoSingleton<PoolManager>
 {
     [SerializeField] private PoolingList _poolingList;
     [SerializeField] private int batchSize = 15; // 한 번에 생성(로딩)할 오브젝트 수
 
-    private Dictionary<string, Stack<IPoolable>> pools = new Dictionary<string, Stack<IPoolable>>();
+    private readonly Dictionary<string, Stack<IPoolable>> pools = new();
+    private readonly Dictionary<AssetLabelReference, List<string>> labelToPoolNames = new();
+    
     private Coroutine loadingCoroutine;
 
+    public PoolingList PoolingList => _poolingList;
     public bool IsReady => loadingCoroutine == null;
     
     private void Awake()
@@ -35,7 +39,7 @@ public class PoolManager : MonoSingleton<PoolManager>
     {
         var initTasks = new List<IEnumerator>
         {
-            SetUpPoolList(_poolingList.MainList, "섬 모델"),
+            SetUpPoolList(_poolingList.EnvironmentList, "섬 모델"),
             SetUpPoolList(_poolingList.UIList, "UI"),
             SetUpPoolList(_poolingList.PlaceableObjectList, "건물 오브젝트"),
             SetUpPoolList(_poolingList.EffectList, "이펙트"),
@@ -69,7 +73,6 @@ public class PoolManager : MonoSingleton<PoolManager>
 
         OnPoolListLoadingStarted?.Invoke(listName);
 
-        // 모든 프리팹을 일단 먼저 비동기로 로드
         var prefabLoadTasks = new Dictionary<PoolingItem, AsyncOperationHandle<GameObject>>();
         foreach (var poolItem in poolList)
         {
@@ -124,10 +127,9 @@ public class PoolManager : MonoSingleton<PoolManager>
                     OnPoolItemLoaded?.Invoke(assetName, newPool.Count, poolItem.poolCount);
                 }
 
-                yield return new WaitForSeconds(0.01f); // 프레임 드랍 방지를 위한 짧은 대기
+                yield return new WaitForSeconds(0.01f); // 프레임 드랍 방지
             }
 
-            // 원본 프리팹 에셋 해제
             Addressables.Release(loadHandle);
         }
     }
@@ -158,7 +160,7 @@ public class PoolManager : MonoSingleton<PoolManager>
         Debug.LogWarning($"Pool for {objectName} is empty!");
         return null;
     }
-
+    
     public void Return(IPoolable poolableObject)
     {
         var monoBehaviour = poolableObject as MonoBehaviour;

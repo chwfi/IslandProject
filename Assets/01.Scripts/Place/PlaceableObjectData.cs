@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlaceableObjectType
+{
+    LandType,
+    WaterType,
+}
+
 [CreateAssetMenu(menuName = "SO/Place/PlaceableObject", fileName = "Object_")]
 public class PlaceableObjectData : ScriptableObject
 {
@@ -10,5 +16,6 @@ public class PlaceableObjectData : ScriptableObject
     public string objectName;
     public string uiName;
     public int price;
+    public PlaceableObjectType placeableObjectType;
     public InGameMaterial material;
 }

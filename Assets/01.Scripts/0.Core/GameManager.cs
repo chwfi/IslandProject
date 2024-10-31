@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    [SerializeField]
-    private InGameMaterial test;
-
     [SerializeField] private Camera _mainCam;
     public Camera MainCam => _mainCam;
 
@@ -21,14 +19,22 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Update() 
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.touchCount > 0)
         {
-            QuestManager.Instance.Report("test", 1);
-        }    
+            Touch touch = Input.GetTouch(0);
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            MaterialManager.Instance.AddMaterialCount(test, 1);
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Ray ray = _mainCam.ScreenPointToRay(touch.position);
+
+                if (Physics.Raycast(ray, out RaycastHit hit))
+                {
+                    if (hit.collider.TryGetComponent<IDragInteractable>(out var interactable))
+                    {
+                        interactable.OnInteract();
+                    }
+                }
+            }
         }
     }
 }

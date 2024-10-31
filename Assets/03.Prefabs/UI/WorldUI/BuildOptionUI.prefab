@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d795b99f51a9e4b0296ac2617abf4df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scaleFactor: 2.5
+  _scaleFactor: 1
   _placeButton: {fileID: 2300237139268062592}
   _exitButton: {fileID: 8888068107901789394}
 --- !u!1 &3482266231026565098

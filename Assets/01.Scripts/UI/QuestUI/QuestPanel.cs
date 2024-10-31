@@ -12,7 +12,7 @@ public class QuestPanel : PopupUI
     {
         base.Awake();
 
-        InactiveUIElements();   
+        InactiveUIElements();
     }
 
     public override void AccessUI(bool active)

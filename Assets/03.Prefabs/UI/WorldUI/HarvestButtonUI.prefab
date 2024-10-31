@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 7108073823189619701}
   - component: {fileID: 9142429835068895493}
   - component: {fileID: 5389934313327157732}
+  - component: {fileID: 343703768623232060}
   m_Layer: 5
   m_Name: HarvestButtonUI
   m_TagString: Untagged
@@ -287,5 +288,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a455312ca4e428d9f20f9b689fa62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scaleFactor: 2
+  _scaleFactor: 1
   _harvestButton: {fileID: 5959800238327970124}
+--- !u!65 &343703768623232060
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2573140371331286588}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.9, y: 4.9, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

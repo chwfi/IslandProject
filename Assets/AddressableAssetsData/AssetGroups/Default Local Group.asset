@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 1ffab0bd351314ecb9059c95a9aeee3b
   m_SerializeEntries:
-  - m_GUID: 38fc144e08b214eff911b9fd685c5683
-    m_Address: Assets/03.Prefabs/Environment.prefab
+  - m_GUID: 9ded78f460ffb4a1b978978625f1a283
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Main.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Environment
@@ -136,6 +136,72 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 149f26cfee61847a1a4cb543a4e1d95f
+    m_Address: Assets/03.Prefabs/PlaceableObject/Pig.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PlaceableObject
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 176464d7b6cdd4244ab2d17582ad9977
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Tree_Group_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7dd2d0aea171140e8af6ef206276a079
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Tree_Group_02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a31593fc387db4b2588d01fce214ef49
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Tree_Group_03.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da7df767b4fe14db0aad642f16078376
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Tree_Group_04.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 152597a7fa6ba476ba6ffa937de822dc
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Tree_Group_05.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0d47857a104d4eb8a39fc110bce8ef8
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Canopies.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a80382923647475f989396ffafd8e36
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Waves.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fc16ce21e32a4a49b9f5f1d364bcb3d
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Glass.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7049154f9e7424c00ba31bf08523f3c7
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Volcano.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 964f31f3337884227bc94f428f7a86e9
+    m_Address: Assets/03.Prefabs/0.MainResources/Environment/Elements.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9dee8bbcdd13643b499a0a20133943cd, type: 2}

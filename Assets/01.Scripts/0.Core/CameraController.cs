@@ -40,7 +40,7 @@ public class CameraController : MonoSingleton<CameraController>
         #endif
     }
 
-    private void MoveCamera_Mobile() // 가드 클로즈 패턴을 사용하여 코드 안정성을 증가시켰습니다.
+    private void MoveCamera_Mobile()
     {
         if (Input.touchCount != 1) return;
 
@@ -48,35 +48,35 @@ public class CameraController : MonoSingleton<CameraController>
 
         Ray ray = GameManager.Instance.MainCam.ScreenPointToRay(touch.position);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit) 
-        || hit.collider.gameObject.layer != LayerMask.NameToLayer("Ground")
-        || hit.collider.gameObject.layer != LayerMask.NameToLayer("Land")) 
-        {
+        if (!Physics.Raycast(ray, out RaycastHit hit))
             return;
-        }
 
-        if (touch.phase == TouchPhase.Began)
+        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Land")
+        || hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            _lastTouchPosition = touch.position;
-            isMoving = true; 
-            return; 
-        }
+            if (touch.phase == TouchPhase.Began)
+            {
+                _lastTouchPosition = touch.position;
+                isMoving = true; 
+                return; 
+            }
 
-        if (touch.phase == TouchPhase.Moved && isMoving)
-        {
-            Vector2 deltaPosition = touch.position - _lastTouchPosition;
+            if (touch.phase == TouchPhase.Moved && isMoving)
+            {
+                Vector2 deltaPosition = touch.position - _lastTouchPosition;
 
-            Vector3 moveDirection = new Vector3(deltaPosition.x, 0, deltaPosition.y);
-            moveDirection = Quaternion.Euler(0, _cameraRoot.eulerAngles.y, 0) * moveDirection;
+                Vector3 moveDirection = new Vector3(deltaPosition.x, 0, deltaPosition.y);
+                moveDirection = Quaternion.Euler(0, _cameraRoot.eulerAngles.y, 0) * moveDirection;
 
-            _cameraRoot.position += _moveSpeed * Time.deltaTime * (-moveDirection);
+                _cameraRoot.position += _moveSpeed * Time.deltaTime * (-moveDirection);
 
-            _lastTouchPosition = touch.position;
-        }
+                _lastTouchPosition = touch.position;
+            }
 
-        if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-        {
-            isMoving = false;
+            if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            {
+                isMoving = false;
+            }
         }
     }
 
