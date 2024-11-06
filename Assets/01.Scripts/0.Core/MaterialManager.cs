@@ -11,6 +11,7 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
     [SerializeField] private string _root;
 
     public List<InGameMaterial> ActiveMaterials = new List<InGameMaterial>();
+    public MaterialDatabase MaterialDatabase => _materialDatabase;
 
     public event MaterialRecieveHandler OnMaterialRecieved;
     public event NotifyHandler OnReceivedNotify;
@@ -39,7 +40,12 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
     #region Save & Load
     public void Load()
     {
-        foreach (var mat in _materialDatabase.Materials) 
+        foreach (var mat in _materialDatabase.CropsMaterials) 
+        {
+            OnLoadMaterialData(mat);
+        }
+
+        foreach (var mat in _materialDatabase.StuffMaterials)
         {
             OnLoadMaterialData(mat);
         }
@@ -57,7 +63,13 @@ public class MaterialManager : MonoSingleton<MaterialManager> // Manage In-Game 
 
     public void SaveAtEmptyState() // Firebase DB에 데이터가 감지되지 않을때, 즉 처음 실행할 때만 실행해주는 Save 로직
     {
-        foreach (var mat in _materialDatabase.Materials)
+        foreach (var mat in _materialDatabase.CropsMaterials)
+        {
+            DataManager.Instance.OnSaveData(mat.ToInitialSaveData(), mat.MaterialName, _root);
+            OnLoadMaterialData(mat);
+        }
+
+        foreach (var mat in _materialDatabase.StuffMaterials)
         {
             DataManager.Instance.OnSaveData(mat.ToInitialSaveData(), mat.MaterialName, _root);
             OnLoadMaterialData(mat);

@@ -16,6 +16,7 @@ public class PlaceableObjectData : ScriptableObject
     public string objectName;
     public string uiName;
     public int price;
+    public float timer;
     public PlaceableObjectType placeableObjectType;
     public InGameMaterial material;
 }

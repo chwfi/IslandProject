@@ -16,5 +16,6 @@ MonoBehaviour:
   objectName: Pig
   uiName: "\uB3FC\uC9C0"
   price: 100
+  timer: 45
   placeableObjectType: 1
   material: {fileID: 0}

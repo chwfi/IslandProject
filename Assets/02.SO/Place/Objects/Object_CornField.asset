@@ -16,4 +16,6 @@ MonoBehaviour:
   objectName: CornField
   uiName: "\uC625\uC218\uC218\uBC2D"
   price: 0
+  timer: 20
+  placeableObjectType: 0
   material: {fileID: 11400000, guid: 7187aef006ca44777a49a3f8f6f696a1, type: 2}

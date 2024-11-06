@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd2301b0f261a419fb348edeb189a4c1, type: 3}
   m_Name: MaterialDatabase
   m_EditorClassIdentifier: 
-  _materials:
-  - {fileID: 11400000, guid: caeb83acf037e4d80b06093e3b47ab3c, type: 2}
+  _cropsMaterials:
   - {fileID: 11400000, guid: 7187aef006ca44777a49a3f8f6f696a1, type: 2}
+  _stuffMaterials:
+  - {fileID: 11400000, guid: caeb83acf037e4d80b06093e3b47ab3c, type: 2}

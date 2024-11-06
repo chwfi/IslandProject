@@ -85,7 +85,19 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     public void SetObjectPosition(PlaceableObjectData data)
     {
         if (PreviousPlaceableObject == null)
-            return;
+        {
+            if (data.placeableObjectType == PlaceableObjectType.WaterType)
+            {
+                SetTargetPosition(_waterInitTransform.position.x, _waterInitTransform.position.z);
+                return;
+            }
+
+            if (data.placeableObjectType == PlaceableObjectType.LandType)
+            {
+                SetTargetPosition(_landInitTransform.position.x, _landInitTransform.position.z);
+                return;
+            }
+        }
 
         if (PreviousPlaceableObject.ObjectData.placeableObjectType != data.placeableObjectType)
         {
