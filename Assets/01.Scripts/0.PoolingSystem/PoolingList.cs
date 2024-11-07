@@ -16,11 +16,9 @@ public class PoolingList : ScriptableObject
     [SerializeField] private List<PoolingItem> _uiList;
     [SerializeField] private List<PoolingItem> _placeableObjectList;
     [SerializeField] private List<PoolingItem> _effectList;
-    [SerializeField] private List<PoolingItem> _plantList;
 
     public List<PoolingItem> EnvironmentList => _environment;
     public List<PoolingItem> UIList => _uiList;
     public List<PoolingItem> PlaceableObjectList => _placeableObjectList;
     public List<PoolingItem> EffectList => _effectList;
-    public List<PoolingItem> PlantList => _plantList;
 }

@@ -6,12 +6,11 @@ public class Entity : PlaceableObject
 {
     private Animator _animator;
 
-    public override void CheckState()
-    {
-        throw new System.NotImplementedException();
-    }
+    private readonly int IdleHash = Animator.StringToHash("Idle");
+    private readonly int WorkHash = Animator.StringToHash("Work");
+    private readonly int CompleteHash = Animator.StringToHash("Complete");
 
-    private void Awake() 
+    private void Start() 
     {
         _animator = transform.Find("Object").GetComponent<Animator>();    
     }
@@ -28,7 +27,23 @@ public class Entity : PlaceableObject
         int randomIndex = Random.Range(0, materials.Count);
 
         ObjectData.material = materials[randomIndex];
+    }
 
+    public override void OnInactive()
+    {
+        _animator.SetBool(IdleHash, true);
+    }
+
+    public override void OnActive()
+    {
+        _animator.SetBool(WorkHash, true);
+    }
+
+    public override void OnWaitForCompletion()
+    {
+        _animator.SetBool(CompleteHash, true);
+
+        OnComplete();
         ShowHarvestUI();
     }
 }

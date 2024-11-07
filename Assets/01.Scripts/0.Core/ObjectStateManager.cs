@@ -5,20 +5,13 @@ using UnityEngine;
 public class ObjectStateManager : MonoSingleton<ObjectStateManager>
 {
     [SerializeField] private string _saveRoot;
+    [SerializeField] private PlaceableDatabase _database;
 
-    public List<PlaceableObject> ObjectList { get; set; }
-
-    private void Awake() 
-    {
-        ObjectList = new List<PlaceableObject>();
-    }
+    public List<PlaceableObject> ObjectList = new List<PlaceableObject>();
 
     private void Start() 
     {
-        foreach (var obj in ObjectList)
-        {
-            OnLoadData(obj);
-        }    
+        Load();
     }
 
     private void Update() 
@@ -58,27 +51,23 @@ public class ObjectStateManager : MonoSingleton<ObjectStateManager>
         }
     }
 
-    public void OnLoadData(PlaceableObject obj)
+    public void Load()
     {
-        DataManager.Instance.OnLoadData<TaskQuestSaveData>(obj.ObjectData.objectName, _saveRoot, (loadedData) =>
+        DataManager.Instance.OnLoadAllData<PlaceableObjectSaveData>(_saveRoot, (loadedDatas) =>
         {
-            if (loadedData != null)
+            if (loadedDatas != null)
             {
-                if (loadedData.questState == QuestState.Complete)
-                    return;
-
-                var newObject = PoolManager.Instance.Take(obj.ObjectData.objectName, null);
-                // newObject.
-                // newQuest.OnRegister();
-                // newQuest.LoadFrom(loadedData);
-                // ActiveTaskQuests.Add(newQuest);
-
-                // OnCheckCompleted?.Invoke();
+                foreach (var data in loadedDatas)
+                {
+                    var newObject = PoolManager.Instance.Take("CornField", null) as PlaceableObject;
+                    newObject.LoadFrom(data);
+                    ObjectList.Add(newObject);
+                }
             }
             else
             {
                 Debug.Log("Failed to load data");
             }
-        }, null);            
+        });
     }
 }

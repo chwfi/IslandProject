@@ -1,39 +1,47 @@
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using Util;
 
 public class ObjectField : PlaceableObject
 {
+    [SerializeField] private GameObject[] _plantGroups;
+
     public Vector3[] GetPlantPositions()
     {
         return transform.Find("PlantGroup").GetComponent<PlantGroup>().PlantPositions;
     }
 
-    private void InitializeField()
+    public override void OnInactive()
     {
-        ObjectStateManager.Instance.ObjectList.Add(this);
-        InitPlants();
+        foreach (var obj in _plantGroups)
+        {
+            obj.SetActive(false);
+        }
+
+        _plantGroups[0].SetActive(true);
     }
 
-    private void InitPlants()
+    public override void OnActive()
     {
-        UpdatePlants();
+        foreach (var obj in _plantGroups)
+        {
+            obj.SetActive(false);
+        }
+
+        _plantGroups[1].SetActive(true);
     }
 
-    private void UpdatePlants()
+    public override void OnWaitForCompletion()
     {
+        foreach (var obj in _plantGroups)
+        {
+            obj.SetActive(false);
+        }
 
-    }
+        _plantGroups[2].SetActive(true);
 
-    public override void CheckState()
-    {
-        
-    }
-
-    private void SpawnDustEffect()
-    {
-        // var effect = PoolManager.Instance.Take(DUST_EFFECT_PREFAB, transform) as EffectPlayer;
-        // SetTransformUtil.SetTransformParent(effect.transform, transform, Vector3.zero, false);
-        // effect.transform.localScale = new Vector3(3, 3, 3);
+        ShowHarvestUI();
     }
 }

@@ -3127,6 +3127,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectData: {fileID: 11400000, guid: c2b6d038443e54f7db38b47ac2cbe1f5, type: 2}
+  _plantGroups:
+  - {fileID: 547876876746900730}
+  - {fileID: 6185288950346970474}
+  - {fileID: 9046607345665219618}
 --- !u!1001 &7281071309502543582
 PrefabInstance:
   m_ObjectHideFlags: 0

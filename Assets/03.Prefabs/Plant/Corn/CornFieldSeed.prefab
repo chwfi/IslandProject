@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5677451268659411844}
   - component: {fileID: 8747538917089604641}
   - component: {fileID: 6809854977571750123}
-  - component: {fileID: 8905226751184060743}
   m_Layer: 0
   m_Name: CornFieldSeed
   m_TagString: Untagged
@@ -84,15 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8905226751184060743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008437598070808894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f92ab0cf41e124deab69069dca418d8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

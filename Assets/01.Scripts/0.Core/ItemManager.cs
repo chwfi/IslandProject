@@ -4,7 +4,6 @@ using UnityEngine;
 public class ItemSaveData
 {
     public int coinAmount;
-    public int crystalAmount;
     public int popularityAmount;
 }
 

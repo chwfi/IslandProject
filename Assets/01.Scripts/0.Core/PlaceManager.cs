@@ -66,7 +66,6 @@ public class PlaceManager : MonoSingleton<PlaceManager>
         SetObjectPosition(data);
         
         CurrentPlaceableObject.transform.position = _targetRoot.transform.position;
-        CurrentPlaceableObject.SetPlaceableObject(data);
     }
 
     private void SetPreviousObject()

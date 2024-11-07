@@ -19,7 +19,6 @@ public class PlaceUIController : MonoBehaviour
         {
             var ui = PoolManager.Instance.Take(_structureUIPrefab.name, _horizontalGroup) as StructureUI;
             ui.SetUI(placeableData);
-            Debug.Log(ui);
         }  
     }
 }

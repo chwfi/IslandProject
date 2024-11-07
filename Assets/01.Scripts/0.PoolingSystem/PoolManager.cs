@@ -43,7 +43,6 @@ public class PoolManager : MonoSingleton<PoolManager>
             SetUpPoolList(_poolingList.UIList, "UI"),
             SetUpPoolList(_poolingList.PlaceableObjectList, "건물 오브젝트"),
             SetUpPoolList(_poolingList.EffectList, "이펙트"),
-            SetUpPoolList(_poolingList.PlantList, "식물")
         };
 
         yield return new WaitForSeconds(0.1f);

@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleFactor: 1
-  _harvestButton: {fileID: 5959800238327970124}
+  _buttonImage: {fileID: 4744949644296395057}
 --- !u!65 &343703768623232060
 BoxCollider:
   m_ObjectHideFlags: 0
