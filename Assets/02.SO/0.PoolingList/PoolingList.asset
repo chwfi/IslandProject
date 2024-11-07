@@ -15,12 +15,6 @@ MonoBehaviour:
   _environment:
   - poolCount: 1
     assetReference:
-      m_AssetGUID: 7b9fa8ba97ef14d588875f5e861da2ed
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  - poolCount: 1
-    assetReference:
       m_AssetGUID: 176464d7b6cdd4244ab2d17582ad9977
       m_SubObjectName: 
       m_SubObjectType: 
@@ -36,13 +30,13 @@ MonoBehaviour:
       m_AssetGUID: a31593fc387db4b2588d01fce214ef49
       m_SubObjectName: 
       m_SubObjectType: 
-      m_EditorAssetChanged: 1
+      m_EditorAssetChanged: 0
   - poolCount: 1
     assetReference:
       m_AssetGUID: da7df767b4fe14db0aad642f16078376
       m_SubObjectName: 
       m_SubObjectType: 
-      m_EditorAssetChanged: 1
+      m_EditorAssetChanged: 0
   - poolCount: 1
     assetReference:
       m_AssetGUID: 152597a7fa6ba476ba6ffa937de822dc
@@ -84,7 +78,7 @@ MonoBehaviour:
       m_AssetGUID: 9ded78f460ffb4a1b978978625f1a283
       m_SubObjectName: 
       m_SubObjectType: 
-      m_EditorAssetChanged: 0
+      m_EditorAssetChanged: 1
   _uiList:
   - poolCount: 9
     assetReference:
@@ -181,25 +175,6 @@ MonoBehaviour:
   - poolCount: 2
     assetReference:
       m_AssetGUID: 48b6a922a942b435a9e157bc3547645f
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 1
-  _plantList:
-  - poolCount: 180
-    assetReference:
-      m_AssetGUID: 4c940fba11d904f65a0fe061fd3710f6
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  - poolCount: 180
-    assetReference:
-      m_AssetGUID: 3cc91414bcdc040dd9f21385dd863276
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  - poolCount: 180
-    assetReference:
-      m_AssetGUID: a1294a48b91cb457ba72b3d51d4ccf05
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1

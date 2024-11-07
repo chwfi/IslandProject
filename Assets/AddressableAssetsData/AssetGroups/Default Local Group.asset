@@ -125,12 +125,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7b9fa8ba97ef14d588875f5e861da2ed
-    m_Address: Assets/03.Prefabs/0.MainResources/Zone.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Environment
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a294ee04a96c409d9e9d4a18498881b
     m_Address: Assets/03.Prefabs/UI/MaterialUI/MaterialUI.prefab
     m_ReadOnly: 0
