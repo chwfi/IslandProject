@@ -3127,6 +3127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectData: {fileID: 11400000, guid: c2b6d038443e54f7db38b47ac2cbe1f5, type: 2}
+  _harvestMaterial: {fileID: 11400000, guid: 7187aef006ca44777a49a3f8f6f696a1, type: 2}
   _plantGroups:
   - {fileID: 547876876746900730}
   - {fileID: 6185288950346970474}

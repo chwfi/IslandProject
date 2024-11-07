@@ -179,7 +179,7 @@ public class PoolManager : MonoSingleton<PoolManager>
         }
     }
 
-    private string GetOriginalObjectName(string cloneName)
+    public string GetOriginalObjectName(string cloneName)
     {
         return cloneName.Replace("(Clone)", "").Trim();
     }

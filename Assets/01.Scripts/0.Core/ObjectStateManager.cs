@@ -59,7 +59,7 @@ public class ObjectStateManager : MonoSingleton<ObjectStateManager>
             {
                 foreach (var data in loadedDatas)
                 {
-                    var newObject = PoolManager.Instance.Take("CornField", null) as PlaceableObject;
+                    var newObject = PoolManager.Instance.Take(data.thisObjectName, null) as PlaceableObject;
                     newObject.LoadFrom(data);
                     ObjectList.Add(newObject);
                 }

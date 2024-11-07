@@ -6,17 +6,18 @@ public class Entity : PlaceableObject
 {
     private Animator _animator;
 
-    private readonly int IdleHash = Animator.StringToHash("Idle");
-    private readonly int WorkHash = Animator.StringToHash("Work");
     private readonly int CompleteHash = Animator.StringToHash("Complete");
 
-    private void Start() 
+    private void OnEnable() 
     {
-        _animator = transform.Find("Object").GetComponent<Animator>();    
+        _animator = transform.Find("Object").GetComponent<Animator>();        
     }
 
     private void OnComplete()
     {
+        if (_harvestMaterial != null)
+            return;
+
         List<InGameMaterial> materials = new List<InGameMaterial>();
 
         foreach (var value in MaterialManager.Instance.MaterialDatabase.StuffMaterials)
@@ -26,17 +27,17 @@ public class Entity : PlaceableObject
 
         int randomIndex = Random.Range(0, materials.Count);
 
-        ObjectData.material = materials[randomIndex];
+        _harvestMaterial = materials[randomIndex];
     }
 
     public override void OnInactive()
     {
-        _animator.SetBool(IdleHash, true);
+        _animator.SetBool(CompleteHash, false);
     }
 
     public override void OnActive()
     {
-        _animator.SetBool(WorkHash, true);
+
     }
 
     public override void OnWaitForCompletion()
