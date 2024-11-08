@@ -52,7 +52,8 @@ public class CameraController : MonoSingleton<CameraController>
             return;
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Land")
-        || hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        || hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground")
+        || hit.collider.gameObject.layer == LayerMask.NameToLayer("Seacost"))
         {
             if (touch.phase == TouchPhase.Began)
             {
