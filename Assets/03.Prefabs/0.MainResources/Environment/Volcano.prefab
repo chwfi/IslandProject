@@ -1073,7 +1073,7 @@ GameObject:
   - component: {fileID: 29560125977054494}
   - component: {fileID: 8846711829997285407}
   - component: {fileID: 5853712787147767751}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: volcano_A_giant_brown_lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9509,7 +9509,7 @@ GameObject:
   - component: {fileID: 5642186987945587281}
   - component: {fileID: 308782732118373109}
   - component: {fileID: 7116282506765679183}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: volcano_C_small
   m_TagString: Untagged
   m_Icon: {fileID: 0}

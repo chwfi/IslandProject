@@ -91,6 +91,7 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
             case PlaceableObjectState.Active:
                 ObjectState = PlaceableObjectState.WaitForCompletion;
                 OnWaitForCompletion();
+                OnInactive();
                 break;
         }
     }
