@@ -6,6 +6,7 @@ using Util;
 
 public class ObjectField : PlaceableObject
 {
+    [SerializeField] private InGameMaterial _harvestMaterial;
     [SerializeField] private GameObject[] _plantGroups;
 
     public Vector3[] GetPlantPositions()
@@ -42,6 +43,6 @@ public class ObjectField : PlaceableObject
 
         _plantGroups[2].SetActive(true);
 
-        ShowHarvestUI();
+        ShowHarvestUI(_harvestMaterial);
     }
 }

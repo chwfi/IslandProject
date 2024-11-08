@@ -15,3 +15,4 @@ MonoBehaviour:
   _placeableObjects:
   - {fileID: 11400000, guid: c2b6d038443e54f7db38b47ac2cbe1f5, type: 2}
   - {fileID: 11400000, guid: ff06c4d6dda804fc388d0811437f8b19, type: 2}
+  - {fileID: 11400000, guid: 5324c1d7c868e46a0916de90bd6a7b97, type: 2}

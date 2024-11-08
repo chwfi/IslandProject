@@ -9,7 +9,7 @@ public class PlaceableObjectSaveData
     public float timer;
     public bool isPlaced;
     public string thisObjectName;
-    public int materialCodeName;
+    public object harvestObject;
 } 
 
 public enum PlaceableObjectState
@@ -21,12 +21,14 @@ public enum PlaceableObjectState
 
 public abstract class PlaceableObject : MonoBehaviour, IPoolable
 {
+    [Header("Data")]
     [SerializeField] private PlaceableObjectData _objectData;
-    [SerializeField] protected InGameMaterial _harvestMaterial;
 
     private BuildOptionUI _buildOptionUI;
     private PlaceableChecker _placeableChecker;
     private GameObject _modelObject;
+
+    protected object _harvestObject = null;
 
     public GameObject ModelObject => _modelObject;
     public PlaceableObjectData ObjectData => _objectData;
@@ -116,10 +118,10 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
         _timer = 0;
     }
     
-    protected void ShowHarvestUI()
+    protected void ShowHarvestUI(object harvestObject)
     {
         var ui = PoolManager.Instance.Take(HARVEST_BUTTON_PREFAB, transform) as HarvestButtonUI;
-        ui.SetObject(this, _harvestMaterial);  
+        ui.SetObject(this, harvestObject);  
     }
 
     public PlaceableObjectSaveData ToSaveData()
@@ -131,7 +133,7 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
             timer = _timer,
             isPlaced = _isPlaced,
             thisObjectName = PoolManager.Instance.GetOriginalObjectName(this.name),
-            materialCodeName = _harvestMaterial != null ? _harvestMaterial.CodeName : 999
+            harvestObject = _harvestObject
         };
     }
 
@@ -141,8 +143,7 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
         ObjectState = saveData.state;
         _timer = saveData.timer;
         _isPlaced = saveData.isPlaced;
-        if (saveData.materialCodeName < 999)
-            _harvestMaterial = MaterialManager.Instance.FindMaterialBy(saveData.materialCodeName);
+        _harvestObject = saveData.harvestObject;
 
         CheckCondition(saveData);
     }
@@ -152,7 +153,6 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
         if (saveData.state == PlaceableObjectState.WaitForCompletion)
         {
             OnWaitForCompletion();
-            ShowHarvestUI();
         }
         else if (saveData.state == PlaceableObjectState.Inactive)
         {

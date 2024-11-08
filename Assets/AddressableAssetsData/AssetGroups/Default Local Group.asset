@@ -197,6 +197,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Environment
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3892b1ac4d94498e99e4259e6c3dc81
+    m_Address: Assets/03.Prefabs/PlaceableObject/Well.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PlaceableObject
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9dee8bbcdd13643b499a0a20133943cd, type: 2}
   m_SchemaSet:

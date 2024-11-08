@@ -56,6 +56,9 @@ public class PlaceManager : MonoSingleton<PlaceManager>
 
     public void SetPlaceableObject(PlaceableObjectData data)
     {
+        if (!ItemManager.Instance.CheckCoin(data.price))
+            return;
+
         PopupUIManager.Instance.MovePopupUI("CreatePanel", new Vector3(0, -375, 0));
 
         SetPreviousObject();

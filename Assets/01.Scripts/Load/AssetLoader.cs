@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceLocations;
-using System.IO;  // System.IO 네임스페이스 추가
+using System.IO;
 
 public class AssetLoader : MonoBehaviour
 {

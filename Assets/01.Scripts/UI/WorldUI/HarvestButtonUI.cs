@@ -19,11 +19,11 @@ public class HarvestButtonUI : WorldUI, IDragInteractable
         PoolManager.Instance.Return(this);
     }
   
-    public void SetObject(PlaceableObject obj, InGameMaterial material)
+    public void SetObject(PlaceableObject obj, object material)
     {
         transform.GetComponent<RectTransform>().DOAnchorPosY(8.3f, 0.9f).SetEase(Ease.OutBack);
 
-        _buttonImage.sprite = material.Icon;
+        //_buttonImage.sprite = material.Icon;
         _ownObject = obj;
     }
 }

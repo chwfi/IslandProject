@@ -94,6 +94,19 @@ public class ItemManager : MonoSingleton<ItemManager>
         }
     }
 
+    public bool CheckCoin(int amount)
+    {
+        if (Coin < amount)
+        {
+            PopupUIManager.Instance.AccessPopupUI("WarningPanel", true);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public void Save()
     {
         DataManager.Instance.OnDeleteData(_root);

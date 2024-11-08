@@ -15,7 +15,7 @@ public class Entity : PlaceableObject
 
     private void OnComplete()
     {
-        if (_harvestMaterial != null)
+        if (_harvestObject != null)
             return;
 
         List<InGameMaterial> materials = new List<InGameMaterial>();
@@ -27,7 +27,7 @@ public class Entity : PlaceableObject
 
         int randomIndex = Random.Range(0, materials.Count);
 
-        _harvestMaterial = materials[randomIndex];
+        _harvestObject = materials[randomIndex];
     }
 
     public override void OnInactive()
@@ -45,6 +45,6 @@ public class Entity : PlaceableObject
         _animator.SetBool(CompleteHash, true);
 
         OnComplete();
-        ShowHarvestUI();
+        ShowHarvestUI(_harvestObject);
     }
 }
