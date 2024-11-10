@@ -142,13 +142,17 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
 
     private void CheckCondition(PlaceableObjectSaveData saveData)
     {
-        if (saveData.state == PlaceableObjectState.WaitForCompletion)
+        switch (saveData.state)
         {
-            OnWaitForCompletion();
-        }
-        else if (saveData.state == PlaceableObjectState.Inactive)
-        {
-            OnInactive();
+            case PlaceableObjectState.Inactive:
+                OnInactive();
+                break;
+            case PlaceableObjectState.Active:
+                OnActive();
+                break;
+            case PlaceableObjectState.WaitForCompletion:
+                OnWaitForCompletion();
+                break;
         }
 
         if (_isPlaced)

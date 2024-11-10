@@ -26,4 +26,4 @@ MonoBehaviour:
   _isCanclable: 0
   _materialGroups:
   - material: {fileID: 11400000, guid: 7187aef006ca44777a49a3f8f6f696a1, type: 2}
-    needAmount: 120
+    needAmount: 9

@@ -48,7 +48,7 @@ public class ObjectField : PlaceableObject
 
     public override void OnHarvest()
     {
-        MaterialManager.Instance.AddMaterialCount(_harvestMaterial, 1);
+        MaterialManager.Instance.AddMaterialCount(_harvestMaterial, 3);
 
         ObjectState = PlaceableObjectState.Inactive;
         OnInactive();
