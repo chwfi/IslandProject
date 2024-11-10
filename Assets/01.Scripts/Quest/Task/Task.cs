@@ -47,7 +47,6 @@ public class Task : ScriptableObject, IQuestable, ICloneable<Task>
         if (TaskState == TaskState.Complete) return;
 
         CurrentSuccessValue += successCount;
-        Debug.Log(CurrentSuccessValue);
 
         if (CurrentSuccessValue >= _needToSuccessValue)
         {

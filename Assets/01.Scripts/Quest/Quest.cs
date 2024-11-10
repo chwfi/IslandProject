@@ -34,6 +34,7 @@ public abstract class Quest : ScriptableObject, IQuestable
     [Header("Option")]
     [SerializeField] protected bool _isAutoStartQuest;
     [SerializeField] protected bool _isAutoComplete;
+    [SerializeField] protected bool _isReward = true;
     [SerializeField] protected bool _isCanclable;
 
     public event CompletedHandler OnCompleted;
@@ -78,8 +79,11 @@ public abstract class Quest : ScriptableObject, IQuestable
         OnDestroyUI?.Invoke(this);
         OnCompleted?.Invoke(this);
 
-        foreach (var group in _rewardGroups)
-            group.reward.Give(group.reward.RewardType, group.amount);
+        if (_isReward)
+        {
+            foreach (var group in _rewardGroups)
+                group.reward.Give(group.reward.RewardType, group.amount);
+        }
 
         OnCompleted = null;
         OnCanceled = null;

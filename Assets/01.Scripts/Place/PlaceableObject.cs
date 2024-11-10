@@ -68,6 +68,8 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
             CameraController.Instance.canControll = true;
             ObjectStateManager.Instance.ObjectList.Add(this);
 
+            QuestManager.Instance.Report(ObjectData.objectName, 1);
+
             OnInactive();
 
             _isPlaced = true;

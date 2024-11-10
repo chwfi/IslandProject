@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e3624cf7b6c6446ca9fa2ff626b7ce6, type: 3}
-  m_Name: QuestDatabase
+  m_Script: {fileID: 11500000, guid: cabc4e5fd08be4e5997b58c5ad71d283, type: 3}
+  m_Name: FieldTarget
   m_EditorClassIdentifier: 
-  _taskQuests: []
-  _trafficQuests:
-  - {fileID: 11400000, guid: 772c0b915b020413987145848443cb71, type: 2}
+  _target: CornField

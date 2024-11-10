@@ -9,22 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30d9f9642b85f49e9bc898bc2c8ab51a, type: 3}
-  m_Name: TrafficQuest01
+  m_Script: {fileID: 11500000, guid: 785a61f0b09e846fa8e932031ddf8a7d, type: 3}
+  m_Name: Guide02
   m_EditorClassIdentifier: 
   _codeName: 1
-  _questName: "\uC625\uC218\uC218 \uC218\uD655"
+  _questName: Guide02
   _questIcon: {fileID: 0}
   _questDescription: 
   _rewardGroups:
   - reward: {fileID: 11400000, guid: 9a868640a847b4f889a76ebdc47728f5, type: 2}
     amount: 100
-  - reward: {fileID: 11400000, guid: fa090063781b54341b60846b5f3c0fe4, type: 2}
-    amount: 45
   _isAutoStartQuest: 0
-  _isAutoComplete: 0
+  _isAutoComplete: 1
   _isReward: 1
   _isCanclable: 0
-  _materialGroups:
-  - material: {fileID: 11400000, guid: 7187aef006ca44777a49a3f8f6f696a1, type: 2}
-    needAmount: 9
+  _task: {fileID: 11400000, guid: f8409515a95324d48a749fafd4761b3e, type: 2}
+  NewTaskClone: {fileID: 0}
