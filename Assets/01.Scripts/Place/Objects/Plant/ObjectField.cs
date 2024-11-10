@@ -45,4 +45,14 @@ public class ObjectField : PlaceableObject
 
         ShowHarvestUI(_harvestMaterial);
     }
+
+    public override void OnHarvest()
+    {
+        MaterialManager.Instance.AddMaterialCount(_harvestMaterial, 1);
+
+        ObjectState = PlaceableObjectState.Inactive;
+        OnInactive();
+        
+        _timer = 0;
+    }
 }

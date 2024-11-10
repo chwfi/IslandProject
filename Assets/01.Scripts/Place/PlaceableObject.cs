@@ -9,7 +9,6 @@ public class PlaceableObjectSaveData
     public float timer;
     public bool isPlaced;
     public string thisObjectName;
-    public object harvestObject;
 } 
 
 public enum PlaceableObjectState
@@ -28,14 +27,12 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
     private PlaceableChecker _placeableChecker;
     private GameObject _modelObject;
 
-    protected object _harvestObject = null;
-
     public GameObject ModelObject => _modelObject;
     public PlaceableObjectData ObjectData => _objectData;
-    public PlaceableObjectState ObjectState { get; private set; }
+    public PlaceableObjectState ObjectState { get; protected set; }
 
     private const string HARVEST_BUTTON_PREFAB = "HarvestButtonUI";
-    private float _timer;
+    protected float _timer;
     private bool _isPlaced = false;
 
     public void SetPlaceableObject() 
@@ -67,6 +64,7 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
             _buildOptionUI.gameObject.SetActive(false);
             
             PlaceManager.Instance.InitTargetHeight();
+            PlaceManager.Instance.MainCanvas.SetActive(true);
             CameraController.Instance.canControll = true;
             ObjectStateManager.Instance.ObjectList.Add(this);
 
@@ -80,6 +78,12 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
         });
     }
 
+    public abstract void OnInactive();
+    public abstract void OnActive();
+    public abstract void OnWaitForCompletion();
+
+    public abstract void OnHarvest();
+
     public void CheckState()
     {
         switch (ObjectState)
@@ -91,14 +95,9 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
             case PlaceableObjectState.Active:
                 ObjectState = PlaceableObjectState.WaitForCompletion;
                 OnWaitForCompletion();
-                OnInactive();
                 break;
         }
     }
-
-    public abstract void OnInactive();
-    public abstract void OnActive();
-    public abstract void OnWaitForCompletion();
 
     public void SetTimer(float endTime)
     {
@@ -112,14 +111,8 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
             _timer = 0;
         }
     }
-
-    public void OnHarvest()
-    {
-        ObjectState = PlaceableObjectState.Inactive;
-        _timer = 0;
-    }
     
-    protected void ShowHarvestUI(object harvestObject)
+    protected void ShowHarvestUI(InGameMaterial harvestObject)
     {
         var ui = PoolManager.Instance.Take(HARVEST_BUTTON_PREFAB, transform) as HarvestButtonUI;
         ui.SetObject(this, harvestObject);  
@@ -134,7 +127,6 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
             timer = _timer,
             isPlaced = _isPlaced,
             thisObjectName = PoolManager.Instance.GetOriginalObjectName(this.name),
-            harvestObject = _harvestObject
         };
     }
 
@@ -144,7 +136,6 @@ public abstract class PlaceableObject : MonoBehaviour, IPoolable
         ObjectState = saveData.state;
         _timer = saveData.timer;
         _isPlaced = saveData.isPlaced;
-        _harvestObject = saveData.harvestObject;
 
         CheckCondition(saveData);
     }

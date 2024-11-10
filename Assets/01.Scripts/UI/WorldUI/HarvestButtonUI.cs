@@ -24,7 +24,8 @@ public class HarvestButtonUI : WorldUI, IDragInteractable
     {
         transform.GetComponent<RectTransform>().DOAnchorPosY(8.3f, 0.9f).SetEase(Ease.OutBack);
 
-        //_buttonImage.sprite = material.Icon;
+        var mat = (InGameMaterial)material;
+        _buttonImage.sprite = mat.Icon;
         _ownObject = obj;
     }
 }

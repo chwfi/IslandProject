@@ -43,6 +43,7 @@ public class CameraController : MonoSingleton<CameraController>
     private void MoveCamera_Mobile()
     {
         if (Input.touchCount != 1) return;
+        if (GameManager.Instance.IsPointerOverUIObject()) return;
 
         Touch touch = Input.GetTouch(0);
 
@@ -81,7 +82,6 @@ public class CameraController : MonoSingleton<CameraController>
         }
     }
 
-
     private void ZoomCamera_Mobile()
     {
         if (Input.touchCount == 2)
@@ -112,13 +112,10 @@ public class CameraController : MonoSingleton<CameraController>
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        // 카메라의 forward와 right 벡터에 따라 방향을 계산
         Vector3 direction = (_cameraRoot.forward * z + _cameraRoot.right * x).normalized;
 
-        // Y축 움직임을 방지 (카메라가 위아래로 움직이지 않도록)
         direction.y = 0;
 
-        // 움직임 벡터 계산 및 적용
         Vector3 move = 40 * Time.deltaTime * direction;
         _cameraRoot.position += move;
     }
@@ -128,6 +125,13 @@ public class CameraController : MonoSingleton<CameraController>
         float scroollWheel = Input.GetAxis("Mouse ScrollWheel");
         var wheel = _camera.GetCinemachineComponent<CinemachineFramingTransposer>();
         wheel.m_CameraDistance += -scroollWheel * Time.deltaTime * 250;
+    }
+    #endregion
+
+    #region Setting
+    public void OnSpeedChange(float value)
+    {
+        _moveSpeed = value * 1.8f;
     }
     #endregion
 }

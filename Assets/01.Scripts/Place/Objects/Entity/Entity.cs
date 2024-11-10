@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Entity : PlaceableObject
 {
+    private InGameMaterial _harvestMaterial;
+
     private Animator _animator;
 
     private readonly int CompleteHash = Animator.StringToHash("Complete");
@@ -15,9 +17,14 @@ public class Entity : PlaceableObject
 
     private void OnComplete()
     {
-        if (_harvestObject != null)
+        if (_harvestMaterial != null)
             return;
 
+        _harvestMaterial = SetRandomMaterial();
+    }
+
+    private InGameMaterial SetRandomMaterial()
+    {
         List<InGameMaterial> materials = new List<InGameMaterial>();
 
         foreach (var value in MaterialManager.Instance.MaterialDatabase.StuffMaterials)
@@ -25,9 +32,11 @@ public class Entity : PlaceableObject
             materials.Add(value);
         }
 
-        int randomIndex = Random.Range(0, materials.Count);
+        int randomValue = Random.Range(0, materials.Count);
 
-        _harvestObject = materials[randomIndex];
+        var selectedMaterial = materials[randomValue];
+
+        return selectedMaterial;
     }
 
     public override void OnInactive()
@@ -45,6 +54,16 @@ public class Entity : PlaceableObject
         _animator.SetBool(CompleteHash, true);
 
         OnComplete();
-        ShowHarvestUI(_harvestObject);
+        ShowHarvestUI(_harvestMaterial);
+    }
+
+    public override void OnHarvest()
+    {
+        MaterialManager.Instance.AddMaterialCount(_harvestMaterial, 1);
+
+        ObjectState = PlaceableObjectState.Inactive;
+        OnInactive();
+        
+        _timer = 0;
     }
 }

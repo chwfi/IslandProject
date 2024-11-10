@@ -19,6 +19,7 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     [SerializeField] private Material _negativeMaterial;
     [SerializeField] private float _rayDistance;
     [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private GameObject _mainCanvas;
 
     public PlaceableObject PreviousPlaceableObject { get; private set; }
     public PlaceableObject CurrentPlaceableObject { get; private set; }
@@ -38,6 +39,7 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     public Material NegativeMaterial => _negativeMaterial;
     public float RayDistance => _rayDistance;
     public LayerMask LayerMask => _layerMask;
+    public GameObject MainCanvas => _mainCanvas;
 
     private void Start() 
     {
@@ -58,6 +60,8 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     {
         if (!ItemManager.Instance.CheckCoin(data.price))
             return;
+
+        _mainCanvas.SetActive(false);
 
         PopupUIManager.Instance.MovePopupUI("CreatePanel", new Vector3(0, -375, 0));
 
@@ -142,6 +146,7 @@ public class PlaceManager : MonoSingleton<PlaceManager>
     {
         PoolManager.Instance.Return(CurrentPlaceableObject);
         InitTargetHeight();
+        _mainCanvas.SetActive(true);
     }
 
     private void Update() 
