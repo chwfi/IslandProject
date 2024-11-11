@@ -53,7 +53,7 @@ public class ObjectStateManager : MonoSingleton<ObjectStateManager>
 
     public void Load()
     {
-        DataManager.Instance.OnLoadAllData<PlaceableObjectSaveData>(_saveRoot, (loadedDatas) =>
+        DataManager.Instance.OnLoadFromDatabase<PlaceableObjectSaveData>(_saveRoot, (loadedDatas) =>
         {
             if (loadedDatas != null)
             {

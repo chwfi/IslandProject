@@ -36,12 +36,12 @@ public class DataManager : MonoSingleton<DataManager>
         StartCoroutine(LoadDataCoroutine(id, baseRoot, callback, failed));
     }
 
-    public void OnLoadAllData<T>(string baseRoot, Action<List<T>> callback)
+    public void OnLoadFromDatabase<T>(string baseRoot, Action<List<T>> callback)
     {
-        StartCoroutine(LoadAllDataCoroutine(baseRoot, callback));
+        StartCoroutine(LoadFromDatabaseCoroutine(baseRoot, callback));
     }
 
-    private IEnumerator LoadAllDataCoroutine<T>(string baseRoot, Action<List<T>> callback)
+    private IEnumerator LoadFromDatabaseCoroutine<T>(string baseRoot, Action<List<T>> callback)
     {
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
         var DBTask = reference.Child(userId).Child(baseRoot).GetValueAsync();

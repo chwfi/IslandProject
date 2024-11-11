@@ -2,14 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public class GuideQuestSaveData
-{
-    public int codeName;
-    public QuestState questState;
-    public TaskSaveData taskSaveData;
-}
-
 [CreateAssetMenu(menuName = "SO/Quest/GuideQuest")]  
 public class GuideQuest : Quest, ICloneable<Quest>, IQuestable
 {
@@ -66,38 +58,4 @@ public class GuideQuest : Quest, ICloneable<Quest>, IQuestable
         questSystem.OnQuestRecieved -= OnReceieveTask;
         questSystem.OnCheckCompleted -= OnCheckCompleteTask;
     }
-
-    // public GuideQuestSaveData ToSaveData()
-    // {
-    //     return new GuideQuestSaveData
-    //     {
-    //         codeName = _codeName,
-    //         questState = _state,
-    //         taskSaveData = TaskCloneGroup.First
-    //     };
-    // }
-
-    // public GuideQuestSaveData ToInitialSaveData()
-    // {
-    //     return new GuideQuestSaveData
-    //     {
-    //         codeName = _codeName,
-    //         questState = _state,
-    //         taskSaveData = _task.CurrentSuccessValue,
-    //     };
-    // }
-
-    // public void LoadFrom(GuideQuestSaveData saveData)
-    // {
-    //     _codeName = saveData.codeName;
-    //     _state = saveData.questState;
-
-    //     if (TaskCloneGroup.Count > 0)
-    //     {
-    //         for (int i = 0; i < Mathf.Min(TaskCloneGroup.Count, saveData.taskSaveData.Length); i++)
-    //         {
-    //             TaskCloneGroup[i].CurrentSuccessValue = saveData.taskSaveData[i].currentSuccess;
-    //         }     
-    //     }
-    // }
 }

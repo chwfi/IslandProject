@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -14,10 +12,12 @@ public class GuideController : MonoSingleton<GuideController>
     private List<GuideQuest> _guideQuests;
     private GuideQuest _currentGuideQuest;
 
+    private int _currentGuideIndex = 0;
+
     private void Start() 
     {
         _guideQuests = new List<GuideQuest>();
-    
+
         for (int i = 0; i < _database.Guides.Count; i++)
         {
             var clone = _database.Guides[i].Clone() as GuideQuest;
@@ -26,12 +26,31 @@ public class GuideController : MonoSingleton<GuideController>
             _guideQuests.Add(clone);
         }
 
-        _currentGuideQuest = _guideQuests[0];
+        Load();
+    }
+
+    public void Load()
+    {
+        DataManager.Instance.OnLoadFromDatabase<int>("guides", (loadedDatas) =>
+        {
+            if (loadedDatas != null)
+            {
+                foreach (var data in loadedDatas)
+                {
+                    _currentGuideIndex = data;
+                    _currentGuideQuest = _guideQuests[_currentGuideIndex];
+                }
+            }
+            else
+            {
+                Debug.Log("Failed to load data");
+            }
+        });
     }
 
     public void SetCurrentGuideQuest()
     {
-        _guideQuests.Remove(_guideQuests[0]);
+        _currentGuideIndex++;
 
         if (_guideQuests.Count <= 0)
         {
@@ -39,7 +58,7 @@ public class GuideController : MonoSingleton<GuideController>
             return;
         }
 
-        _currentGuideQuest = _guideQuests[0];
+        _currentGuideQuest = _guideQuests[_currentGuideIndex];
     }
 
     private void Update() 
@@ -49,5 +68,10 @@ public class GuideController : MonoSingleton<GuideController>
 
         _questText.text = $"{_currentGuideQuest.NewTaskClone.Description} {_currentGuideQuest.NewTaskClone.CurrentSuccessValue}/{_currentGuideQuest.NewTaskClone.NeedToSuccessValue}";
         _rewardText.text = $"{_currentGuideQuest.Rewards[0].amount}";
+    }
+
+    private void OnApplicationQuit() 
+    {
+        DataManager.Instance.OnSaveData(_currentGuideIndex, "index", "guides"); 
     }
 }
